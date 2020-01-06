@@ -1,1 +1,31 @@
+.avatar {
+    margin: 10px;
+}
 
+ion-content {
+    --background: #fff url('/assets/image/2/box.jpg') 20px 0/90% 100% no-repeat;
+}
+
+ion-item {
+    --background: none;
+}
+
+ion-item.name {
+    // padding-top: 0px;
+    padding-left: 30px;
+    margin-top: -5px;
+}
+
+ion-item.box {
+    width: 50px;
+    height: 100px;
+    box-shadow: 50px 100px #cc0000 inset;
+}
+
+$colors: ( primary: #f9961e,
+secondary: #882e2e,
+danger: #f84e4e,
+light: #f4f4f4,
+dark: #222,
+pinkPastel: #f6b498,
+);

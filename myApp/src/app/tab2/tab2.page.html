@@ -1,9 +1,49 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Two
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            Tab Three
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content padding>
+    <form #form="ngForm" (ngSubmit)="login(form)">
+        <ion-grid>
+            <ion-row justify-content-center>
+                <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+                    <div text-center>
+                        <img src="/assets/image/logo.png" alt="" width="150px" height="150px" />
+                        <h3>Aqual Ul Kit</h3>
+                    </div>
+                    <div padding>
+                        <ion-item>
+                            <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+                        </ion-item>
+                    </div>
+                    <div padding>
+                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+                        <div text-center>
+                            <a routerLink='/'>
+                                <p style="padding-left: 20px;">Lost password?</p>
+                            </a>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+
+        <div text-center>
+            <a routerLink='/register'>
+                <p>Registration</p>
+            </a>
+        </div>
+
+    </ion-toolbar>
+</ion-footer>

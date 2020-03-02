@@ -7,7 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-    <form #form="ngForm" (ngSubmit)="login(form)">
+    <!-- <form #form="ngForm" (ngSubmit)="login(form)">  -->
+    <form #form="ngForm"> 
         <ion-grid>
             <ion-row justify-content-center>
                 <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -17,14 +18,14 @@
                     </div>
                     <div padding>
                         <ion-item>
-                            <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                            <ion-input name="email" type="text-center" placeholder="your@email.com" [(ngModel)]="userName" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+                            <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" ngModel required></ion-input>
                         </ion-item>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="logIn()">Login</ion-button>
                         <div text-center>
                             <a routerLink='/'>
                                 <p style="padding-left: 20px;">Lost password?</p>

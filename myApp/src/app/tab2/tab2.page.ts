@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app'
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +9,26 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  userName: string = "";
+  password: string = ""
+
+  constructor(public afAuth: AngularFireAuth) { }
+
+  ngOninit() {
+
+  }
+
+  async logIn() {
+    const { userName, password } = this
+    try {
+      const res = await this.afAuth.auth.signInWithEmailAndPassword(userName + "gmail.com", password)
+    }
+    catch (err) {
+      console.dir(err)
+      if(err.code === "auth/invalid-email"){
+        console.log("User not found")
+      }
+    }
+  }
 
 }

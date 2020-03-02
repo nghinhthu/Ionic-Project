@@ -1,41 +1,53 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab One
-    </ion-title>
+      <ion-title>
+          Tab Three
+      </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card class="welcome-card">
-      <img src="/assets/shapes.svg" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
-    </ion-list>
+<ion-content padding>
+  <!-- <form #form="ngForm" (ngSubmit)="login(form)">  -->
+  <form #form="ngForm"> 
+      <ion-grid>
+          <ion-row justify-content-center>
+              <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+                  <div text-center>
+                      <img src="/assets/image/logo.png" alt="" width="150px" height="150px" />
+                      <h3>Aqual Ul Kit</h3>
+                  </div>
+                  <div padding>
+                      <ion-item>
+                          <ion-input name="email" type="text" placeholder="your@email.com" [(ngModel)]="userName" ngModel required></ion-input>
+                      </ion-item>
+                      <ion-item>
+                          <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" ngModel required></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="password" type="password" placeholder="Confirm Password" [(ngModel)]="cPassword" ngModel required></ion-input>
+                    </ion-item>
+                  </div>
+                  <div padding>
+                      <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()">Login</ion-button>
+                      <div text-center>
+                          <a routerLink='/'>
+                              <p style="padding-left: 20px;">Lost password?</p>
+                          </a>
+                      </div>
+                  </div>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </form>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+
+      <div text-center>
+          <a routerLink='/register'>
+              <p>Registration</p>
+          </a>
+      </div>
+
+  </ion-toolbar>
+</ion-footer>

@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app'
+import { UserService } from '../user.service';
+import { Router } from '@angular/router'
+import { AlertController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore'
+
 
 @Component({
   selector: 'app-tab2',
@@ -12,7 +17,11 @@ export class Tab2Page {
   userName: string = "";
   password: string = ""
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(public afAuth: AngularFireAuth, 
+    public afStore: AngularFirestore,
+    public user: UserService, 
+    public router: Router,
+    public alert: AlertController) { }
 
   ngOninit() {
 
@@ -21,14 +30,38 @@ export class Tab2Page {
   async logIn() {
     const { userName, password } = this
     try {
-      const res = await this.afAuth.auth.signInWithEmailAndPassword(userName + "gmail.com", password)
+      const res = await this.afAuth.auth.signInWithEmailAndPassword(userName + '@gmail.com', password)
+
+      if(res.user){
+        this.user.setUser({
+          userName,
+          uid: res.user.uid
+        })
+        this.router.navigate(['/tabs'])
+      }
     }
     catch (err) {
       console.dir(err)
-      if(err.code === "auth/invalid-email"){
+      if(err.code){
+        this.showAlert("Error", err)
         console.log("User not found")
       }
+      // else if(err.code === "auth/user-not-found"){
+      //   this.showAlert("Error", err)
+      // }
+      // else if(err.code === "auth/wrong-password"){
+      //   this.showAlert("Error", err)
+      // }
     }
   }
 
+  async showAlert(header: string, message: string) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: ["Ok"]
+    })
+
+    await alert.present()
+  }
 }

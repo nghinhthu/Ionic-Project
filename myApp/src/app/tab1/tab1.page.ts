@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app'
-import { AlertController } from '@ionic/angular'
-import { Router } from '@angular/router'
+import { auth } from 'firebase/app';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { UserService } from '../user.service'
 
 @Component({
   selector: 'app-tab1',
@@ -15,36 +17,58 @@ export class Tab1Page {
   password: string = "";
   cPassword: string = "";
 
+  constructor(
+    public afAuth: AngularFireAuth,
+    public afStore: AngularFirestore,
+    public alert: AlertController,
+    public router: Router,
+    public user: UserService) { }
+
   ngOninit() {
 
+  } 
+
+  async presentAlert(title: string, content: string) {
+    const alert = await this.alert.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    })
   }
 
-  constructor(
-    public afAuth: AngularFireAuth, 
-    public alert: AlertController,
-    public router: Router) {}
-
-  async register(){
-    const { userName, password, cPassword} = this
-    if(this.password !== this.cPassword){
+  async register() {
+    const { userName, password, cPassword } = this
+    if (password !== cPassword) {
       this.showAlert("Error", "Password do not match")
       return console.log("Password do not match")
     }
-    try{
-      const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@abc.com', password)
-      console.log(res)
-      this.showAlert("Success!", "Welcome Aboard!")
-      this.router.navigate(['/tab3'])
+    try {
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@gmail.com', password)
+
+      this.afStore.doc(`users/${res.user.uid}`).set({
+        userName
+      })
+
+      this.user.setUser({
+        userName,
+        uid: res.user.uid
+      })
+
+      this.showAlert('Success!', 'You are registered!')
+      this.router.navigate(['/tabs'])
+      // console.log(res)
+      // this.showAlert("Success!", "Welcome Aboard!")
+      // this.router.navigate(['/tabs'])
     }
-    catch(error){
+    catch (error) {
       console.dir(error)
       this.showAlert("Error", error.message)
     }
   }
 
-  async showAlert(header: string, message: string){
+  async showAlert(header: string, message: string) {
     const alert = await this.alert.create({
-      header, 
+      header,
       message,
       buttons: ["Ok"]
     })

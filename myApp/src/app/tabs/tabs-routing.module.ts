@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: TabsPage,
-    children: [
-      // {
+  // {
+  //   path: '',
+  //   component: TabsPage,
+  //   children: [
+  //     {
   //       path: 'tab1',
   //       children: [
   //         {
@@ -57,9 +57,21 @@ const routes: Routes = [
   //     {path: 'feed', loadChildren: '../feed/feed.module#FeedPageModule'}
   //   ]
   // }
-  {path: 'feed', loadChildren: '../feed/feed.module#FeedPageModule'},
-  {path: 'upload', loadChildren: '../upload/upload.module#UploadPageModule'},
-    ]}
+
+  {
+    path: '',
+    component: TabsPage,
+    children: [
+      {path: 'feed', loadChildren: '../feed/feed.module#FeedPageModule'},
+      {path: 'upload', loadChildren: '../upload/upload.module#UploadPageModule'},
+      {path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule'},
+      {path: 'post/:id', loadChildren: '../post/post.module#PostPageModule'}
+      // {path: 'tab3',
+      //  loadChildren: () => import ('../tab3/tab3.module').then(m => m.Tab3PageModule)},
+    ]
+  }
+
+  //   ]}
 ];
       
 

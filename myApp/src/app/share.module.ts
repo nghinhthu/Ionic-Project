@@ -3,20 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
-import { UploadPageRoutingModule } from './upload-routing.module';
-
-import { UploadPage } from './upload.page';
-import { ShareModule } from '../share.module';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UploadPageRoutingModule,
-    ShareModule
   ],
-  declarations: [UploadPage]
+  declarations: [LoadingComponent],
+  exports: [LoadingComponent]
 })
-export class UploadPageModule {}
+export class ShareModule {}

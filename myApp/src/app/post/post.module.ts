@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { UploadPageRoutingModule } from './upload-routing.module';
+import { PostPageRoutingModule } from './post-routing.module';
 
-import { UploadPage } from './upload.page';
+import { PostPage } from './post.page';
 import { ShareModule } from '../share.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { ShareModule } from '../share.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    UploadPageRoutingModule,
+    PostPageRoutingModule,
     ShareModule
   ],
-  declarations: [UploadPage]
+  declarations: [PostPage]
 })
-export class UploadPageModule {}
+export class PostPageModule {}

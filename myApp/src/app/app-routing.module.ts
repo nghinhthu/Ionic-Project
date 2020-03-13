@@ -35,14 +35,14 @@ const routes: Routes = [
   { path: 'register', loadChildren: './tab1/tab1.module#Tab1PageModule' },
   // { path: 'tab3', loadChildren: './tab3/tab3.module#Tab3PageModule' },
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthService] },
-  {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
-    path: 'post',
-    loadChildren: () => import('./post/post.module').then( m => m.PostPageModule)
-  }
+  // {
+  //   path: 'profile',
+  //   loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  // },
+  // {
+  //   path: 'post',
+  //   loadChildren: () => import('./post/post.module').then( m => m.PostPageModule)
+  // }
 ];
 @NgModule({
   imports: [

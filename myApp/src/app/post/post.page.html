@@ -1,22 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>post</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>post</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-  <app-loading *ngIf="!post"></app-loading>
+    <app-loading *ngIf="!post"></app-loading>
 
-  <ion-card *ngIf="post as postData">
-    <img src="http://ucarecdn.com/{{ postID }}/">
-    <ion-card-content>
-      <p>
-        {{ postData.desc }}
-      </p>
-    </ion-card-content>
-    <ion-item (click)="toggleHeart()">
-      <ion-icon [name]="heartType"></ion-icon>
-    </ion-item>
-  </ion-card>
+    <ion-card *ngIf="post as postData">
+        <img src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
+        <ion-card-content>
+            <p>
+                {{ postData.desc }}
+            </p>
+        </ion-card-content>
+        <ion-item (click)="toggleHeart()">
+            <ion-icon [name]="heartType"></ion-icon>
+        </ion-item>
+    </ion-card>
 </ion-content>

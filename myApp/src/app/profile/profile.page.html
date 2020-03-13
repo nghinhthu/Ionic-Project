@@ -1,27 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>profile</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-   <app-loading *ngIf="!userPosts"></app-loading>
+    <app-loading *ngIf="!posts"></app-loading>
 
-  <div id="images" *ngIf="(userPosts | async)?.posts as posts">
-    <div class="image" *ngFor="let post of posts">
-      <!-- <ion-card (click)="goTo(post)"> -->
-        <!-- <ion-img src="http://ucarecdn.com/{{ post.image }}/-/crop/200x200/center/"> </ion-img> -->
-        <img (click)="goTo(post)" class="main-image" src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/">
-      <!-- </ion-card> -->
-      <!-- <ion-content>
-        <p>
-          {{post.desc}}
-        </p>
-      </ion-content> -->
+    <div id="profile-info" *ngIf="userName">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="4" class="user-image">
+                    <ion-img src="https://ucarecdn.com/{{ profilePic }}/-/scale_crop/200x200/center/"></ion-img>
+                </ion-col>
+                <ion-col size="8">
+                    <p>{{ userName }}</p>
+                    <ion-button shape="round" color="primary" routerLink="/tabs/edit-profile">Edit Profile</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </div>
-  </div>
 
-</ion-content>    
+    <!-- *ngIf="(userPosts | async)?.posts as posts" -->
+    <div id="images" *ngIf="posts">
+        <div class="image" *ngFor="let post of posts">
+            <img (click)="goTo(post)" class="main-image" src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/">
+        </div>
+    </div>
 
-
+</ion-content>

@@ -65,7 +65,8 @@ const routes: Routes = [
       {path: 'feed', loadChildren: '../feed/feed.module#FeedPageModule'},
       {path: 'upload', loadChildren: '../upload/upload.module#UploadPageModule'},
       {path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule'},
-      {path: 'post/:id', loadChildren: '../post/post.module#PostPageModule'}
+      {path: 'post/:id', loadChildren: '../post/post.module#PostPageModule'},
+      {path: 'edit-profile', loadChildren: '../edit-profile/edit-profile.module#EditProfilePageModule'}
       // {path: 'tab3',
       //  loadChildren: () => import ('../tab3/tab3.module').then(m => m.Tab3PageModule)},
     ]

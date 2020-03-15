@@ -20,6 +20,8 @@ export class PostPage implements OnInit {
 
   sub
 
+  userName: string
+
   constructor(
     private route: ActivatedRoute, 
     private afStore: AngularFirestore,
@@ -35,6 +37,7 @@ export class PostPage implements OnInit {
     this.sub = this.postReference.valueChanges().subscribe(val=> {
       this.post = val
       this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-empty'
+      // this.userName = val.author.includes(this.user.getUserName);
     })
   }
 

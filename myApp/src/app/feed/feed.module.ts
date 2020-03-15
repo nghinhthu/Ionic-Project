@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { FeedPageRoutingModule } from './feed-routing.module';
 
 import { FeedPage } from './feed.page';
+// import { UploadPage } from './upload.page';
+import { ShareModule } from '../share.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FeedPageRoutingModule
+    FeedPageRoutingModule,
+    ShareModule
   ],
   declarations: [FeedPage]
 })

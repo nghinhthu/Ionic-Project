@@ -17,7 +17,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { HttpModule } from '@angular/http'
 import { UserService } from './user.service';
 import { AuthService } from './auth.service'
-import { LoadingComponent } from './loading/loading.component'
+import { LoadingComponent } from './loading/loading.component';
 import { ShareModule } from './share.module';
 import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions' 
 
@@ -40,7 +40,7 @@ import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     UserService,
     AuthService,
-    { provide: FunctionsRegionToken, useValue: 'us-central1' }
+    { provide: FunctionsRegionToken, useValue: 'us-central1' },
   ],
   bootstrap: [AppComponent]
 })

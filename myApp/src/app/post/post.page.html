@@ -1,22 +1,50 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>postttt</ion-title>
+        <ion-title>post</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content fullscreen>
 
     <app-loading *ngIf="!post"></app-loading>
 
     <ion-card *ngIf="post as postData">
         <img src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
-        <ion-card-content>
-            <p>
-                {{ postData.desc }} {{ postData.author }}
+        <div class="interactive">
+            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+            <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
+            <ion-icon name="paper-plane-outline" color="dark"></ion-icon>
+            <p style="margin: 0px;margin-left:10px ; font-size: small;">
+                <b>abc</b> đã thích bài viết của bạn
             </p>
-        </ion-card-content>
-        <ion-item (click)="toggleHeart()">
-            <ion-icon [name]="heartType"></ion-icon>
-        </ion-item>
+
+        </div>
+        <ion-card-header style="padding:0 !important; margin: 5px 0px 5px 14px; color: black;">
+            <b>{{ postData.author }}</b>
+            {{ postData.desc }}
+        </ion-card-header>
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">15 tháng 3</ion-label>
+        <ion-footer class="ion-no-border" style="margin-left:10px ; font-size: small;">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="3">
+                        <ion-chip class="ion-margin-start" style="margin: 0px; background: none;">
+                            <ion-avatar>
+                                <img src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
+                            </ion-avatar>
+                            <ion-label><b>{{ postData.author }}</b></ion-label>
+                        </ion-chip>
+
+                            tui là Nghinh Thư Nghinh Thư Nghinh Thư Nghinh Thư
+                       
+                    </ion-col>
+                
+                </ion-row>
+                
+            </ion-grid>
+            
+        </ion-footer>
+
     </ion-card>
+
 </ion-content>

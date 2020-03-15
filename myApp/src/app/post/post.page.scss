@@ -1,0 +1,17 @@
+.interactive{
+    margin: 5px;
+}
+.interactive ion-icon{
+    font-size: 20px;
+    margin: 5px;
+}
+ion-content {
+
+    ion-card {
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+        max-width : 100% !important;
+        margin: 0 !important;
+    }
+}

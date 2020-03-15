@@ -16,11 +16,9 @@ export class PostPage implements OnInit {
 
   postReference: AngularFirestoreDocument
 
-  heartType: string = "heart-empty"
-
+  heartType: string = "heart-outline"
+  heartColor: string = "black"
   sub
-
-  userName: string
 
   constructor(
     private route: ActivatedRoute, 
@@ -36,8 +34,8 @@ export class PostPage implements OnInit {
     
     this.sub = this.postReference.valueChanges().subscribe(val=> {
       this.post = val
-      this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-empty'
-      // this.userName = val.author.includes(this.user.getUserName);
+      this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
+      this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
     })
   }
 
@@ -47,7 +45,7 @@ export class PostPage implements OnInit {
 
   toggleHeart(){
     // this.heartType = this.heartType == "heart" ? "heart-empty" : "heart"
-    if(this.heartType == 'heart-empty'){
+    if(this.heartType == 'heart-outline'){
       this.postReference.update({
         likes: firestore.FieldValue.arrayUnion(this.user.getUID())
       })

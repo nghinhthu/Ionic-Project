@@ -11,22 +11,59 @@
     <div id="profile-info" *ngIf="userName">
         <ion-grid>
             <ion-row>
-                <ion-col size="4" class="user-image">
-                    <ion-img src="https://ucarecdn.com/{{ profilePic }}/-/scale_crop/200x200/center/"></ion-img>
+                <ion-col size="3" class="user-image">
+                    <ion-avatar>
+                        <ion-img src="https://ucarecdn.com/{{ profilePic }}/-/scale_crop/200x200/center/"></ion-img>
+                    </ion-avatar>    
                 </ion-col>
-                <ion-col size="8">
-                    <p>{{ userName }}</p>
-                    <ion-button shape="round" color="primary" routerLink="/tabs/edit-profile">Edit Profile</ion-button>
+                <ion-col size="9" >
+                    <ion-row>
+                        <ion-col size="4">
+                            <ion-label style="text-align: center;">
+                                <b><h3 >1</h3></b>
+                                <h4 style="font-size: 10px;">Bài viết</h4>
+                              </ion-label>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-label style="text-align: center;">
+                                <b><h3>3</h3></b>
+                                <h4 style="font-size: 8px;">Người theo dõi</h4>
+                              </ion-label>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-label style="text-align: center;">
+                                <b><h3>4</h3></b>
+                                <h4 style="font-size: 8px;">Đang theo dõi</h4>
+                              </ion-label>
+                        </ion-col>
+                    </ion-row>
                 </ion-col>
             </ion-row>
+            <ion-label>
+                <h2>{{ userName }}</h2>
+                <p>Listen, I've had a pretty messed up day...</p>
+                <h3>Có <b>levanb, danchoi_1</b> và <b>12 người khác</b> theo dõi</h3>
+              </ion-label>
+            <section class="full-width">
+                <ion-button size="small" expand="full" shape="round" color="light" routerLink="/tabs/edit-profile">Edit Profile</ion-button>
+              </section>
         </ion-grid>
     </div>
 
     <!-- *ngIf="(userPosts | async)?.posts as posts" -->
     <div id="images" *ngIf="posts">
-        <div class="image" *ngFor="let post of posts">
-            <img (click)="goTo(post)" class="main-image" src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/">
-        </div>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="4" *ngFor="let post of posts">
+                    <div class="image">
+                        <img (click)="goTo(post)" class="main-image"
+                            src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/"
+                            style="width: 136px; height: 120px">
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
     </div>
 
 </ion-content>

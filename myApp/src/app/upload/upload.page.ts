@@ -6,8 +6,8 @@ import { UserService } from "../user.service";
 import { firestore } from "firebase/app";
 import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
-import { Camera, CameraOptions, MediaType } from "@ionic-native/camera/ngx";
-import { File } from "@ionic-native/file/ngx";
+// import { Camera, CameraOptions, MediaType } from "@ionic-native/camera/ngx";
+// import { File } from "@ionic-native/file/ngx";
 
 @Component({
   selector: "app-upload",
@@ -15,7 +15,7 @@ import { File } from "@ionic-native/file/ngx";
   styleUrls: ["./upload.page.scss"]
 })
 export class UploadPage implements OnInit {
-  photos: any = [];
+  // photos: any = [];
 
   imageURL: string;
   desc: string;
@@ -36,8 +36,8 @@ export class UploadPage implements OnInit {
   @ViewChild("fileButton", { static: false }) fileButton;
 
   constructor(
-    public camera: Camera,
-    public file: File,
+    // public camera: Camera,
+    // public file: File,
     public http: Http,
     public afStore: AngularFirestore,
     public user: UserService,
@@ -104,19 +104,19 @@ export class UploadPage implements OnInit {
         this.busy = false;
       });
   }
-  takePhoto(){
-    var option: CameraOptions = {
-      quality: 100,
-      mediaType: this.camera.MediaType.PICTURE,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG
-    }
-    this.camera.getPicture().then((imagedata) => {
-      let fileName = imagedata.substring(imagedata.lastIndexOf('/')+1);
-      let path = imagedata.substring(0,imagedata.lastIndexOf('/')+1);
-      this.file.readAsDataURL(path,fileName).then((base64data) => {
-        this.photos.push(base64data)
-      })
-    })
-  }
+  // takePhoto(){
+  //   var option: CameraOptions = {
+  //     quality: 100,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //     destinationType: this.camera.DestinationType.FILE_URI,
+  //     encodingType: this.camera.EncodingType.JPEG
+  //   }
+  //   this.camera.getPicture().then((imagedata) => {
+  //     let fileName = imagedata.substring(imagedata.lastIndexOf('/')+1);
+  //     let path = imagedata.substring(0,imagedata.lastIndexOf('/')+1);
+  //     this.file.readAsDataURL(path,fileName).then((base64data) => {
+  //       this.photos.push(base64data)
+  //     })
+  //   })
+  // }
 }

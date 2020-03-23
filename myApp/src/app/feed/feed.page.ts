@@ -32,8 +32,8 @@ export class FeedPage implements OnInit {
     // private route: ActivatedRoute, 
     // private afStore: AngularFirestore,
     // private user: UserService,
-    // public router: Router,
-    // private afAuth: AngularFireAuth
+    public router: Router,
+    private afAuth: AngularFireAuth
   ) {
     // this.mainuser = afStore.doc(`users/${user.getUID()}`)
 		// this.sub = this.mainuser.valueChanges().subscribe(event => {
@@ -70,16 +70,16 @@ export class FeedPage implements OnInit {
   // goTo(postID: string){
   //   this.router.navigate(['/tabs/post/'+postID])
   // }
-  // logOut(){
-  //   // this.afAuth.getInstance().signOut();
-  //   this.router.navigate(['/login'])
-  //   this.afAuth.auth.signOut().then(function() {
-  //     // this.router.navigate(['/tab1'])
-  //     console.log("log out")
-  //     // Sign-out successful.
-  //   }, function(error) {
-  //     console.log("err")
-  //     // An error happened.
-  //   });
-  // }
+  logOut(){
+    // this.afAuth.getInstance().signOut();
+    this.router.navigate(['/login'])
+    this.afAuth.auth.signOut().then(function() {
+      // this.router.navigate(['/tab1'])
+      console.log("log out")
+      // Sign-out successful.
+    }, function(error) {
+      console.log("err")
+      // An error happened.
+    });
+  }
 }

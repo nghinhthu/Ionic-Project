@@ -21,6 +21,9 @@ import { LoadingComponent } from './loading/loading.component';
 import { ShareModule } from './share.module';
 import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions' 
 
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -38,6 +41,8 @@ import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Camera,
+    File,
     UserService,
     AuthService,
     { provide: FunctionsRegionToken, useValue: 'us-central1' },

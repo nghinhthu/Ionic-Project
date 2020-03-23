@@ -19,23 +19,5 @@
 
 <ion-content padding>
 
-    <!-- <app-loading *ngIf="!post"></app-loading> -->
-
-    <!-- <ion-card *ngIf="post as postData">
-        <img src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
-        <ion-card-content>
-            <p>
-                {{ postData.desc }}
-            </p>
-        </ion-card-content>
-        <ion-item (click)="toggleHeart()">
-            <ion-icon [name]="heartType"></ion-icon>
-        </ion-item>
-    </ion-card> -->
-
-    <!-- <div id="images" *ngIf="posts">
-        <div class="image" *ngFor="let post of posts">
-            <img (click)="goTo(post)" class="main-image" src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/">
-        </div>
-    </div> -->
+    <ion-button expand="block" (click)="logOut()">LogOut</ion-button>
 </ion-content>

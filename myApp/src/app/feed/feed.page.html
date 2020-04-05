@@ -18,6 +18,26 @@
 
 
 <ion-content padding>
+    <app-loading *ngIf="!posts"></app-loading>
+    <!-- <div *ngIf="posts | async as feed"> -->
+    <ion-card *ngFor="let post of post | async">
+        <ion-card-content>
+            <ion-img (click)="goTo(post.postID)" src="https://ucarecdn.com/{{ post.postID }}/-/preview/{{ effect }}"></ion-img>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="12" style="padding:0 ;">
+                        <ion-chip class="ion-margin-start" style="margin: 0px; background: none;">
+                            <ion-avatar>
+                                <img src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
+                            </ion-avatar>
+                            <ion-label><b>{{ post.author }}</b></ion-label>
+                        </ion-chip>
+                    </ion-col>
 
-    <ion-button expand="block" (click)="logOut()">LogOut</ion-button>
+                </ion-row>
+
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+    <!-- </div> -->
 </ion-content>

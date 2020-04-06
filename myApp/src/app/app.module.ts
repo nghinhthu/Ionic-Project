@@ -26,6 +26,9 @@ import { HTTP } from '@ionic-native/http/ngx'
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+// import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +43,7 @@ import { File } from '@ionic-native/file/ngx';
     ShareModule,
     AngularFireFunctionsModule,
     HttpClientModule
+    // Ng2SearchPipeModule
   ],
   providers: [
     StatusBar,
@@ -47,6 +51,7 @@ import { File } from '@ionic-native/file/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
     File,
+    SocialSharing,
     UserService,
     AuthService,
     { provide: FunctionsRegionToken, useValue: 'us-central1' },

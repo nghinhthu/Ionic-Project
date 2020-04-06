@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserService } from '../user.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -7,7 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchPage implements OnInit {
 
-  constructor() { }
+  // term
+  items = [{ name: "archie" }, { name: "jake" }, { name: "richard" }];  
+
+  users: Observable<any[]>; //collection 'users'
+
+  constructor(
+    private user: UserService,
+    private afStore: AngularFirestore,
+    public router: Router
+  ) { 
+    this.users = afStore.collection('users').valueChanges({idField: 'userID'})
+    console.log('USER '+ this.users)
+  }
 
   ngOnInit() {
   }

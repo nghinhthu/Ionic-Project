@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { UserService } from '../user.service';
-import { firestore } from 'firebase/app'
+import { firestore } from 'firebase/app';
+import { File } from "@ionic-native/file/ngx";
+import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 
 @Component({
   selector: 'app-post',
@@ -20,10 +22,15 @@ export class PostPage implements OnInit {
   heartColor: string = "black"
   sub
 
+  text = 'Hom nay dui que'
+  url = 'https://facebook.com/nghinhmatbu'
+
   constructor(
     private route: ActivatedRoute, 
     private afStore: AngularFirestore,
-    private user: UserService
+    private user: UserService,
+    private socialSharing: SocialSharing,
+    private file: File
     ) { }
 
   ngOnInit() {
@@ -56,4 +63,28 @@ export class PostPage implements OnInit {
       })
     }
   }
+
+  async resolveLocalFile(){
+    return this.file.copyFile(`${this.file.applicationDirectory}www/assets/image`, 'logo.png', 
+    this.file.cacheDirectory, `${new Date().getTime()}.jpg`)
+  }
+
+  removeTempFile(name){
+    this.file.removeFile(this.file.cacheDirectory, name)
+  }
+
+  // async shareFacebook(){
+  //   let file = await this.resolveLocalFile
+  //   console.log('FILE '+ this.file)
+  //   this.socialSharing.shareViaFacebook(null, file.nativeURL, this.url).then(() => {
+      
+  //   }).catch(e => {
+
+  //   })
+  // }
+
+  sendShare(message, subject, url) {
+    this.socialSharing.share(message, subject, null, url);
+  }
+
 } 

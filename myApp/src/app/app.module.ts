@@ -19,7 +19,10 @@ import { UserService } from './user.service';
 import { AuthService } from './auth.service'
 import { LoadingComponent } from './loading/loading.component';
 import { ShareModule } from './share.module';
-import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions' 
+import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions';
+// import {  } from '@angular/fire'
+import { HttpClientModule} from '@angular/common/http';
+import { HTTP } from '@ionic-native/http/ngx'
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -35,7 +38,8 @@ import { File } from '@ionic-native/file/ngx';
     AngularFirestoreModule,
     HttpModule,
     ShareModule,
-    AngularFireFunctionsModule
+    AngularFireFunctionsModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
@@ -46,6 +50,7 @@ import { File } from '@ionic-native/file/ngx';
     UserService,
     AuthService,
     { provide: FunctionsRegionToken, useValue: 'us-central1' },
+    HTTP
   ],
   bootstrap: [AppComponent]
 })

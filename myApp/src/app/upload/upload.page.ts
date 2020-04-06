@@ -54,13 +54,14 @@ export class UploadPage implements OnInit {
     const desc = this.desc;
 
     this.afStore.doc(`users/${this.user.getUID()}`).update({
-      posts: firestore.FieldValue.arrayUnion(image) //["image1", "image2"]
+      posts: firestore.FieldValue.arrayUnion(image), //["image1", "image2"]
     });
 
     this.afStore.doc(`posts/${image}`).set({
       desc,
       author: this.user.getUserName(),
-      likes: []
+      likes: [],
+      date: firestore.FieldValue.serverTimestamp()
     });
 
     this.busy = false;

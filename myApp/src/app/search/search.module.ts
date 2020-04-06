@@ -4,20 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ChatPageRoutingModule } from './chat-routing.module';
+import { SearchPageRoutingModule } from './search-routing.module';
 
-import { ChatPage } from './chat.page';
-
-import { AutosizeModule } from 'ngx-autosize'
+import { SearchPage } from './search.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChatPageRoutingModule,
-    AutosizeModule
+    SearchPageRoutingModule
   ],
-  declarations: [ChatPage]
+  declarations: [SearchPage]
 })
-export class ChatPageModule {}
+export class SearchPageModule {}

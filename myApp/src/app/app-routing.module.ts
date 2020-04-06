@@ -34,7 +34,12 @@ const routes: Routes = [
   { path: 'login', loadChildren: './tab2/tab2.module#Tab2PageModule' },
   { path: 'register', loadChildren: './tab1/tab1.module#Tab1PageModule' },
   // { path: 'tab3', loadChildren: './tab3/tab3.module#Tab3PageModule' },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthService] }
+  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthService] },
+  // {
+  //   path: 'search',
+  //   loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
+  // }
+
   // { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
   // {
   //   path: 'chat',

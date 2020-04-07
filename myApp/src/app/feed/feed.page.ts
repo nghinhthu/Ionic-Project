@@ -48,8 +48,8 @@ export class FeedPage implements OnInit {
     private route: ActivatedRoute,
     private user: UserService
   ) {
-    this.posts = afStore.collection('posts').valueChanges({idField: 'postID'})
-    this.post = this.afStore.collection('posts', ref => ref.orderBy('date', 'desc')).valueChanges({idField: 'postID'})
+    this.post = afStore.collection('posts').valueChanges({idField: 'postID'})
+    this.posts = this.afStore.collection('posts', ref => ref.orderBy('date', 'desc')).valueChanges({idField: 'postID'})
     // this.post = this.posts
     console.log('POST '+this.post)
   }

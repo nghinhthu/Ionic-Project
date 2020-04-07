@@ -6,6 +6,10 @@
 
 <ion-content>
 
-    <ion-searchbar animated></ion-searchbar>
-
+    <ion-searchbar animated [(ngModel)]="term"></ion-searchbar>
+    <div *ngFor="let user of users.userID |filter:term">
+        <p>
+            {{user.userName}}
+        </p>
+    </div>
 </ion-content>

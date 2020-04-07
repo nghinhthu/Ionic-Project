@@ -7,7 +7,7 @@ import { firestore } from "firebase/app";
 import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
 // import { Camera, CameraOptions, MediaType } from "@ionic-native/camera/ngx";
-// import { File } from "@ionic-native/file/ngx";
+import { File } from "@ionic-native/file/ngx";
 
 @Component({
   selector: "app-upload",
@@ -18,7 +18,7 @@ export class UploadPage implements OnInit {
   // photos: any = [];
 
   imageURL: string;
-  desc: string;
+  desc: string = " ";
 
   busy: boolean = false;
 

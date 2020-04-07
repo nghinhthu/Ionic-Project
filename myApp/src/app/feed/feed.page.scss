@@ -12,12 +12,44 @@ ion-header img {
     margin: 5px;
 }
 
-ion-content {
-    ion-card {
-        display: flex;
-        flex-direction: column;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-    }
-}
+
+
+hr {
+    height: 2px !important;
+    width: 100% !important;
+    background: #d5d5d5 !important;
+  }
+  ion-avatar{
+    background-image: url('../../assets/image/instagram-bg-color.jpg');
+    background-size: contain;
+    padding: 2px;
+    margin: 5px;
+    height: 35px;
+    width: 35px;
+  }
+  ion-avatar img {
+    border: 2px solid white;
+  }
+  ion-label {
+    font-size: 14px!important;
+    font-weight: 700;
+    color: #1e2023!important;
+    margin-left: 5px;
+  }
+  .post_img {
+    width: 100%;
+  }
+  .flex-button {
+    display: flex;
+    justify-content: space-between;
+  }
+  .flex-button ion-icon {
+    font-size: 26px;
+    margin: 4px;
+    color: #86888f;
+  }
+  
+  .insta-text {
+    font-size: 13px;
+    margin: 0px 6px 4px 6px;
+  }

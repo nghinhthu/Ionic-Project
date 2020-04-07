@@ -65,6 +65,7 @@ const routes: Routes = [
       {path: 'feed', loadChildren: '../feed/feed.module#FeedPageModule'},
       {path: 'upload', loadChildren: '../upload/upload.module#UploadPageModule'},
       {path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule'},
+      {path: 'profile/:id', loadChildren: '../profile/profile.module#ProfilePageModule'},
       {path: 'post/:id', loadChildren: '../post/post.module#PostPageModule'},
       {path: 'edit-profile', loadChildren: '../edit-profile/edit-profile.module#EditProfilePageModule'},
       {path: 'chat', loadChildren: '../chat/chat.module#ChatPageModule'},

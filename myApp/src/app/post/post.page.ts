@@ -83,6 +83,10 @@ export class PostPage implements OnInit {
   //   })
   // }
 
+  share(){
+    
+  }
+
   sendShare(message, subject, url) {
     this.socialSharing.share(message, subject, null, url);
   }

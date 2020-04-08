@@ -10,7 +10,8 @@
     <app-loading *ngIf="!posts"></app-loading>
 
     <ion-item lines="none" *ngIf="userName">
-        <ion-avatar>
+        <ion-avatar style="width: 45px;
+        height: 45px;">
             <ion-img src="https://ucarecdn.com/{{ profilePic }}/-/scale_crop/200x200/center/"></ion-img>
         </ion-avatar>
         <ion-label style="margin: 5px;">
@@ -55,33 +56,19 @@
 
     <ion-segment color="medium">
         <ion-segment-button>
-          <ion-icon name="apps"></ion-icon>
+            <ion-icon name="apps"></ion-icon>
         </ion-segment-button>
         <ion-segment-button>
-          <ion-icon name="person-circle"></ion-icon>
+            <ion-icon name="person-circle"></ion-icon>
         </ion-segment-button>
-      </ion-segment>
-
-      <div class="grid">
-            <div class="img_box"></div>
-            <div class="img_box"></div>
-            <div class="img_box"></div>
-      </div>
-
+    </ion-segment>
+  
     <!-- *ngIf="(userPosts | async)?.posts as posts" -->
-    <!-- <div id="images" *ngIf="posts">
-        <ion-grid>
-            <ion-row>
-                <ion-col size="4" *ngFor="let post of posts">
-                    <div class="image">
-                        <img (click)="goTo(post)" class="main-image"
-                            src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/"
-                            style="width: 136px; height: 120px">
-                    </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-
-    </div> -->
+    <div id="images" *ngIf="posts">
+        <div class="img_box" *ngFor="let post of posts">
+            <img (click)="goTo(post)" class="main-image"
+                src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/">
+        </div>
+    </div>
 
 </ion-content>

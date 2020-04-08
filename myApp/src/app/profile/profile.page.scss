@@ -33,10 +33,7 @@ h1 {
     flex-wrap: wrap;
 }
 .img_box {
-    background-image: url('../../assets/image/13.jpg');
     border: 1px solid white;
     width: 33.3%;
-    padding-bottom: 31%;
-    background-size: cover;
-    background-repeat: no-repeat;
+    float: left;
 }

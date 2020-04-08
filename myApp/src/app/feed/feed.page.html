@@ -21,7 +21,7 @@
     <ion-item no-padding lines="none" >
         <app-loading *ngIf="!posts"></app-loading>
         <ion-avatar slot="start">
-            <img src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
+            <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
         </ion-avatar>
         <ion-label>{{ post.author }}</ion-label>
         <ion-icon slot="end" name="more"></ion-icon>
@@ -41,5 +41,6 @@
         conditor</p>
     </div>
     <br>
+    
 
 </ion-content>

@@ -27,6 +27,11 @@ import { HTTP } from '@ionic-native/http/ngx'
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { Media } from '@ionic-native/media/ngx';
+import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -54,6 +59,12 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     SocialSharing,
     UserService,
     AuthService,
+    ImagePicker,
+    MediaCapture,
+    File,
+    Media,
+    StreamingMedia,
+    PhotoViewer,
     { provide: FunctionsRegionToken, useValue: 'us-central1' },
     HTTP
   ],

@@ -9,6 +9,7 @@ import { UploadPageRoutingModule } from './upload-routing.module';
 import { UploadPage } from './upload.page';
 import { ShareModule } from '../share.module';
 
+
 @NgModule({
   imports: [
     CommonModule,

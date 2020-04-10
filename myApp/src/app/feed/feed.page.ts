@@ -18,7 +18,7 @@ import { Platform, LoadingController } from "@ionic/angular";
 import { finalize } from "rxjs/operators";
 import { from, Observable } from "rxjs";
 import "firebase/firestore";
-import { PostService } from "../post.service";
+// import { PostService } from "../post.service";
 
 @Component({
   selector: "app-feed",
@@ -26,18 +26,22 @@ import { PostService } from "../post.service";
   styleUrls: ["./feed.page.scss"]
 })
 export class FeedPage implements OnInit {
+
   posts: Observable<any[]>; //collection 'posts'
-  postsLike: Observable<any[]>;
+  users: Observable<any[]>; //collection 'users'
+
+  post
 
   postid: string;
   // post
-  postLike;
-  postReference: AngularFirestoreDocument;
 
   heartType: string = "heart-outline";
   heartColor: string = "black";
   sub;
-  subLike;
+
+  userss;
+  joined;
+  joined2;
 
   constructor(
     public router: Router,
@@ -52,8 +56,23 @@ export class FeedPage implements OnInit {
     private user: UserService
   ) // private post: PostService
   {
+    let loadedPosts = {};
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
       .valueChanges({ idField: "postID" });
+    this.post = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
+      .valueChanges({ idField: "postID" });
+    this.users = this.afStore.collection("users")
+      .valueChanges({ idField: "postID" });
+
+      // this.post.get()
+      // .then((docSnaps) => {
+      //   docSnaps.forEach((doc) => {
+      //     loadedPosts[doc.id] = doc.data();
+      //     this.afStore.collection('users').child(doc.data().uid).get().then((userDoc) => {
+      //       loadedPosts[doc.id].userName = userDoc.data().name;
+      //     });
+      //   })
+      // });
   }
 
   getPostID(postID: string) {
@@ -73,118 +92,24 @@ export class FeedPage implements OnInit {
   // 	this.sub.unsubscribe()
   // }
 
-  toggleHeart(postID: string) {
-    // this.heartType = this.heartType == "heart" ? "heart-empty" : "heart"
-    console.log("ahihi " + postID);
-    this.postReference = this.afStore.doc(`posts/${postID}`);
-    this.sub = this.postReference.valueChanges().subscribe(val => {
-      this.postLike = val;
-      // this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
-      // this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
-    });
-    if (this.heartType == "heart-outline") {
-      this.postReference.update({
-        likes: firestore.FieldValue.arrayUnion(this.user.getUID())
-      });
-    } else {
-      this.postReference.update({
-        likes: firestore.FieldValue.arrayRemove(this.user.getUID())
-      });
-    }
-  }
-
   goTo(postID: string) {
     this.router.navigate(["/tabs/post/" + postID]);
   }
 
+  chat() {
+    console.log('chat')
+    this.router.navigate(["/tabs/chat"]);
+  }
+
   logOut() {
-    // this.afAuth.getInstance().signOut();
     this.router.navigate(["/login"]);
     this.afAuth.auth.signOut().then(
       function () {
-        // this.router.navigate(['/tab1'])
         console.log("log out");
-        // Sign-out successful.
       },
       function (error) {
         console.log("err");
-        // An error happened.
       }
     );
   }
-
-  countLiked(postID) {
-    // var uid = this.post.getUID
-
-    // console.log('uidpost '+uid)
-
-    console.log("POSTID " + postID);
-
-    var like = this.postLike.likes.length;
-    if (like == 1) {
-      return like + " Like";
-    } else if (like > 1) {
-      return like + " Likes";
-    }
-  }
-
-  // async getDataa() {
-  //   try {
-  //     const url = 'https://us-central1-ionic-project-e1801.cloudfunctions.net/getFeed';
-  //     const params = {};
-  //     const headers = {};
-
-  //     const response = await this.nativeHTTP.get(url, params, headers);
-
-  //     console.log(response.status);
-  //     console.log(JSON.parse(response.data)); // JSON data returned by server
-  //     console.log(response.headers);
-
-  //   } catch (error) {
-  //     console.error(error.status);
-  //     console.error(error.error); // Error message as string
-  //     console.error(error.headers);
-  //   }
-  // }
-
-  // async getData(){
-  //   let loading = await this.loadingCtrl.create();
-  //   await loading.present();
-
-  //   this.http.get('https://us-central1-ionic-project-e1801.cloudfunctions.net/getFeed').pipe(
-  //     finalize(() => loading.dismiss())
-  //   )
-
-  //   .subscribe(data => {
-  //     this.data =  data ['results'];
-  //     console.log(data)
-  //   },err => {
-  //     console.log('JS Call Error: ', err)
-  //   });
-  // }
-
-  // async getDataNative(){
-  //   let loading = await this.loadingCtrl.create();
-  //   await loading.present();
-
-  //   let nativeCall = this.nativeHTTP.get('https://us-central1-ionic-project-e1801.cloudfunctions.net/getFeed', {}, {
-  //     'Content-Type': 'application/json'
-  //   });
-
-  //   from(nativeCall).pipe(
-  //     finalize(() => loading.dismiss())
-  //   )
-
-  //   .subscribe(data => {
-  //     console.log('nativeDATA: ', data)
-  //     this.data =  JSON.parse(data.data).results;
-  //     // this.data = parsed;
-  //   },err => {
-  //     console.log('JS Call Error: ', err)
-  //   });
-  // }
-
-  // async getDataEveryWhere(){
-  //   this.plt.is('cordova') ? this.getDataNative() : this.getData();
-  // }
 }

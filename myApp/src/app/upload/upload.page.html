@@ -19,6 +19,8 @@
 
         <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline">Upload File
         </ion-button>
+        <ion-button shape="round" color="primary" (click)="takePhoto()" *ngIf="!imageURL" fill="outline">Taking photo
+        </ion-button>
         <!-- Camera -->
         <!-- <ion-button (click)="takePhoto()" expand="full">Camera</ion-button>
         <ion-list *ngFor="let photo of photos">

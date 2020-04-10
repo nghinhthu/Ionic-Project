@@ -64,6 +64,16 @@ export class PostPage implements OnInit {
     }
   }
 
+  countLiked(){
+    var like = this.post.likes.length
+    if(like == 1){
+      return like+' Like'
+    }
+    else if(like > 1){
+      return like+' Likes'
+    }
+  }
+
   async resolveLocalFile(){
     return this.file.copyFile(`${this.file.applicationDirectory}www/assets/image`, 'logo.png', 
     this.file.cacheDirectory, `${new Date().getTime()}.jpg`)
@@ -82,13 +92,15 @@ export class PostPage implements OnInit {
 
   //   })
   // }
+  
 
   share(){
     
   }
+  
 
-  sendShare(message, subject, url) {
-    this.socialSharing.share(message, subject, null, url);
+  sendShare(url) {
+    this.socialSharing.share(null, null, null, url);
   }
 
 } 

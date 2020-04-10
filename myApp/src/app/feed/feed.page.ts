@@ -12,12 +12,13 @@ import { AngularFireAuth } from "@angular/fire/auth";
 
 import { AngularFireFunctions } from "@angular/fire/functions";
 import { HTTP } from "@ionic-native/http/ngx";
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Http, HttpModule } from '@angular/http';
-import { Platform, LoadingController } from '@ionic/angular';
-import { finalize } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
-import 'firebase/firestore';
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { Http, HttpModule } from "@angular/http";
+import { Platform, LoadingController } from "@ionic/angular";
+import { finalize } from "rxjs/operators";
+import { from, Observable } from "rxjs";
+import "firebase/firestore";
+import { PostService } from "../post.service";
 
 @Component({
   selector: "app-feed",
@@ -25,16 +26,18 @@ import 'firebase/firestore';
   styleUrls: ["./feed.page.scss"]
 })
 export class FeedPage implements OnInit {
-
   posts: Observable<any[]>; //collection 'posts'
+  postsLike: Observable<any[]>;
 
   postid: string;
-  post
-  postReference: AngularFirestoreDocument
+  // post
+  postLike;
+  postReference: AngularFirestoreDocument;
 
-  heartType: string = "heart-outline"
-  heartColor: string = "black"
-  sub
+  heartType: string = "heart-outline";
+  heartColor: string = "black";
+  sub;
+  subLike;
 
   constructor(
     public router: Router,
@@ -47,17 +50,16 @@ export class FeedPage implements OnInit {
     private afStore: AngularFirestore,
     private route: ActivatedRoute,
     private user: UserService
-  ) {
-    this.post = afStore.collection('posts').valueChanges({idField: 'postID'})
-    this.posts = this.afStore.collection('posts', ref => ref.orderBy('date', 'desc')).valueChanges({idField: 'postID'})
-    // this.post = this.posts
-    console.log('POST '+this.post)
+  ) // private post: PostService
+  {
+    this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
+      .valueChanges({ idField: "postID" });
   }
 
-  getPostID(postID: string){
-    this.postid = postID
-    console.log('aaaaa '+this.postid)
-    return this.postid
+  getPostID(postID: string) {
+    this.postid = postID;
+    console.log("aaaaa " + this.postid);
+    return this.postid;
   }
 
   ngOnInit() {
@@ -65,52 +67,65 @@ export class FeedPage implements OnInit {
     // getFeed({}).subscribe(data => {
     //   console.log('babababa '+data);
     // });
-    
   }
 
   // ngOnDestroy() {
-	// 	this.sub.unsubscribe()
+  // 	this.sub.unsubscribe()
   // }
-  
-  toggleHeart(postID: string){
+
+  toggleHeart(postID: string) {
     // this.heartType = this.heartType == "heart" ? "heart-empty" : "heart"
-    console.log('ahihi '+postID)
-    this.postReference = this.afStore.doc(`posts/${postID}`)
-    this.sub = this.postReference.valueChanges().subscribe(val=> {
-      this.post = val
-      this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
-      this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
-    })
-    if(this.heartType == 'heart-outline'){
+    console.log("ahihi " + postID);
+    this.postReference = this.afStore.doc(`posts/${postID}`);
+    this.sub = this.postReference.valueChanges().subscribe(val => {
+      this.postLike = val;
+      // this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
+      // this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
+    });
+    if (this.heartType == "heart-outline") {
       this.postReference.update({
         likes: firestore.FieldValue.arrayUnion(this.user.getUID())
-      })
-    }
-    else{
+      });
+    } else {
       this.postReference.update({
         likes: firestore.FieldValue.arrayRemove(this.user.getUID())
-      })
+      });
     }
   }
 
-  goTo(postID: string){
-    this.router.navigate(['/tabs/post/'+postID])
+  goTo(postID: string) {
+    this.router.navigate(["/tabs/post/" + postID]);
   }
 
   logOut() {
     // this.afAuth.getInstance().signOut();
     this.router.navigate(["/login"]);
     this.afAuth.auth.signOut().then(
-      function() {
+      function () {
         // this.router.navigate(['/tab1'])
         console.log("log out");
         // Sign-out successful.
       },
-      function(error) {
+      function (error) {
         console.log("err");
         // An error happened.
       }
     );
+  }
+
+  countLiked(postID) {
+    // var uid = this.post.getUID
+
+    // console.log('uidpost '+uid)
+
+    console.log("POSTID " + postID);
+
+    var like = this.postLike.likes.length;
+    if (like == 1) {
+      return like + " Like";
+    } else if (like > 1) {
+      return like + " Likes";
+    }
   }
 
   // async getDataa() {

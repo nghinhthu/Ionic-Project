@@ -5,7 +5,7 @@ import { auth } from 'firebase/app'
 
 interface user{
     userName: string;
-    uid: string
+    uid: string, 
 }
 
 @Injectable()

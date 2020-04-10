@@ -16,31 +16,31 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-   
-    <div *ngFor="let post of post | async">
-    <ion-item no-padding lines="none" >
-        <app-loading *ngIf="!posts"></app-loading>
-        <ion-avatar slot="start">
-            <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
-        </ion-avatar>
-        <ion-label>{{ post.author }}</ion-label>
-        <ion-icon slot="end" name="more"></ion-icon>
-        
-    </ion-item>
-    <img class="post_img" (click)="goTo(post.postID)" src="http://ucarecdn.com/{{ post.postID }}/-/preview/{{ effect }}">
-    <div class="flex-button">
-        <div>
-            <ion-icon name="heart-outline"></ion-icon>
-            <ion-icon name="chatbubble-outline"></ion-icon>
-            <ion-icon name="paper-plane-outline"></ion-icon>
+
+    <div *ngFor="let post of posts | async">
+        <ion-item no-padding lines="none">
+            <app-loading *ngIf="!posts"></app-loading>
+            <ion-avatar slot="start">
+                <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
+            </ion-avatar>
+            <ion-label>{{ post.author }}</ion-label>
+            <ion-icon slot="end" name="more"></ion-icon>
+
+        </ion-item>
+        <img class="post_img" (click)="goTo(post.postID)" src="http://ucarecdn.com/{{ post.postID }}/-/preview/{{ effect }}">
+        <div class="flex-button">
+            <div>
+                <ion-icon name="heart-outline"></ion-icon>
+                <ion-icon name="chatbubble-outline"></ion-icon>
+                <ion-icon name="paper-plane-outline"></ion-icon>
+            </div>
+            <ion-icon name="bookmark"></ion-icon>
         </div>
-        <ion-icon name="bookmark"></ion-icon>
-    </div>
-    <p class="insta-text"><b>428 Likes</b></p>
-    <p class="insta-text"><b>susan_mda</b> e licet Graecis nominibus appellentur, quae isdem ad arbitrium inposita sunt
-        conditor</p>
+        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p> -->
+        <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy hh:mm' }}</ion-label>
     </div>
     <br>
-    
+
 
 </ion-content>

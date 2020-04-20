@@ -26,7 +26,7 @@ export class Tab1Page {
 
   ngOninit() {
 
-  } 
+  }
 
   async presentAlert(title: string, content: string) {
     const alert = await this.alert.create({
@@ -74,5 +74,44 @@ export class Tab1Page {
     })
 
     await alert.present()
+  }
+
+  resetPassword() {
+    // var actionCodeSettings = {
+    //   url: 'https://www.example.com/?email=' + this.afAuth.auth.currentUser.email,
+    //   iOS: {
+    //     bundleId: 'com.example.ios'
+    //   },
+    //   android: {
+    //     packageName: 'com.example.android',
+    //     installApp: true,
+    //     minimumVersion: '12'
+    //   },
+    //   handleCodeInApp: true,
+    //   // When multiple custom dynamic link domains are defined, specify which
+    //   // one to use.
+    //   dynamicLinkDomain: "example.page.link"
+    // };
+    // var user = this.afAuth.auth.currentUser;
+
+    // user.sendEmailVerification(actionCodeSettings).then(function () {
+    //   // Email sent.
+    // }).catch(function (error) {
+    //   // An error happened.
+    // });
+    if(this.userName != ""){
+      this.afAuth.auth.sendPasswordResetEmail(this.userName+'@gmail.com').then(function (){
+        window.alert('Email has been sent to you. Please check your email and verify !')
+      })
+      .catch(function(err){
+        console.dir(err)
+      // if(err){
+        console.dir(err)
+        this.showAlert("Error", err)
+        // console.log(err.code)
+        window.alert(err)
+      // }
+      })
+    }
   }
 }

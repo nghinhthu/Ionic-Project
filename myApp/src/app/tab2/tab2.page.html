@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Tab Three
+            LogIn
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -26,7 +26,7 @@
                     </div>
                     <div padding>
                         <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="logIn()">Login</ion-button>
-                        <div text-center>
+                        <div text-center (click)="resetPassword()">
                             <a routerLink='/'>
                                 <p style="padding-left: 20px;">Lost password?</p>
                             </a>

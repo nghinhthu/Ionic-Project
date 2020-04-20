@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { first } from 'rxjs/operators'
 import { auth } from 'firebase/app'
+import { AngularFirestore } from '@angular/fire/firestore'
 
-interface user{
+interface user {
     userName: string;
-    uid: string, 
+    uid: string,
+    // profilePic: string
 }
 
 @Injectable()
@@ -14,38 +16,42 @@ export class UserService {
 
     private user: user
 
-    constructor(private afAuth: AngularFireAuth){
+    constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore) {
 
     }
 
-    setUser(user: user){
+    setUser(user: user) {
         this.user = user
     }
 
-    getUserName(): string{
+    getUserName(): string {
         return this.user.userName
     }
 
+    // getProfilePic(): string {
+    //     return this.user.profilePic
+    // }
+
     reAuth(userName: string, password: string) {
-		return this.afAuth.auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(userName + '@gmail.com', password))
-	}
+        return this.afAuth.auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(userName + '@gmail.com', password))
+    }
 
-	updatePassword(newpassword: string) {
-		return this.afAuth.auth.currentUser.updatePassword(newpassword)
-	}
+    updatePassword(newpassword: string) {
+        return this.afAuth.auth.currentUser.updatePassword(newpassword)
+    }
 
-	updateEmail(newemail: string) {
-		return this.afAuth.auth.currentUser.updateEmail(newemail + '@gmail.com')
-	}
+    updateEmail(newemail: string) {
+        return this.afAuth.auth.currentUser.updateEmail(newemail + '@gmail.com')
+    }
 
-    async isAuthenticated(){
-        if(this.user){
+    async isAuthenticated() {
+        if (this.user) {
             return true
         }
 
         const user = await this.afAuth.authState.pipe(first()).toPromise()
 
-        if(user){
+        if (user) {
             this.setUser({
                 userName: user.email.split('@')[0],
                 uid: user.uid
@@ -55,7 +61,7 @@ export class UserService {
         return false
     }
 
-    getUID(): string{
+    getUID(): string {
         // if(!this.user){
         //     if(this.afAuth.auth.currentUser){
         //         const user = this.afAuth.auth.currentUser
@@ -72,4 +78,16 @@ export class UserService {
         // return this.user.uid
         return this.user.uid
     }
+
+    resetPasswordInit(email: string) {
+        return this.afAuth.auth.sendPasswordResetEmail(
+            email,
+            { url: 'https://ionic-project-e1801.firebaseapp.com/__/auth/action' });
+    }
+    
+    resetPassword(email: string) {
+        return this.afAuth.auth.sendPasswordResetEmail(email + '@gmail.com')
+          .then(() => console.log('sent Password Reset Email!'))
+          .catch((error) => console.log(error))
+      }
 }

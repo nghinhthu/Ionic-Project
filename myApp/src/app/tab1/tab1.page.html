@@ -29,8 +29,9 @@
                     </div>
                     <div padding>
                         <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()">Login</ion-button>
-                        <div text-center>
-                            <a routerLink='/'>
+                        <div text-center (click)="resetPassword()">
+                            <a>
+                            <!-- <a routerLink='/'> -->
                                 <p style="padding-left: 20px;">Lost password?</p>
                             </a>
                         </div>

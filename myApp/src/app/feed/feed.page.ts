@@ -56,23 +56,8 @@ export class FeedPage implements OnInit {
     private user: UserService
   ) // private post: PostService
   {
-    let loadedPosts = {};
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
       .valueChanges({ idField: "postID" });
-    this.post = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
-      .valueChanges({ idField: "postID" });
-    this.users = this.afStore.collection("users")
-      .valueChanges({ idField: "postID" });
-
-      // this.post.get()
-      // .then((docSnaps) => {
-      //   docSnaps.forEach((doc) => {
-      //     loadedPosts[doc.id] = doc.data();
-      //     this.afStore.collection('users').child(doc.data().uid).get().then((userDoc) => {
-      //       loadedPosts[doc.id].userName = userDoc.data().name;
-      //     });
-      //   })
-      // });
   }
 
   getPostID(postID: string) {

@@ -16,7 +16,9 @@ export class ProfilePage implements OnInit {
 	sub
 	posts
 	userName: string
-	profilePic: string
+  profilePic: string
+  profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
+  avatar
 
   constructor(
     public afStore: AngularFirestore,
@@ -29,12 +31,23 @@ export class ProfilePage implements OnInit {
 		this.sub = this.mainuser.valueChanges().subscribe(event => {
 			this.posts = event.posts
 			this.userName = event.userName
-			this.profilePic = event.profilePic
-		})
+      this.profilePic = event.profilePic
+      
+    })
   }
 
   ngOnDestroy() {
 		this.sub.unsubscribe()
+  }
+
+  getProfilePic(){
+    if(this.profilePic != ""){
+      this.avatar = this.profilePic
+    }
+    else{
+      this.avatar = this.profilePicDefault
+    }
+    return this.avatar
   }
   
   goTo(postID: string){

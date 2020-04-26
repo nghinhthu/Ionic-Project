@@ -26,9 +26,19 @@
                         <ion-item>
                             <ion-input clearInput name="password" type="password" placeholder="Confirm Password" [(ngModel)]="cPassword" ngModel required></ion-input>
                         </ion-item>
+                          <ion-radio-group>
+                            <ion-item *ngFor="let item of gender">
+                              <ion-label>{{item.text}}</ion-label>
+                              <ion-radio slot="start" checked="item.checked" (ionFocus)="getGender(item.text)"></ion-radio>
+                            </ion-item>
+                            <!-- <ion-item>
+                                <ion-label>Female</ion-label>
+                                <ion-radio name="gender" value="Female" slot="start" (ionSelect)="mcqAnswer(value)"></ion-radio>
+                              </ion-item> -->
+                          </ion-radio-group>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()">Login</ion-button>
+                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()">Register</ion-button>
                         <div text-center (click)="resetPassword()">
                             <a>
                             <!-- <a routerLink='/'> -->

@@ -12,7 +12,7 @@
     <ion-item lines="none" *ngIf="userName">
         <ion-avatar style="width: 45px;
         height: 45px;">
-            <ion-img src="https://ucarecdn.com/{{ profilePic }}/-/scale_crop/200x200/center/"></ion-img>
+            <ion-img src="https://ucarecdn.com/{{ getProfilePic() }}/-/scale_crop/200x200/center/"></ion-img>
         </ion-avatar>
         <ion-label style="margin: 5px;">
             <div class="info_box">
@@ -37,7 +37,7 @@
         </ion-button>
     </section>
 
-    <ion-button class="text_button" shape="round" size="small">message</ion-button>
+    <ion-button class="text_button" shape="round" size="small" (click)="getProfilePic()">message</ion-button>
     <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
         <ion-icon color="dark" slot="icon-only" name="person-circle"></ion-icon>
         <ion-icon color="dark" slot="icon-only" name="checkmark"></ion-icon>

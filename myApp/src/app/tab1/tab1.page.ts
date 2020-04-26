@@ -16,6 +16,12 @@ export class Tab1Page {
   userName: string = "";
   password: string = "";
   cPassword: string = "";
+  gender = [
+    { text: 'Male', disabled: false, checked: true},
+    { text: 'Female', disabled: false, checked: false}
+  ]
+  genderChoose : string = ""
+  profilePicDefault : string = "fcf0068f-da61-49a8-a814-95869c68c87c"
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -24,8 +30,15 @@ export class Tab1Page {
     public router: Router,
     public user: UserService) { }
 
+
   ngOninit() {
 
+  }
+
+  getGender(genderID){
+    console.log('gender '+genderID)
+    this.genderChoose = genderID
+    return this.genderChoose
   }
 
   async presentAlert(title: string, content: string) {
@@ -37,21 +50,25 @@ export class Tab1Page {
   }
 
   async register() {
-    const { userName, password, cPassword } = this
+    const { userName, password, cPassword, gender } = this
     if (password !== cPassword) {
       this.showAlert("Error", "Password do not match")
       return console.log("Password do not match")
     }
     try {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@gmail.com', password)
+      const gender = this.genderChoose
+      const profilePicDefault = this.profilePicDefault
 
       this.afStore.doc(`users/${res.user.uid}`).set({
-        userName
+        userName,
+        gender
       })
 
       this.user.setUser({
         userName,
         uid: res.user.uid
+        // gender: this.gender.val
       })
 
       this.showAlert('Success!', 'You are registered!')
@@ -77,41 +94,19 @@ export class Tab1Page {
   }
 
   resetPassword() {
-    // var actionCodeSettings = {
-    //   url: 'https://www.example.com/?email=' + this.afAuth.auth.currentUser.email,
-    //   iOS: {
-    //     bundleId: 'com.example.ios'
-    //   },
-    //   android: {
-    //     packageName: 'com.example.android',
-    //     installApp: true,
-    //     minimumVersion: '12'
-    //   },
-    //   handleCodeInApp: true,
-    //   // When multiple custom dynamic link domains are defined, specify which
-    //   // one to use.
-    //   dynamicLinkDomain: "example.page.link"
-    // };
-    // var user = this.afAuth.auth.currentUser;
-
-    // user.sendEmailVerification(actionCodeSettings).then(function () {
-    //   // Email sent.
-    // }).catch(function (error) {
-    //   // An error happened.
-    // });
-    if(this.userName != ""){
-      this.afAuth.auth.sendPasswordResetEmail(this.userName+'@gmail.com').then(function (){
+    if (this.userName != "") {
+      this.afAuth.auth.sendPasswordResetEmail(this.userName + '@gmail.com').then(function () {
         window.alert('Email has been sent to you. Please check your email and verify !')
       })
-      .catch(function(err){
-        console.dir(err)
-      // if(err){
-        console.dir(err)
-        this.showAlert("Error", err)
-        // console.log(err.code)
-        window.alert(err)
-      // }
-      })
+        .catch(function (err) {
+          console.dir(err)
+          // if(err){
+          console.dir(err)
+          this.showAlert("Error", err)
+          // console.log(err.code)
+          window.alert(err)
+          // }
+        })
     }
   }
 }

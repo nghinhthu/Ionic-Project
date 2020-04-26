@@ -220,21 +220,19 @@ export class UploadPage implements OnInit {
 
     const image = this.imageURL;
     const desc = this.desc;
-    var profilePic
 
     this.afStore.doc(`users/${this.user.getUID()}`).update({
       posts: firestore.FieldValue.arrayUnion(image), //["image1", "image2"]
     });
 
-    profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
-    console.log(profilePic + 'profilePic')
+    // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
+    // console.log(profilePic + 'profilePic')
 
     this.afStore.doc(`posts/${image}`).set({
       desc,
       author: this.user.getUserName(),
       likes: [],
       date: firestore.FieldValue.serverTimestamp(),
-      profilePic
       // data = new firestore.FieldValue.serverTimestamp()
     });
 

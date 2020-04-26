@@ -7,6 +7,8 @@ import { AngularFirestore } from '@angular/fire/firestore'
 interface user {
     userName: string;
     uid: string,
+
+    // gender: string
     // profilePic: string
 }
 
@@ -30,6 +32,10 @@ export class UserService {
 
     // getProfilePic(): string {
     //     return this.user.profilePic
+    // }
+
+    // getGender(): string {
+
     // }
 
     reAuth(userName: string, password: string) {

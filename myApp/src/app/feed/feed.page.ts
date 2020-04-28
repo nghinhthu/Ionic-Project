@@ -30,6 +30,9 @@ export class FeedPage implements OnInit {
   posts: Observable<any[]>; //collection 'posts'
   users: Observable<any[]>; //collection 'users'
 
+  username
+  author
+
   post
 
   postid: string;
@@ -39,9 +42,7 @@ export class FeedPage implements OnInit {
   heartColor: string = "black";
   sub;
 
-  userss;
-  joined;
-  joined2;
+  comments
 
   constructor(
     public router: Router,
@@ -71,6 +72,7 @@ export class FeedPage implements OnInit {
     // getFeed({}).subscribe(data => {
     //   console.log('babababa '+data);
     // });
+
   }
 
   // ngOnDestroy() {

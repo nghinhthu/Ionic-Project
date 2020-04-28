@@ -20,7 +20,7 @@ export class Tab1Page {
     { text: 'Male', disabled: false, checked: true},
     { text: 'Female', disabled: false, checked: false}
   ]
-  genderChoose : string = ""
+  genderChoose : string = "Male"
   profilePicDefault : string = "fcf0068f-da61-49a8-a814-95869c68c87c"
 
   constructor(

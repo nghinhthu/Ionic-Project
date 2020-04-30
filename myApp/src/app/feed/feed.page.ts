@@ -14,10 +14,11 @@ import { AngularFireFunctions } from "@angular/fire/functions";
 import { HTTP } from "@ionic-native/http/ngx";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { Http, HttpModule } from "@angular/http";
-import { Platform, LoadingController } from "@ionic/angular";
+import { Platform, LoadingController, AlertController } from "@ionic/angular";
 import { finalize } from "rxjs/operators";
 import { from, Observable } from "rxjs";
 import "firebase/firestore";
+import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
 // import { PostService } from "../post.service";
 
 @Component({
@@ -43,6 +44,7 @@ export class FeedPage implements OnInit {
   sub;
 
   comments
+  scheduled = []
 
   constructor(
     public router: Router,
@@ -54,11 +56,74 @@ export class FeedPage implements OnInit {
     private loadingCtrl: LoadingController,
     private afStore: AngularFirestore,
     private route: ActivatedRoute,
-    private user: UserService
+    private user: UserService,
+    private localNotifications: LocalNotifications,
+    private alertCtrl: AlertController
   ) // private post: PostService
   {
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
       .valueChanges({ idField: "postID" });
+    this.plt.ready().then(() => {
+      this.localNotifications.on('click').subscribe(res => {
+        console.log('click: ', res)
+        let msg = res.data ? res.data.mydata: '';
+        this.showAlert(res.title, res.text, msg)
+      });
+
+      this.localNotifications.on('trigger').subscribe(res => {
+        console.log('trigger: ', res)
+        let msg = res.data ? res.data.mydata: '';
+        this.showAlert(res.title, res.text, msg)
+      });
+    })
+  }
+
+  schedule(){
+    this.localNotifications.schedule({
+      id: 1,
+      title: 'Attention',
+      text: 'Chichay Notifications',
+      data: { mydata: 'My hidden message this is'},
+      trigger: { in: 5, unit: ELocalNotificationTriggerUnit.SECOND},
+      // foreground: true
+    })
+  }
+
+  recurring(){
+    this.localNotifications.schedule({
+      id: 22,
+      title: 'Recurring',
+      text: 'Chichay Recurring Notifications',
+      data: { mydata: 'My hidden message this is'},
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE},
+      // foreground: true
+    })
+  }
+
+  repeating(){
+    this.localNotifications.schedule({
+      id: 42,
+      title: 'Good morning',
+      text: 'Code something epic today',
+      data: { mydata: 'My hidden message this is'},
+      trigger: { every: {hour: 11, minute: 49}},
+      // foreground: true
+    })
+  }
+
+  getAll(){
+    this.localNotifications.getAll().then(res => {
+      this.scheduled = res;
+    })
+  }
+
+  showAlert(header, sub, msg){
+    this.alertCtrl.create({
+      header: header,
+      subHeader: sub, 
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present)
   }
 
   getPostID(postID: string) {

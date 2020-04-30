@@ -17,6 +17,20 @@
 </ion-header>
 <ion-content>
 
+    <ion-button expand="block" (click)="schedule()" color="dark">Schedule</ion-button>
+    <ion-button expand="block" (click)="recurring()" color="dark">Every Minute</ion-button>
+    <ion-button expand="block" (click)="repeating()" color="dark">Daily</ion-button>
+    <ion-button expand="block" (click)="getAll()" color="dark">Get All</ion-button>
+
+    <ion-list>
+        <ion-item *ngFor="let n of scheduled">
+            <!-- <ion-labe text-wrap> -->
+                {{ n.id }} - {{ n.title }}
+                <p>Trigger: {{ n.trigger | json }}</p>
+            <!-- </ion-label> -->
+        </ion-item>
+    </ion-list>
+
     <div *ngFor="let post of posts | async">
         <ion-item no-padding lines="none">
             <app-loading *ngIf="!posts"></app-loading>

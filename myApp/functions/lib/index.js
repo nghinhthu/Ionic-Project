@@ -28,3 +28,29 @@ exports.getFeed = functions.https.onCall(async(req, res) => {
 //     });
 // });
 //# sourceMappingURL=index.js.map
+// exports.subscribeToTopic = functions.https.onCall( async (data, context) => {
+//     await admin.messaging().subscribeToTopic(data, token, data.topic)
+//     return `subscribed to ${data.topic}`
+// }
+// );
+// exports.subscribeFromTopic = functions.https.onCall( async (data, context) => {
+//     await admin.messaging().subscribeFromTopic(data, token, data.topic)
+//     return `subscribed to ${data.topic}`
+// }
+// );
+// exports.sendOnFirestoreCreate = functions.firestore
+//     .document('discounts/{discountID}')
+//     .onCreate(async snapshot => {
+//         const discount = snapshot.data()
+
+//         const notification: admin.messaging.Notification = {
+//             title: 'New Discount Available'
+//             body: discount.headline
+//         }
+
+//         const payload: admin.messaging.Message = {
+//             notification
+//         }
+
+//         return admin.messaging().send(payload)
+//     })

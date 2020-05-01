@@ -19,15 +19,6 @@
 
         <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline">Upload File
         </ion-button>
-        <ion-button shape="round" color="primary" (click)="takePhoto()" *ngIf="!imageURL" fill="outline">Taking photo
-        </ion-button>
-        <!-- Camera -->
-        <!-- <ion-button (click)="takePhoto()" expand="full">Camera</ion-button>
-        <ion-list *ngFor="let photo of photos">
-            <ion-item>
-                <img src={{photo}} style="width: 200px; height: 150px">
-            </ion-item>
-        </ion-list> -->
 
         <div *ngIf="imageURL">
 
@@ -41,24 +32,6 @@
                         </ion-card-content>
                     </ion-col>
                 </ion-row>
-
-                <!-- <ion-row>
-                    <ion-col (click)="setSelected('effect1')">
-                        <ion-img src="https://ucarecdn.com/{{ imageURL }}/{{ scaleCrop }}/"></ion-img>
-                    </ion-col>
-                    <ion-col (click)="setSelected('effect2')">
-                        <ion-img src="https://ucarecdn.com/{{ imageURL }}/{{ scaleCrop }}/{{ effects.effect2 }}"></ion-img>
-                    </ion-col>
-                    <ion-col (click)="setSelected('effect3')">
-                        <ion-img src="https://ucarecdn.com/{{ imageURL }}/{{ scaleCrop }}/{{ effects.effect3 }}"></ion-img>
-                    </ion-col>
-                    <ion-col (click)="setSelected('effect4')">
-                        <ion-img src="https://ucarecdn.com/{{ imageURL }}/{{ scaleCrop }}/{{ effects.effect4 }}"></ion-img>
-                    </ion-col>
-                    <ion-col (click)="setSelected('effect5')">
-                        <ion-img src="https://ucarecdn.com/{{ imageURL }}/{{ scaleCrop }}/{{ effects.effect5 }}"></ion-img>
-                    </ion-col>
-                </ion-row> -->
 
                 <ion-row>
                     <ion-col [class.active]="activeEffect==effects.effect1" (click)="setSelected('effect1')">
@@ -93,25 +66,33 @@
 
 
     <!-- Newwwwww -->
-    <!-- <ion-list>
+    <ion-list>
         <ion-item-sliding *ngFor="let f of files">
-            <ion-item (click)="openFile(f)">
-                <ion-icon name="image" slot="start" *ngIf="f.name.endsWith('jpg')"></ion-icon>
-                <ion-icon name="videocam" slot="start" *ngIf="f.name.endsWith('MOV') || f.name.endsWith('mp4')"></ion-icon>
-                <ion-icon name="mic" slot="start" *ngIf="f.name.endsWith('wav')"></ion-icon>
-
-                <ion-label class="ion-text-wrap">
-                    {{ f.name }}
-                    <p>{{ f.fullPath }}</p>
-                </ion-label>
-            </ion-item>
-
-            <ion-item-options side="start">
-                <ion-item-option (click)="deleteFile(f)" color="danger">
-                    <ion-icon name="trash" slot="icon-only"></ion-icon>
-                </ion-item-option>
-            </ion-item-options>
-
+          <ion-item (click)="openFile(f)">
+            <ion-icon name="image" slot="start" *ngIf="f.name.endsWith('jpg')"></ion-icon>
+            <ion-icon name="videocam" slot="start" *ngIf="f.name.endsWith('MOV') || f.name.endsWith('mp4')"></ion-icon>
+            <ion-icon name="mic" slot="start" *ngIf="f.name.endsWith('wav')"></ion-icon>
+     
+            <ion-label class="ion-text-wrap">
+              {{ f.name }}
+              <p>{{ f.fullPath }}</p>
+            </ion-label>
+          </ion-item>
+     
+          <ion-item-options side="start">
+            <ion-item-option (click)="deleteFile(f)" color="danger">
+              <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+     
         </ion-item-sliding>
-    </ion-list> -->
+      </ion-list>
 </ion-content>
+<ion-footer>
+    <ion-toolbar color="primary">
+      <ion-button fill="clear" expand="full" color="light" (click)="selectMedia()">
+        <ion-icon slot="start" name="document"></ion-icon>
+        Select Media
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>

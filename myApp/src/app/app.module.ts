@@ -34,6 +34,7 @@ import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { FCM } from '@ionic-native/fcm/ngx'
 
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -69,7 +70,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
     PhotoViewer,
     { provide: FunctionsRegionToken, useValue: 'us-central1' },
     HTTP,
-    LocalNotifications
+    LocalNotifications,
+    FCM
   ],
   bootstrap: [AppComponent]
 })

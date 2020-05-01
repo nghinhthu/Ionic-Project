@@ -69,17 +69,17 @@ export class UploadPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.plt.ready().then(() => {
-    //   let path = this.file.dataDirectory;
-    //   this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
-    //     () => {
-    //       this.loadFiles();
-    //     },
-    //     err => {
-    //       this.file.createDir(path, MEDIA_FOLDER_NAME, false);
-    //     }
-    //   );
-    // });
+    this.plt.ready().then(() => {
+      let path = this.file.dataDirectory;
+      this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
+        () => {
+          this.loadFiles();
+        },
+        err => {  
+          this.file.createDir(path, MEDIA_FOLDER_NAME, false);
+        }
+      );
+    });
   }
   loadFiles() {
     this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
@@ -276,20 +276,5 @@ export class UploadPage implements OnInit {
         this.imageURL = event.json().file;
         this.busy = false;
       });
-  }
-  takePhoto(){
-    var option: CameraOptions = {
-      quality: 100,
-      mediaType: this.camera.MediaType.PICTURE,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG
-    }
-    this.camera.getPicture().then((imagedata) => {
-      let fileName = imagedata.substring(imagedata.lastIndexOf('/')+1);
-      let path = imagedata.substring(0,imagedata.lastIndexOf('/')+1);
-      this.file.readAsDataURL(path,fileName).then((base64data) => {
-        this.photos.push(base64data)
-      })
-    })
   }
 }

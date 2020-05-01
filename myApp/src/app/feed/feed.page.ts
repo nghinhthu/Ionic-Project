@@ -20,6 +20,7 @@ import { from, Observable } from "rxjs";
 import "firebase/firestore";
 import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
 // import { PostService } from "../post.service";
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: "app-feed",
@@ -45,6 +46,7 @@ export class FeedPage implements OnInit {
 
   comments
   scheduled = []
+  pushes: any = [];
 
   constructor(
     public router: Router,
@@ -58,7 +60,8 @@ export class FeedPage implements OnInit {
     private route: ActivatedRoute,
     private user: UserService,
     private localNotifications: LocalNotifications,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private fcm: FCM
   ) // private post: PostService
   {
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
@@ -76,6 +79,35 @@ export class FeedPage implements OnInit {
         this.showAlert(res.title, res.text, msg)
       });
     })
+// fcm
+    this.plt.ready()
+      .then(() => {
+        this.fcm.onNotification().subscribe(data => {
+          if (data.wasTapped) {
+            console.log("Received in background");
+          } else {
+            console.log("Received in foreground");
+          };
+        });
+
+        this.fcm.onTokenRefresh().subscribe(token => {
+          // Register your new token in your back-end if you want
+          // backend.registerToken(token);
+        });
+      })
+  }
+
+  subscribeToTopic() {
+    this.fcm.subscribeToTopic('enappd');
+  }
+  getToken() {
+    this.fcm.getToken().then(token => {
+      // Register your new token in your back-end if you want
+      // backend.registerToken(token);
+    });
+  }
+  unsubscribeFromTopic() {
+    this.fcm.unsubscribeFromTopic('enappd');
   }
 
   schedule(){

@@ -10,27 +10,14 @@
         </ion-title>
         <ion-buttons slot="end" color="dark">
             <ion-button (click)="chat()" color="dark">
-                <ion-icon slot="icon-only" name="send"></ion-icon>
+                <ion-icon slot="icon-only" name="send-outline" ></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
 
-    <ion-button expand="block" (click)="schedule()" color="dark">Schedule</ion-button>
-    <!-- <ion-button expand="block" (click)="recurring()" color="dark">Every Minute</ion-button> -->
-    <ion-button expand="block" (click)="repeating()" color="dark">Daily</ion-button>
-    <ion-button expand="block" (click)="getAll()" color="dark">Get All</ion-button>
-
-    <ion-list>
-        <ion-item *ngFor="let n of scheduled">
-            <!-- <ion-labe text-wrap> -->
-                {{ n.id }} - {{ n.title }}
-                <p>Trigger: {{ n.trigger | json }}</p>
-            <!-- </ion-label> -->
-        </ion-item>
-    </ion-list>
-
+    <!--
     <div *ngFor="let post of posts | async">
         <ion-item no-padding lines="none">
             <app-loading *ngIf="!posts"></app-loading>
@@ -52,7 +39,7 @@
         </div>
         <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p> -->
         <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
-        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
     </div>
     <br>
 

@@ -9,7 +9,7 @@
     <app-loading *ngIf="!post"></app-loading>
 
     <ion-card *ngIf="post as postData">
-        <img (dblclick)="toggleHeart()" src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}">
+        <img (dblclick)="toggleHeart()" src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}" alt="insta-post" class="insta-post" />
         <div class="interactive">
             <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
             <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
@@ -46,7 +46,6 @@
             padding: 0px;">{{ postData.desc }}</p>
         </ion-label>
     </ion-card>
-
 </ion-content>
 
 <!-- <ion-header>

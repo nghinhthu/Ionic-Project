@@ -10,13 +10,12 @@
         </ion-title>
         <ion-buttons slot="end" color="dark">
             <ion-button (click)="chat()" color="dark">
-                <ion-icon slot="icon-only" name="send"></ion-icon>
+                <ion-icon slot="icon-only" name="send-outline" ></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-
     <div *ngFor="let post of posts | async">
         <ion-item no-padding lines="none">
             <app-loading *ngIf="!posts"></app-loading>
@@ -38,7 +37,7 @@
         </div>
         <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p> -->
         <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
-        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
     </div>
     <br>
 

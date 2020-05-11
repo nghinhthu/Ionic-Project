@@ -12,7 +12,7 @@ import { SocialSharing } from "@ionic-native/social-sharing/ngx";
   styleUrls: ['./post.page.scss'],
 })
 export class PostPage implements OnInit {
-
+//like
   postID: string
   post
 
@@ -83,6 +83,8 @@ export class PostPage implements OnInit {
     this.file.removeFile(this.file.cacheDirectory, name)
   }
 
+
+
   // async shareFacebook(){
   //   let file = await this.resolveLocalFile
   //   console.log('FILE '+ this.file)
@@ -102,5 +104,9 @@ export class PostPage implements OnInit {
   sendShare(url) {
     this.socialSharing.share(null, null, null, url);
   }
+
+
+
+
 
 } 

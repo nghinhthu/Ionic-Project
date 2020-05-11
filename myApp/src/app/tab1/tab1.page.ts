@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../user.service'
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -29,7 +30,6 @@ export class Tab1Page {
     public alert: AlertController,
     public router: Router,
     public user: UserService) { }
-
 
   ngOninit() {
 

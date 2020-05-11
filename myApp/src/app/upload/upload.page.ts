@@ -4,7 +4,7 @@ import { database } from "firebase/app";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { UserService } from "../user.service";
 import { firestore } from "firebase/app";
-import { AlertController } from "@ionic/angular";
+import { AlertController, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { Camera, CameraOptions, MediaType } from "@ionic-native/camera/ngx";
 import { File, FileEntry } from "@ionic-native/file/ngx";
@@ -19,6 +19,7 @@ import {
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+// import { AngularFireStorage } from '@angular/fire/storage';
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -31,6 +32,7 @@ export class UploadPage implements OnInit {
 
   photos: any = [];
   files = [];
+  uploadProgress = 0;
 
   imageURL: string;
   desc: string = " ";
@@ -65,7 +67,9 @@ export class UploadPage implements OnInit {
     private streamingMedia: StreamingMedia,
     private photoViewer: PhotoViewer,
     private actionSheetController: ActionSheetController,
-    private plt: Platform
+    private plt: Platform,
+    private toastCtrl: ToastController,
+    // private storage: AngularFireStorage
   ) {}
 
   ngOnInit() {
@@ -214,6 +218,41 @@ export class UploadPage implements OnInit {
       this.loadFiles();
     }, err => console.log('error remove: ', err));
   }
+
+  // async uploadFile(f: FileEntry) {
+  //   const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
+  //   const type = this.getMimeType(f.name.split('.').pop());
+  //   const buffer = await this.file.readAsArrayBuffer(path, f.name);
+  //   const fileBlob = new Blob([buffer], type);
+ 
+  //   const randomId = Math.random()
+  //     .toString(36)
+  //     .substring(2, 8);
+ 
+  //   const uploadTask = this.storage.upload(
+  //     `files/${new Date().getTime()}_${randomId}`,
+  //     fileBlob
+  //   );
+ 
+  //   uploadTask.percentageChanges().subscribe(change => {
+  //     this.uploadProgress = change;
+  //   });
+ 
+  //   uploadTask.then(async res => {
+  //     const toast = await this.toastCtrl.create({
+  //       duration: 3000,
+  //       message: 'File upload finished!'
+  //     });
+  //     toast.present();
+  //   });
+  // }
+ 
+  // getMimeType(fileExt) {
+  //   if (fileExt == 'wav') return { type: 'audio/wav' };
+  //   else if (fileExt == 'jpg') return { type: 'image/jpg' };
+  //   else if (fileExt == 'mp4') return { type: 'video/mp4' };
+  //   else if (fileExt == 'MOV') return { type: 'video/quicktime' };
+  // }
 
   async createPost() {
     this.busy = true;

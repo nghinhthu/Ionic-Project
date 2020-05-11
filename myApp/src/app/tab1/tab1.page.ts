@@ -57,6 +57,11 @@ export class Tab1Page {
     }
     try {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@gmail.com', password)
+      const auth = await this.afAuth.auth.currentUser.sendEmailVerification().then(function() {
+        // Email sent.
+      }).catch(function(error) {
+        // An error happened.
+      });
       const gender = this.genderChoose
       const profilePicDefault = this.profilePicDefault
 
@@ -91,7 +96,13 @@ export class Tab1Page {
     })
 
     await alert.present()
-  }
+  } 
+
+  // authenticateEmail(){
+  //   if (this.userName != ""){
+  //     this.afAuth.auth.isSignInWithEmailLink(emailLink)
+  //   }
+  // }
 
   resetPassword() {
     if (this.userName != "") {

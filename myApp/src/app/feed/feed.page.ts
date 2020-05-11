@@ -185,9 +185,9 @@ export class FeedPage implements OnInit {
     this.router.navigate(["/tabs/chat"]);
   }
 
-  logOut() {
+  async logOut() {
     this.router.navigate(["/login"]);
-    this.afAuth.auth.signOut().then(
+    await this.afAuth.auth.signOut().then(
       function () {
         console.log("log out");
       },

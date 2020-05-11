@@ -36,6 +36,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { FCM } from '@ionic-native/fcm/ngx'
 
+// import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
@@ -72,6 +74,7 @@ import { FCM } from '@ionic-native/fcm/ngx'
     HTTP,
     LocalNotifications,
     FCM
+    // InAppBrowser
   ],
   bootstrap: [AppComponent]
 })

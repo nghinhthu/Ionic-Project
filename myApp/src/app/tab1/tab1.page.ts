@@ -17,6 +17,8 @@ export class Tab1Page {
   userName: string = "";
   password: string = "";
   cPassword: string = "";
+  displayName: string = "";
+  account
   gender = [
     { text: 'Male', disabled: false, checked: true},
     { text: 'Female', disabled: false, checked: false}
@@ -49,8 +51,8 @@ export class Tab1Page {
     })
   }
 
-  async register() {
-    const { userName, password, cPassword, gender } = this
+  async registerWithAdmin() {
+    const { userName, password, cPassword, gender, displayName } = this
     if (password !== cPassword) {
       this.showAlert("Error", "Password do not match")
       return console.log("Password do not match")
@@ -67,12 +69,14 @@ export class Tab1Page {
 
       this.afStore.doc(`users/${res.user.uid}`).set({
         userName,
-        gender
+        gender,
+        displayName
       })
 
       this.user.setUser({
         userName,
-        uid: res.user.uid
+        uid: res.user.uid,
+        displayName: res.user.displayName
         // gender: this.gender.val
       })
 

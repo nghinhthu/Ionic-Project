@@ -12,10 +12,12 @@ import { AppComponent } from './app.component';
 import firebaseConfig from './firebase'
 import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
-import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore'
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { HttpModule } from '@angular/http'
 import { UserService } from './user.service';
+import { PostService } from './post.service';
 import { AuthService } from './auth.service'
 import { LoadingComponent } from './loading/loading.component';
 import { ShareModule } from './share.module';
@@ -36,7 +38,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { FCM } from '@ionic-native/fcm/ngx'
 
-// import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -52,8 +54,10 @@ import { FCM } from '@ionic-native/fcm/ngx'
     HttpModule,
     ShareModule,
     AngularFireFunctionsModule,
-    HttpClientModule
+    HttpClientModule,
     // Ng2SearchPipeModule
+    // AngularFirestore
+    AngularFireStorageModule
   ],
   providers: [
     StatusBar,
@@ -63,6 +67,7 @@ import { FCM } from '@ionic-native/fcm/ngx'
     File,
     SocialSharing,
     UserService,
+    PostService,
     AuthService,
     ImagePicker,
     MediaCapture,
@@ -73,8 +78,9 @@ import { FCM } from '@ionic-native/fcm/ngx'
     { provide: FunctionsRegionToken, useValue: 'us-central1' },
     HTTP,
     LocalNotifications,
-    FCM
-    // InAppBrowser
+    FCM,
+    InAppBrowser,
+    AngularFirestore
   ],
   bootstrap: [AppComponent]
 })

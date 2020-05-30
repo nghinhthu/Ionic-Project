@@ -17,7 +17,7 @@
   <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline">UPLOAD FILE</ion-button> -->
         <input type="file" *ngIf="!imageURL" (change)="fileChanged($event)" class="filebtn" #fileButton />
 
-        <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline">Upload File
+        <ion-button shape="round" color="primary" (click)="uploadFileOld()" *ngIf="!imageURL" fill="outline">Upload File
         </ion-button>
 
         <div *ngIf="imageURL">
@@ -66,6 +66,7 @@
 
 
     <!-- Newwwwww -->
+    <ion-progress-bar [value]="uploadProgress" color="success"></ion-progress-bar>
     <ion-list>
         <ion-item-sliding *ngFor="let f of files">
           <ion-item (click)="openFile(f)">
@@ -79,20 +80,47 @@
             </ion-label>
           </ion-item>
      
+          <!-- <ion-item-options side="start">
+            <ion-item-option (click)="deleteFile(f)" color="danger">
+              <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-item-option>
+          </ion-item-options> -->
+
           <ion-item-options side="start">
             <ion-item-option (click)="deleteFile(f)" color="danger">
               <ion-icon name="trash" slot="icon-only"></ion-icon>
             </ion-item-option>
           </ion-item-options>
      
+     
+          <ion-item-options side="end">
+            <ion-item-option (click)="uploadFile(f)" color="primary">
+              <ion-icon name="cloud-upload" slot="icon-only"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+     
         </ion-item-sliding>
       </ion-list>
+
+      <input type="file" name="file" id="file" (change)="uploadImage($event)">
+      <ion-progress-bar type="indeterminate" value="{{ uploadPercent | async }}"></ion-progress-bar>
+      <div [hidden]="!image">
+        <img [src]="image || '//:0' ">
+      </div>
+      <ion-item>
+        <ion-input clearInput type="text" placeholder="Post Title" [(ngModel)]="title" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input clearInput type="text" placeholder="Post Content" [(ngModel)]="content" rows="10" ngModel required></ion-input>
+    </ion-item>
+    <ion-button color="primary" (click)="createPost()" [disabled]="!title || !content || !image">{{saving}}</ion-button>
+
 </ion-content>
-<ion-footer>
+<!-- <ion-footer>
     <ion-toolbar color="primary">
       <ion-button fill="clear" expand="full" color="light" (click)="selectMedia()">
         <ion-icon slot="start" name="document"></ion-icon>
         Select Media
       </ion-button>
     </ion-toolbar>
-  </ion-footer>
+  </ion-footer> -->

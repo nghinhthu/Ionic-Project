@@ -21,6 +21,9 @@
                             <ion-input clearInput name="email" type="text" placeholder="your@email.com" [(ngModel)]="userName" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
+                            <ion-input clearInput name="email" type="text" placeholder="User Name" [(ngModel)]="displayName" ngModel required></ion-input>
+                        </ion-item>
+                        <ion-item>
                             <ion-input clearInput name="password" type="password" placeholder="Password" [(ngModel)]="password" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
@@ -38,7 +41,7 @@
                           </ion-radio-group>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()">Register</ion-button>
+                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="registerWithAdmin()">Register</ion-button>
                         <div text-center (click)="resetPassword()">
                             <a>
                             <!-- <a routerLink='/'> -->

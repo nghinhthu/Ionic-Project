@@ -17,8 +17,8 @@
 </ion-header>
 <ion-content>
 
-    <!--
-    <div *ngFor="let post of posts | async">
+    
+    <div *ngFor="let post of postss | async">
         <ion-item no-padding lines="none">
             <app-loading *ngIf="!posts"></app-loading>
             <ion-avatar slot="start">
@@ -37,11 +37,27 @@
             </div>
             <ion-icon name="bookmark"></ion-icon>
         </div>
-        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p> -->
+        <ion-button (click)="delete(post.id)">delete</ion-button>
+        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p>
         <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
-        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label> -->
     </div>
     <br>
+
+
+dsfasdg
+    <ion-card *ngFor="let post of posts | async">
+        <ion-img src="{{post.image}}"></ion-img>
+        {{post.author}}
+        {{post.desc}}
+        <!-- <div class="interactive">
+            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+            <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
+        </div> -->
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <hr>
+        
+    </ion-card>
 
 
 </ion-content>

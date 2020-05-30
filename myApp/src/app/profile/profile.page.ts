@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
     this.mainuser = afStore.doc(`users/${user.getUID()}`)
 		this.sub = this.mainuser.valueChanges().subscribe(event => {
 			this.posts = event.posts
-			this.userName = event.userName
+			this.userName = event.displayName
       this.profilePic = event.profilePic
       
     })

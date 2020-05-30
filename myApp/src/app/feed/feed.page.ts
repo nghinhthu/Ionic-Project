@@ -6,7 +6,7 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import { UserService } from "../user.service";
-import { firestore } from "firebase/app";
+import { firestore, auth } from "firebase/app";
 import { Router } from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/auth";
 
@@ -21,6 +21,7 @@ import "firebase/firestore";
 import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
 // import { PostService } from "../post.service";
 import { FCM } from '@ionic-native/fcm/ngx';
+import { PostService } from '../post.service';
 
 @Component({
   selector: "app-feed",
@@ -61,40 +62,42 @@ export class FeedPage implements OnInit {
     private user: UserService,
     private localNotifications: LocalNotifications,
     private alertCtrl: AlertController,
-    private fcm: FCM
+    private fcm: FCM,
+
+    private postService: PostService
   ) // private post: PostService
   {
-    this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
-      .valueChanges({ idField: "postID" });
-    this.plt.ready().then(() => {
-      this.localNotifications.on('click').subscribe(res => {
-        console.log('click: ', res)
-        let msg = res.data ? res.data.mydata: '';
-        this.showAlert(res.title, res.text, msg)
-      });
+    // this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
+    //   .valueChanges({ idField: "postID" });
+    // this.plt.ready().then(() => {
+    //   this.localNotifications.on('click').subscribe(res => {
+    //     console.log('click: ', res)
+    //     let msg = res.data ? res.data.mydata : '';
+    //     this.showAlert(res.title, res.text, msg)
+    //   });
 
-      this.localNotifications.on('trigger').subscribe(res => {
-        console.log('trigger: ', res)
-        let msg = res.data ? res.data.mydata: '';
-        this.showAlert(res.title, res.text, msg)
-      });
-    })
-// fcm
-    this.plt.ready()
-      .then(() => {
-        this.fcm.onNotification().subscribe(data => {
-          if (data.wasTapped) {
-            console.log("Received in background");
-          } else {
-            console.log("Received in foreground");
-          };
-        });
+    //   this.localNotifications.on('trigger').subscribe(res => {
+    //     console.log('trigger: ', res)
+    //     let msg = res.data ? res.data.mydata : '';
+    //     this.showAlert(res.title, res.text, msg)
+    //   });
+    // })
+    // // fcm
+    // this.plt.ready()
+    //   .then(() => {
+    //     this.fcm.onNotification().subscribe(data => {
+    //       if (data.wasTapped) {
+    //         console.log("Received in background");
+    //       } else {
+    //         console.log("Received in foreground");
+    //       };
+    //     });
 
-        this.fcm.onTokenRefresh().subscribe(token => {
-          // Register your new token in your back-end if you want
-          // backend.registerToken(token);
-        });
-      })
+    //     this.fcm.onTokenRefresh().subscribe(token => {
+    //       // Register your new token in your back-end if you want
+    //       // backend.registerToken(token);
+    //     });
+    //   })
   }
 
   subscribeToTopic() {
@@ -110,49 +113,49 @@ export class FeedPage implements OnInit {
     this.fcm.unsubscribeFromTopic('enappd');
   }
 
-  schedule(){
+  schedule() {
     this.localNotifications.schedule({
       id: 1,
       title: 'Attention',
       text: 'Chichay Notifications',
-      data: { mydata: 'My hidden message this is'},
-      trigger: { in: 5, unit: ELocalNotificationTriggerUnit.SECOND},
+      data: { mydata: 'My hidden message this is' },
+      trigger: { in: 5, unit: ELocalNotificationTriggerUnit.SECOND },
       // foreground: true
     })
   }
 
-  recurring(){
+  recurring() {
     this.localNotifications.schedule({
       id: 22,
       title: 'Recurring',
       text: 'Chichay Recurring Notifications',
-      data: { mydata: 'My hidden message this is'},
-      trigger: { every: ELocalNotificationTriggerUnit.MINUTE},
+      data: { mydata: 'My hidden message this is' },
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE },
       // foreground: true
     })
   }
 
-  repeating(){
+  repeating() {
     this.localNotifications.schedule({
       id: 42,
       title: 'Good morning',
       text: 'Code something epic today',
-      data: { mydata: 'My hidden message this is'},
-      trigger: { every: {hour: 11, minute: 49}},
+      data: { mydata: 'My hidden message this is' },
+      trigger: { every: { hour: 11, minute: 49 } },
       // foreground: true
     })
   }
 
-  getAll(){
+  getAll() {
     this.localNotifications.getAll().then(res => {
       this.scheduled = res;
     })
   }
 
-  showAlert(header, sub, msg){
+  showAlert(header, sub, msg) {
     this.alertCtrl.create({
       header: header,
-      subHeader: sub, 
+      subHeader: sub,
       message: msg,
       buttons: ['OK']
     }).then(alert => alert.present)
@@ -168,9 +171,33 @@ export class FeedPage implements OnInit {
     // const getFeed = this.aff.httpsCallable('getFeed');
     // getFeed({}).subscribe(data => {
     //   console.log('babababa '+data);
-    // });
+    // });  
+    this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
+      .valueChanges({ idField: "postID" });
+    this.posts = this.postService.getPosts()
+    this.username = this.user.getDisplayName()
+    console.log('post ',this.posts)
+    // console.log('id ',postID)
+    // console.log('displayName ',this.user.authState.displayName)
 
+
+  //   this.afAuth.auth.onAuthStateChanged(function (user) {
+  //     if (user) {
+  //       console.log('User log in ', user)
+  //     }
+  //     else if(user == null){
+  //       console.log('Log in without user')
+  //     } else {
+  //       console.log('User log out ', user)
+  //     }
+  //   });
   }
+
+  delete(id: string) {
+    this.postService.delete(id)
+  }
+
+
 
   // ngOnDestroy() {
   // 	this.sub.unsubscribe()
@@ -186,14 +213,14 @@ export class FeedPage implements OnInit {
   }
 
   async logOut() {
-    this.router.navigate(["/login"]);
     await this.afAuth.auth.signOut().then(
       function () {
-        console.log("log out");
+        // console.log("log out");
       },
       function (error) {
-        console.log("err");
+        console.log("log out err");
       }
     );
+    this.router.navigate(["/login"]);
   }
 }

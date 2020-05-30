@@ -7,28 +7,48 @@ import { AngularFirestore } from '@angular/fire/firestore'
 interface user {
     userName: string;
     uid: string,
+    displayName: string;
 
     // gender: string
     // profilePic: string
+
 }
 
 @Injectable()
 
 export class UserService {
 
+    authState: any = null
+
     private user: user
 
     constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore) {
+        this.afAuth.authState.subscribe(data => this.authState = data)
+    }
 
+    get authenticated(): boolean {
+        return this.authState !== null
+    }
+
+    get currentUserId(): string {
+        return this.authenticated ? this.authState.uid : null
     }
 
     setUser(user: user) {
         this.user = user
     }
 
-    getUserName(): string {
+    getEmail(): string {
         return this.user.userName
     }
+
+    getDisplayName(): string {
+        return this.user.displayName
+    }
+
+    // getAccount(): string {
+    //     return this.user.account
+    // }
 
     // getProfilePic(): string {
     //     return this.user.profilePic
@@ -60,7 +80,8 @@ export class UserService {
         if (user) {
             this.setUser({
                 userName: user.email.split('@')[0],
-                uid: user.uid
+                uid: user.uid,
+                displayName: user.displayName,
             })
             return true
         }
@@ -90,10 +111,10 @@ export class UserService {
             email,
             { url: 'https://ionic-project-e1801.firebaseapp.com/__/auth/action' });
     }
-    
+
     resetPassword(email: string) {
         return this.afAuth.auth.sendPasswordResetEmail(email + '@gmail.com')
-          .then(() => console.log('sent Password Reset Email!'))
-          .catch((error) => console.log(error))
-      }
+            .then(() => console.log('sent Password Reset Email!'))
+            .catch((error) => console.log(error))
+    }
 }

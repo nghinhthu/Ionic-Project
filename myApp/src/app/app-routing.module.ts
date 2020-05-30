@@ -33,10 +33,16 @@ const routes: Routes = [
   { path: '', redirectTo: 'tabs', pathMatch: 'full' },
   { path: 'login', loadChildren: './tab2/tab2.module#Tab2PageModule' },
   { path: 'register', loadChildren: './tab1/tab1.module#Tab1PageModule' },
+  { path: 'feed', loadChildren: './feed/feed.module#FeedPageModule' },
   // { path: 'tab3', loadChildren: './tab3/tab3.module#Tab3PageModule' },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthService] },  {
+  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthService] },
+  {
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'cloud-list',
+    loadChildren: () => import('./cloud-list/cloud-list.module').then( m => m.CloudListPageModule)
   }
 
   // {

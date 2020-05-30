@@ -19,8 +19,13 @@
 
         <div class="profile-info">
             <ion-item>
-                <ion-label position="floating">User Name</ion-label>
+                <ion-label position="floating">Email</ion-label>
                 <ion-input [(ngModel)]="userName"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">User Name</ion-label>
+                <ion-input [(ngModel)]="displayName"></ion-input>
             </ion-item>
 
             <!-- <ion-item>
@@ -34,7 +39,7 @@
             </ion-item>
 
             <ion-item>
-                <ion-label position="floating">Enter Old Passworddđ</ion-label>
+                <ion-label position="floating">Enter Old Password</ion-label>
                 <ion-input clearInput [(ngModel)]="password" type="password" required></ion-input>
             </ion-item>
             <ion-button fill="solid" expand="block" color="dark" (click)="updateDetails()">Save</ion-button>

@@ -14,6 +14,7 @@ export class EditProfilePage implements OnInit {
   mainUser: AngularFirestoreDocument;
   sub;
   userName: string;
+  displayName: string
   profilePic: string
   profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
   avatar
@@ -43,6 +44,7 @@ export class EditProfilePage implements OnInit {
     this.mainUser = afStore.doc(`users/${user.getUID()}`);
     this.sub = this.mainUser.valueChanges().subscribe(event => {
       this.userName = event.userName;
+      this.displayName = event.displayName
       this.profilePic = event.profilePic;
       this.gender = event.gender
     });
@@ -110,7 +112,7 @@ export class EditProfilePage implements OnInit {
     //   return this.presentAlert("Error!", "Wrong password!");
     // }
     try {
-			await this.user.reAuth(this.user.getUserName(), this.password)
+			await this.user.reAuth(this.user.getEmail(), this.password)
 		} catch(error) {
 			this.busy = false
 			return this.presentAlert('Error!', 'Wrong password!')
@@ -120,7 +122,7 @@ export class EditProfilePage implements OnInit {
       await this.user.updatePassword(this.newpassword);
     }
 
-    if(this.userName !== this.user.getUserName()){
+    if(this.userName !== this.user.getEmail()){
       await this.user.updateEmail(this.userName)
       this.mainUser.update({
         userName: this.userName

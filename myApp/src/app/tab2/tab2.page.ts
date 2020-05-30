@@ -15,7 +15,10 @@ import { AngularFirestore } from '@angular/fire/firestore'
 export class Tab2Page {
 
   userName: string = "";
+  displayName: string = ""
   password: string = ""
+
+  chooseLogin: boolean
 
   constructor(public afAuth: AngularFireAuth, 
     public afStore: AngularFirestore,
@@ -27,15 +30,18 @@ export class Tab2Page {
 
   }
 
+  
+
   async logIn() {
-    const { userName, password } = this
+    const { userName, password, displayName } = this
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(userName + '@gmail.com', password)
 
       if(res.user){
         this.user.setUser({
           userName,
-          uid: res.user.uid
+          uid: res.user.uid,
+          displayName
         })
         this.router.navigate(['/tabs'])
       }

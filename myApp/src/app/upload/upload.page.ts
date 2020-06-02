@@ -38,15 +38,15 @@ const MEDIA_FOLDER_NAME = 'my_media';
 
 export class UploadPage implements OnInit {
 
-  // photos: any = [];
-  // files = [];
-  // uploadProgress = 0;
+  photos: any = [];
+  files = [];
+  uploadProgress = 0;
 
   // imageURL: string;
   // desc: string = " ";
   // profilePic: string
 
-  // busy: boolean = false;
+  busy: boolean = false;
 
   // scaleCrop: string = "-/scale_crop/200x200";
 
@@ -105,24 +105,57 @@ export class UploadPage implements OnInit {
     // });
   }
   createPost() {
-    let displayName = this.user.getDisplayName()
-    const postData = {
-      author: displayName || this.user.authState.email,
-      authorId: this.user.currentUserId,
-      content: this.content,
-      image: this.image || null,
-      published: new Date(),
-      title: this.title
-    }
-    
-    this.postService.create(postData)
-    this.afStore.doc(`users/${this.user.getUID()}`).update({
-      posts: firestore.FieldValue.arrayUnion(), //["image1", "image2"]
-    });
 
-    this.title = ''
-    this.content = ''
-    this.image = ''
+    this.busy = true;
+
+      const image = this.image;
+      const title = this.title;
+      const content = this.content;
+      let id = this.afStore.createId()
+  
+      this.afStore.doc(`users/${this.user.getUID()}`).update({
+        posts: firestore.FieldValue.arrayUnion(id), //["image1", "image2"]
+      });
+  
+      // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
+      // console.log(profilePic + 'profilePic')
+  
+      this.afStore.doc(`posts/${id}`).set({
+        title,
+        content,
+        author: this.user.getDisplayName() || this.user.getEmail(),
+        likes: [],
+        published: firestore.FieldValue.serverTimestamp(),
+        image
+        // data = new firestore.FieldValue.serverTimestamp()
+      });
+  
+      this.busy = false;
+      this.image = "";
+      this.title = "";
+      this.content = ""
+
+
+
+    // let displayName = this.user.getDisplayName()
+    // const postData = {
+    //   author: displayName || this.user.authState.email,
+    //   authorId: this.user.currentUserId,
+    //   content: this.content,
+    //   image: this.image || null,
+    //   published: new Date(),
+    //   title: this.title
+    // }
+    
+    // this.postService.create(postData)
+    // this.user.create(postData)
+    // // this.afStore.doc(`users/${this.user.getUID()}`).update({
+    // //   posts: firestore.FieldValue.arrayUnion(), //["image1", "image2"]
+    // // });
+
+    // this.title = ''
+    // this.content = ''
+    // this.image = ''
 
     this.saving = 'Post Created!'
     setTimeout(() => (this.saving = 'Create Post'), 3000)
@@ -137,7 +170,7 @@ export class UploadPage implements OnInit {
       const task = this.storage.upload(path, file);
       const ref = this.storage.ref(path);
       this.uploadPercent = task.percentageChanges();
-      console.log('Image uploaded!');
+      console.log('Image uploaded!', file.accessToken);
       task.snapshotChanges().pipe(finalize(() => {
           this.downloadURL = ref.getDownloadURL()
           this.downloadURL.subscribe(url => (this.image = url));
@@ -148,174 +181,174 @@ export class UploadPage implements OnInit {
   }
 
 
-  // loadFiles() {
-  //   this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
-  //     res => {
-  //       this.files = res;
-  //     },
-  //     err => console.log('error loading files: ', err)
-  //   );
-  // }
-  // async selectMedia() {
-  //   const actionSheet = await this.actionSheetController.create({
-  //     header: 'What would you like to add?',
-  //     buttons: [
-  //       {
-  //         text: 'Capture Image',
-  //         handler: () => {
-  //           this.captureImage();
-  //         }
-  //       },
-  //       {
-  //         text: 'Record Video',
-  //         handler: () => {
-  //           this.recordVideo();
-  //         }
-  //       },
-  //       {
-  //         text: 'Record Audio',
-  //         handler: () => {
-  //           this.recordAudio();
-  //         }
-  //       },
-  //       {
-  //         text: 'Load multiple',
-  //         handler: () => {
-  //           this.pickImages();
-  //         }
-  //       },
-  //       {
-  //         text: 'Cancel',
-  //         role: 'cancel'
-  //       }
-  //     ]
-  //   });
-  //   await actionSheet.present();
-  // }
-  // pickImages() {
-  //   this.imagePicker.getPictures({}).then(
-  //     results => {
-  //       for (var i = 0; i < results.length; i++) {
-  //         this.copyFileToLocalDir(results[i]);
-  //       }
-  //     }
-  //   );
+  loadFiles() {
+    this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
+      res => {
+        this.files = res;
+      },
+      err => console.log('error loading files: ', err)
+    );
+  }
+  async selectMedia() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'What would you like to add?',
+      buttons: [
+        {
+          text: 'Capture Image',
+          handler: () => {
+            this.captureImage();
+          }
+        },
+        {
+          text: 'Record Video',
+          handler: () => {
+            this.recordVideo();
+          }
+        },
+        {
+          text: 'Record Audio',
+          handler: () => {
+            this.recordAudio();
+          }
+        },
+        {
+          text: 'Load multiple',
+          handler: () => {
+            this.pickImages();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+  pickImages() {
+    this.imagePicker.getPictures({}).then(
+      results => {
+        for (var i = 0; i < results.length; i++) {
+          this.copyFileToLocalDir(results[i]);
+        }
+      }
+    );
  
-  //   // If you get problems on Android, try to ask for Permission first
-  //   // this.imagePicker.requestReadPermission().then(result => {
-  //   //   console.log('requestReadPermission: ', result);
-  //   //   this.selectMultiple();
-  //   // });
-  // }
-  // captureImage() {
-  //   this.mediaCapture.captureImage().then(
-  //     (data: MediaFile[]) => {
-  //       if (data.length > 0) {
-  //         this.copyFileToLocalDir(data[0].fullPath);
-  //       }
-  //     },
-  //     (err: CaptureError) => console.error(err)
-  //   );
-  // }
-  // recordAudio() {
-  //   this.mediaCapture.captureAudio().then(
-  //     (data: MediaFile[]) => {
-  //       if (data.length > 0) {
-  //         this.copyFileToLocalDir(data[0].fullPath);
-  //       }
-  //     },
-  //     (err: CaptureError) => console.error(err)
-  //   );
-  // }
-  // recordVideo() {
-  //   this.mediaCapture.captureVideo().then(
-  //     (data: MediaFile[]) => {
-  //       if (data.length > 0) {
-  //         this.copyFileToLocalDir(data[0].fullPath);
-  //       }
-  //     },
-  //     (err: CaptureError) => console.error(err)
-  //   );
-  // }
-  // copyFileToLocalDir(fullPath) {
-  //   let myPath = fullPath;
-  //   // Make sure we copy from the right location
-  //   if (fullPath.indexOf('file://') < 0) {
-  //     myPath = 'file://' + fullPath;
-  //   }
+    // If you get problems on Android, try to ask for Permission first
+    // this.imagePicker.requestReadPermission().then(result => {
+    //   console.log('requestReadPermission: ', result);
+    //   this.selectMultiple();
+    // });
+  }
+  captureImage() {
+    this.mediaCapture.captureImage().then(
+      (data: MediaFile[]) => {
+        if (data.length > 0) {
+          this.copyFileToLocalDir(data[0].fullPath);
+        }
+      },
+      (err: CaptureError) => console.error(err)
+    );
+  }
+  recordAudio() {
+    this.mediaCapture.captureAudio().then(
+      (data: MediaFile[]) => {
+        if (data.length > 0) {
+          this.copyFileToLocalDir(data[0].fullPath);
+        }
+      },
+      (err: CaptureError) => console.error(err)
+    );
+  }
+  recordVideo() {
+    this.mediaCapture.captureVideo().then(
+      (data: MediaFile[]) => {
+        if (data.length > 0) {
+          this.copyFileToLocalDir(data[0].fullPath);
+        }
+      },
+      (err: CaptureError) => console.error(err)
+    );
+  }
+  copyFileToLocalDir(fullPath) {
+    let myPath = fullPath;
+    // Make sure we copy from the right location
+    if (fullPath.indexOf('file://') < 0) {
+      myPath = 'file://' + fullPath;
+    }
  
-  //   const ext = myPath.split('.').pop();
-  //   const d = Date.now();
-  //   const newName = `${d}.${ext}`;
+    const ext = myPath.split('.').pop();
+    const d = Date.now();
+    const newName = `${d}.${ext}`;
  
-  //   const name = myPath.substr(myPath.lastIndexOf('/') + 1);
-  //   const copyFrom = myPath.substr(0, myPath.lastIndexOf('/') + 1);
-  //   const copyTo = this.file.dataDirectory + MEDIA_FOLDER_NAME;
+    const name = myPath.substr(myPath.lastIndexOf('/') + 1);
+    const copyFrom = myPath.substr(0, myPath.lastIndexOf('/') + 1);
+    const copyTo = this.file.dataDirectory + MEDIA_FOLDER_NAME;
  
-  //   this.file.copyFile(copyFrom, name, copyTo, newName).then(
-  //     success => {
-  //       this.loadFiles();
-  //     },
-  //     error => {
-  //       console.log('error: ', error);
-  //     }
-  //   );
-  // }
-  // openFile(f: FileEntry) {
-  //   if (f.name.indexOf('.wav') > -1) {
-  //     // We need to remove file:/// from the path for the audio plugin to work
-  //     const path =  f.nativeURL.replace(/^file:\/\//, '');
-  //     const audioFile: MediaObject = this.media.create(path);
-  //     audioFile.play();
-  //   } else if (f.name.indexOf('.MOV') > -1 || f.name.indexOf('.mp4') > -1) {
-  //     // E.g: Use the Streaming Media plugin to play a video
-  //     this.streamingMedia.playVideo(f.nativeURL);
-  //   } else if (f.name.indexOf('.jpg') > -1) {
-  //     // E.g: Use the Photoviewer to present an Image
-  //     this.photoViewer.show(f.nativeURL, 'MY awesome image');
-  //   }
-  // }
-  // deleteFile(f: FileEntry) {
-  //   const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
-  //   this.file.removeFile(path, f.name).then(() => {
-  //     this.loadFiles();
-  //   }, err => console.log('error remove: ', err));
-  // }
+    this.file.copyFile(copyFrom, name, copyTo, newName).then(
+      success => {
+        this.loadFiles();
+      },
+      error => {
+        console.log('error: ', error);
+      }
+    );
+  }
+  openFile(f: FileEntry) {
+    if (f.name.indexOf('.wav') > -1) {
+      // We need to remove file:/// from the path for the audio plugin to work
+      const path =  f.nativeURL.replace(/^file:\/\//, '');
+      const audioFile: MediaObject = this.media.create(path);
+      audioFile.play();
+    } else if (f.name.indexOf('.MOV') > -1 || f.name.indexOf('.mp4') > -1) {
+      // E.g: Use the Streaming Media plugin to play a video
+      this.streamingMedia.playVideo(f.nativeURL);
+    } else if (f.name.indexOf('.jpg') > -1) {
+      // E.g: Use the Photoviewer to present an Image
+      this.photoViewer.show(f.nativeURL, 'MY awesome image');
+    }
+  }
+  deleteFile(f: FileEntry) {
+    const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
+    this.file.removeFile(path, f.name).then(() => {
+      this.loadFiles();
+    }, err => console.log('error remove: ', err));
+  }
 
-  // async uploadFile(f: FileEntry) {
-  //   const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
-  //   const type = this.getMimeType(f.name.split('.').pop());
-  //   const buffer = await this.file.readAsArrayBuffer(path, f.name);
-  //   const fileBlob = new Blob([buffer], type);
+  async uploadFile(f: FileEntry) {
+    const path = f.nativeURL.substr(0, f.nativeURL.lastIndexOf('/') + 1);
+    const type = this.getMimeType(f.name.split('.').pop());
+    const buffer = await this.file.readAsArrayBuffer(path, f.name);
+    const fileBlob = new Blob([buffer], type);
  
-  //   const randomId = Math.random()
-  //     .toString(36)
-  //     .substring(2, 8);
+    const randomId = Math.random()
+      .toString(36)
+      .substring(2, 8);
  
-  //   const uploadTask = this.storage.upload(
-  //     `files/${new Date().getTime()}_${randomId}`,
-  //     fileBlob
-  //   );
+    const uploadTask = this.storage.upload(
+      `files/${new Date().getTime()}_${randomId}`,
+      fileBlob
+    );
  
-  //   uploadTask.percentageChanges().subscribe(change => {
-  //     this.uploadProgress = change;
-  //   });
+    uploadTask.percentageChanges().subscribe(change => {
+      this.uploadProgress = change;
+    });
  
-  //   uploadTask.then(async res => {
-  //     const toast = await this.toastCtrl.create({
-  //       duration: 3000,
-  //       message: 'File upload finished!'
-  //     });
-  //     toast.present();
-  //   });
-  // }
+    uploadTask.then(async res => {
+      const toast = await this.toastCtrl.create({
+        duration: 3000,
+        message: 'File upload finished!'
+      });
+      toast.present();
+    });
+  }
  
-  // getMimeType(fileExt) {
-  //   if (fileExt == 'wav') return { type: 'audio/wav' };
-  //   else if (fileExt == 'jpg') return { type: 'image/jpg' };
-  //   else if (fileExt == 'mp4') return { type: 'video/mp4' };
-  //   else if (fileExt == 'MOV') return { type: 'video/quicktime' };
-  // }
+  getMimeType(fileExt) {
+    if (fileExt == 'wav') return { type: 'audio/wav' };
+    else if (fileExt == 'jpg') return { type: 'image/jpg' };
+    else if (fileExt == 'mp4') return { type: 'video/mp4' };
+    else if (fileExt == 'MOV') return { type: 'video/quicktime' };
+  }
 
   // async createPost() {
   //   this.busy = true;

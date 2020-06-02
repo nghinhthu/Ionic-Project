@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 import { firestore } from 'firebase/app';
 import { File } from "@ionic-native/file/ngx";
 import { SocialSharing } from "@ionic-native/social-sharing/ngx";
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'app-post',
@@ -24,13 +25,15 @@ export class PostPage implements OnInit {
 
   text = 'Hom nay dui que'
   url = 'https://facebook.com/nghinhmatbu'
+  posts: any;
 
   constructor(
     private route: ActivatedRoute, 
     private afStore: AngularFirestore,
     private user: UserService,
     private socialSharing: SocialSharing,
-    private file: File
+    private file: File,
+    private postService: PostService
     ) { }
 
   ngOnInit() {
@@ -38,6 +41,9 @@ export class PostPage implements OnInit {
     this.postID = this.route.snapshot.paramMap.get('id')
     // this.post = this.afStore.doc(`posts/${this.postID}`).valueChanges()
     this.postReference = this.afStore.doc(`posts/${this.postID}`)
+
+    this.posts = this.postService.getPostData('id')
+    console.log('id '+this.posts)
     
     this.sub = this.postReference.valueChanges().subscribe(val=> {
       this.post = val

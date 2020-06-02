@@ -3,20 +3,20 @@ import { AngularFireAuth } from '@angular/fire/auth'
 import { first } from 'rxjs/operators'
 import { auth } from 'firebase/app'
 import { AngularFirestore } from '@angular/fire/firestore'
+import { Post } from './post'
 
 interface user {
     userName: string;
     uid: string,
     displayName: string;
-
     // gender: string
     // profilePic: string
-
 }
 
 @Injectable()
 
 export class UserService {
+
 
     authState: any = null
 
@@ -103,7 +103,8 @@ export class UserService {
         //     }
         // }
         // return this.user.uid
-        return this.user.uid
+        // return this.user.uid
+        return this.authenticated ? this.authState.uid : null
     }
 
     resetPasswordInit(email: string) {

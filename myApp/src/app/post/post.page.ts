@@ -42,8 +42,8 @@ export class PostPage implements OnInit {
     // this.post = this.afStore.doc(`posts/${this.postID}`).valueChanges()
     this.postReference = this.afStore.doc(`posts/${this.postID}`)
 
-    this.posts = this.postService.getPostData('id')
-    console.log('id '+this.posts)
+    // this.posts = this.postService.getPostData('id')
+    // console.log('id '+this.posts)
     
     this.sub = this.postReference.valueChanges().subscribe(val=> {
       this.post = val

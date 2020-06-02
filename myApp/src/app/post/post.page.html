@@ -47,7 +47,7 @@
     </ion-card> -->
 
 ádfafd
-    <ion-card *ngFor="let post of posts | async">
+    <ion-card *ngIf="post as posts">
         <ion-img (click)="goTo(post.id)" src="{{post.image}}"></ion-img>
         {{post.author}}
         {{post.desc}}

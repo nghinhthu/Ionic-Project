@@ -20,11 +20,11 @@ export class Tab1Page {
   displayName: string = "";
   account
   gender = [
-    { text: 'Male', disabled: false, checked: true},
-    { text: 'Female', disabled: false, checked: false}
+    { text: 'Male', disabled: false, checked: true },
+    { text: 'Female', disabled: false, checked: false }
   ]
-  genderChoose : string = "Male"
-  profilePicDefault : string = "fcf0068f-da61-49a8-a814-95869c68c87c"
+  genderChoose: string = "Male"
+  profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -37,8 +37,8 @@ export class Tab1Page {
 
   }
 
-  getGender(genderID){
-    console.log('gender '+genderID)
+  getGender(genderID) {
+    console.log('gender ' + genderID)
     this.genderChoose = genderID
     return this.genderChoose
   }
@@ -51,7 +51,31 @@ export class Tab1Page {
     })
   }
 
-  async registerWithAdmin() {
+  registerPasswordUser(){
+    const { userName, password, cPassword, gender, displayName } = this
+    var user = null;
+    //nullify empty arguments
+    for (var i = 0; i < arguments.length; i++) {
+        arguments[i] = arguments[i] ? arguments[i] : null;
+    }
+   
+    this.afAuth.auth.createUserWithEmailAndPassword(userName, password)
+        .then(function () {
+            user = this.afAuth.auth.currentUser;
+            user.sendEmailVerification();
+        })
+        .then(function () {
+            user.updateProfile({
+                displayName: displayName,
+            });
+        })
+        .catch(function(error) {
+            console.log(error.message);
+        });
+        console.log('Validation link was sent to ' + userName + '.', 7000);
+}
+
+  async register() {
     const { userName, password, cPassword, gender, displayName } = this
     if (password !== cPassword) {
       this.showAlert("Error", "Password do not match")
@@ -59,26 +83,29 @@ export class Tab1Page {
     }
     try {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@gmail.com', password)
-      const auth = await this.afAuth.auth.currentUser.sendEmailVerification().then(function() {
+      
+      const auth = await this.afAuth.auth.currentUser.sendEmailVerification().then(function () {
         // Email sent.
-      }).catch(function(error) {
+      }).catch(function (error) {
         // An error happened.
       });
       const gender = this.genderChoose
       const profilePicDefault = this.profilePicDefault
 
+      this.user.setUser({
+        userName,
+        uid: res.user.uid,
+        displayName: this.displayName
+        // gender: this.gender.val
+      })
+      
       this.afStore.doc(`users/${res.user.uid}`).set({
         userName,
         gender,
         displayName
       })
 
-      this.user.setUser({
-        userName,
-        uid: res.user.uid,
-        displayName: res.user.displayName
-        // gender: this.gender.val
-      })
+
 
       this.showAlert('Success!', 'You are registered!')
       this.router.navigate(['/tabs'])
@@ -100,7 +127,7 @@ export class Tab1Page {
     })
 
     await alert.present()
-  } 
+  }
 
   // authenticateEmail(){
   //   if (this.userName != ""){

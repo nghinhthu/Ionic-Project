@@ -29,15 +29,6 @@ export class PostService {
     })
   }
 
-  getID() {
-    return this.postsCollection.snapshotChanges().map(actions => {
-      return actions.map(a => {
-        const id = a.payload.doc.id
-        return { id}
-      })
-    })
-  }
-
   getPostData(id: string) {
     this.postDoc = this.afs.doc<Post>(`posts/${id}`)
     return this.postDoc.valueChanges()

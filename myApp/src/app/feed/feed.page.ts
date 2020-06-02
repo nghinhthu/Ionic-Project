@@ -172,13 +172,14 @@ export class FeedPage implements OnInit {
     // getFeed({}).subscribe(data => {
     //   console.log('babababa '+data);
     // });  
-    this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
-      .valueChanges({ idField: "postID" });
+    // this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
+    //   .valueChanges({ idField: "postID" });
     this.posts = this.postService.getPosts()
-    this.username = this.user.getDisplayName()
     console.log('post ',this.posts)
+    
+    console.log('user ',this.user)
     // console.log('id ',postID)
-    // console.log('displayName ',this.user.authState.displayName)
+    // console.log('displayName ',this.users)
 
 
   //   this.afAuth.auth.onAuthStateChanged(function (user) {

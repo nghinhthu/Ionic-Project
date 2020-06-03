@@ -48,15 +48,29 @@
 dsfasdg
     <ion-card *ngFor="let post of posts | async">
         <ion-img (click)="goTo(post.id)" src="{{post.image}}"></ion-img>
-        {{post.author}}
-        {{post.desc}}
-        <!-- <div class="interactive">
-            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
-            <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
-        </div> -->
-        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
         <hr>
-        
+        <ion-grid>
+            <ion-row>
+                <ion-col col-12>
+                    <b style="color: black;">{{post.author}}</b>
+                    {{post.title}}
+                </ion-col>
+                <ion-col col-12>
+                  {{post.content}}
+                </ion-col>
+            </ion-row>
+            
+            <!-- <div class="interactive">
+                <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+                <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
+            </div> -->
+            <ion-row>
+                <ion-col col-12>
+                    <b style="font-size: small;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</b>
+                </ion-col>
+            </ion-row>
+            
+    </ion-grid>
     </ion-card>
 
 

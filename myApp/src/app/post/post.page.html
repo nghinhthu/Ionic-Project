@@ -53,7 +53,7 @@
         
         <div class="interactive">
             <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
-            <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
+            <ion-icon (click)="toggle()" name="chatbubble-outline" color="dark" ></ion-icon>
             <ion-icon (click)="sendShare(messageBody.innerText, 
             messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')" name="paper-plane-outline" color="dark">
             </ion-icon>
@@ -77,6 +77,14 @@
         <hr>
         
     </ion-card>
+    <ion-footer *ngIf="show">
+        <ion-item>
+            <ion-input placeholder="Type..."></ion-input>
+            <ion-button (click)="send()" fill="clear" icon-only slot="end">
+                <ion-icon name="send"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-footer>
 </ion-content>
 
 <!-- <ion-header>

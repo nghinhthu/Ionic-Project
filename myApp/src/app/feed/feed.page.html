@@ -18,7 +18,7 @@
 <ion-content>
 
     
-    <div *ngFor="let post of postss | async">
+    <div *ngFor="let post of posts | async">
         <ion-item no-padding lines="none">
             <app-loading *ngIf="!posts"></app-loading>
             <ion-avatar slot="start">
@@ -28,7 +28,7 @@
             <ion-icon slot="end" name="more"></ion-icon>
 
         </ion-item>
-        <img class="post_img" (click)="goTo(post.postID)" src="http://ucarecdn.com/{{ post.postID }}/-/preview/{{ effect }}">
+        <img class="post_img" (click)="goTo(post.id)" src="{{post.image}}">
         <div class="flex-button">
             <div>
                 <ion-icon name="heart-outline"></ion-icon>
@@ -37,43 +37,11 @@
             </div>
             <ion-icon name="bookmark"></ion-icon>
         </div>
-        <ion-button (click)="delete(post.id)">delete</ion-button>
-        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p>
-        <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
-        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label> -->
+        <!-- <ion-button (click)="delete(post.id)">delete</ion-button> -->
+        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p> -->
+        <p class="insta-text"><b>{{ post.author }}</b> {{ post.content }}</p>{{ post.content }}
+        <!-- <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label> -->
     </div>
     <br>
-
-
-dsfasdg
-    <ion-card *ngFor="let post of posts | async">
-        <ion-img (click)="goTo(post.id)" src="{{post.image}}"></ion-img>
-        <hr>
-        <ion-grid>
-            <ion-row>
-                <ion-col col-12>
-                    <b style="color: black;">{{post.author}}</b>
-                    {{post.title}}
-                </ion-col>
-               
-            </ion-row>
-            <!-- <ion-row>
-                <ion-col col-12>
-                    {{post.content}}
-                  </ion-col>
-            </ion-row> -->
-            <!-- <div class="interactive">
-                <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
-                <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
-            </div> -->
-            <ion-row>
-                <ion-col col-12>
-                    <b style="font-size: small;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</b>
-                </ion-col>
-            </ion-row>
-            
-    </ion-grid>
-    </ion-card>
-
 
 </ion-content>

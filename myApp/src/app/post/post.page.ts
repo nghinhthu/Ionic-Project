@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { UserService } from '../user.service';
 import { firestore } from 'firebase/app';
 import { File } from "@ionic-native/file/ngx";
 import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 import { PostService } from '../post.service';
+import { Post } from '../post'
 
 @Component({
   selector: 'app-post',
@@ -13,7 +14,12 @@ import { PostService } from '../post.service';
   styleUrls: ['./post.page.scss'],
 })
 export class PostPage implements OnInit {
+
+  postNew: Post
+  currentUserId
+  authorId
 //like
+
   postID: string
   post
 
@@ -30,17 +36,26 @@ export class PostPage implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private afStore: AngularFirestore,
-    private user: UserService,
+    public user: UserService,
     private socialSharing: SocialSharing,
     private file: File,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router,
     ) { }
 
   ngOnInit() {
 
+    this.getPost()
+    this.currentUserId = this.user.currentUserId
+    // this.authorId = this.postNew.authorId
+    // console.log('currentID '+this.currentUserId)
+    // console.log('authorID '+this.postNew.authorId)
+    
+
     this.postID = this.route.snapshot.paramMap.get('id')
     // this.post = this.afStore.doc(`posts/${this.postID}`).valueChanges()
     this.postReference = this.afStore.doc(`posts/${this.postID}`)
+
 
     // this.posts = this.postService.getPostData('id')
     // console.log('id '+this.posts)
@@ -50,6 +65,11 @@ export class PostPage implements OnInit {
       this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
       this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
     })
+  }
+
+  getPost(): void {
+    const id = this.route.snapshot.paramMap.get('id')
+    this.postService.getPostData(id).subscribe(post => (this.post = post))
   }
 
   ngOnDestroy() {
@@ -111,7 +131,10 @@ export class PostPage implements OnInit {
     this.socialSharing.share(null, null, null, url);
   }
 
-
+  deletePost(postID){
+    this.postService.delete(this.postID)
+    this.router.navigate(['/feed'])
+  }
 
 
 

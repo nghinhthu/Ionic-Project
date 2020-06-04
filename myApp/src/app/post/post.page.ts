@@ -18,7 +18,7 @@ export class PostPage implements OnInit {
   postNew: Post
   currentUserId
   authorId
-//like
+  //like
 
   postID: string
   post
@@ -33,15 +33,18 @@ export class PostPage implements OnInit {
   url = 'https://facebook.com/nghinhmatbu'
   posts: any;
 
+  public show: boolean = false;
+  public buttonName: any = 'Show';
+
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private afStore: AngularFirestore,
     public user: UserService,
     private socialSharing: SocialSharing,
     private file: File,
     private postService: PostService,
     private router: Router,
-    ) { }
+  ) { }
 
   ngOnInit() {
 
@@ -50,7 +53,7 @@ export class PostPage implements OnInit {
     // this.authorId = this.postNew.authorId
     // console.log('currentID '+this.currentUserId)
     // console.log('authorID '+this.postNew.authorId)
-    
+
 
     this.postID = this.route.snapshot.paramMap.get('id')
     // this.post = this.afStore.doc(`posts/${this.postID}`).valueChanges()
@@ -59,8 +62,8 @@ export class PostPage implements OnInit {
 
     // this.posts = this.postService.getPostData('id')
     // console.log('id '+this.posts)
-    
-    this.sub = this.postReference.valueChanges().subscribe(val=> {
+
+    this.sub = this.postReference.valueChanges().subscribe(val => {
       this.post = val
       this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
       this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
@@ -73,39 +76,39 @@ export class PostPage implements OnInit {
   }
 
   ngOnDestroy() {
-		this.sub.unsubscribe()
-	}
+    this.sub.unsubscribe()
+  }
 
-  toggleHeart(){
+  toggleHeart() {
     // this.heartType = this.heartType == "heart" ? "heart-empty" : "heart"
-    if(this.heartType == 'heart-outline'){
+    if (this.heartType == 'heart-outline') {
       this.postReference.update({
         likes: firestore.FieldValue.arrayUnion(this.user.getUID())
       })
     }
-    else{
+    else {
       this.postReference.update({
         likes: firestore.FieldValue.arrayRemove(this.user.getUID())
       })
     }
   }
 
-  countLiked(){
+  countLiked() {
     var like = this.post.likes.length
-    if(like == 1){
-      return like+' Like'
+    if (like == 1) {
+      return like + ' Like'
     }
-    else if(like > 1){
-      return like+' Likes'
+    else if (like > 1) {
+      return like + ' Likes'
     }
   }
 
-  async resolveLocalFile(){
-    return this.file.copyFile(`${this.file.applicationDirectory}www/assets/image`, 'logo.png', 
-    this.file.cacheDirectory, `${new Date().getTime()}.jpg`)
+  async resolveLocalFile() {
+    return this.file.copyFile(`${this.file.applicationDirectory}www/assets/image`, 'logo.png',
+      this.file.cacheDirectory, `${new Date().getTime()}.jpg`)
   }
 
-  removeTempFile(name){
+  removeTempFile(name) {
     this.file.removeFile(this.file.cacheDirectory, name)
   }
 
@@ -115,25 +118,34 @@ export class PostPage implements OnInit {
   //   let file = await this.resolveLocalFile
   //   console.log('FILE '+ this.file)
   //   this.socialSharing.shareViaFacebook(null, file.nativeURL, this.url).then(() => {
-      
+
   //   }).catch(e => {
 
   //   })
   // }
-  
 
-  share(){
-    
+
+  share() {
+
   }
-  
+
 
   sendShare(url) {
     this.socialSharing.share(null, null, null, url);
   }
 
-  deletePost(postID){
+  deletePost(postID) {
     this.postService.delete(this.postID)
     this.router.navigate(['/feed'])
+  }
+  toggle() {
+    this.show = !this.show;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if (this.show)
+      this.buttonName = "Hide";
+    else
+      this.buttonName = "Show";
   }
 
 

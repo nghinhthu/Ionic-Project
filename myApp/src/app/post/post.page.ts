@@ -39,26 +39,18 @@ export class PostPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private afStore: AngularFirestore,
-    public user: UserService,
+    private user: UserService,
     private socialSharing: SocialSharing,
     private file: File,
     private postService: PostService,
-    private router: Router,
-  ) { }
+    private router: Router
+    ) { }
 
   ngOnInit() {
-
-    this.getPost()
-    this.currentUserId = this.user.currentUserId
-    // this.authorId = this.postNew.authorId
-    // console.log('currentID '+this.currentUserId)
-    // console.log('authorID '+this.postNew.authorId)
-
 
     this.postID = this.route.snapshot.paramMap.get('id')
     // this.post = this.afStore.doc(`posts/${this.postID}`).valueChanges()
     this.postReference = this.afStore.doc(`posts/${this.postID}`)
-
 
     // this.posts = this.postService.getPostData('id')
     // console.log('id '+this.posts)
@@ -68,11 +60,6 @@ export class PostPage implements OnInit {
       this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
       this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
     })
-  }
-
-  getPost(): void {
-    const id = this.route.snapshot.paramMap.get('id')
-    this.postService.getPostData(id).subscribe(post => (this.post = post))
   }
 
   ngOnDestroy() {

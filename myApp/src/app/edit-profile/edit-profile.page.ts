@@ -129,13 +129,6 @@ export class EditProfilePage implements OnInit {
       })
     }
 
-    if(this.displayName !== this.user.getDisplayName()){
-      await this.user.updateUserName(this.userName)
-      this.mainUser.update({
-        displayName: this.displayName
-      })
-    }
-
     this.password = ""
     this.newpassword = ""
     this.busy = false

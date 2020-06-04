@@ -23,7 +23,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs/Observable'
 import { PostService } from '../post.service'
-import { Post } from '../post'
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -121,21 +120,10 @@ export class UploadPage implements OnInit {
       // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
       // console.log(profilePic + 'profilePic')
   
-      // const postData = {
-      //   author: this.user.authState.displayName || this.user.getDisplayName() || this.user.getEmail(),
-      //   authorId: this.user.currentUserId,
-      //   content: this.content,
-      //   image: this.image || null,
-      //   published: new Date(),
-      //   title: this.title,
-      //   likes: []
-      // }
-      // this.postService.create(postData)
       this.afStore.doc(`posts/${id}`).set({
         title,
         content,
-        author: this.user.authState.displayName || this.user.getDisplayName() || this.user.getEmail(),
-        authorID: this.user.currentUserId,
+        author: this.user.getDisplayName() || this.user.getEmail(),
         likes: [],
         published: firestore.FieldValue.serverTimestamp(),
         image
@@ -146,6 +134,28 @@ export class UploadPage implements OnInit {
       this.image = "";
       this.title = "";
       this.content = ""
+
+
+
+    // let displayName = this.user.getDisplayName()
+    // const postData = {
+    //   author: displayName || this.user.authState.email,
+    //   authorId: this.user.currentUserId,
+    //   content: this.content,
+    //   image: this.image || null,
+    //   published: new Date(),
+    //   title: this.title
+    // }
+    
+    // this.postService.create(postData)
+    // this.user.create(postData)
+    // // this.afStore.doc(`users/${this.user.getUID()}`).update({
+    // //   posts: firestore.FieldValue.arrayUnion(), //["image1", "image2"]
+    // // });
+
+    // this.title = ''
+    // this.content = ''
+    // this.image = ''
 
     this.saving = 'Post Created!'
     setTimeout(() => (this.saving = 'Create Post'), 3000)

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>POST</ion-title>
+        <ion-title>post</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -8,8 +8,8 @@
 
     <app-loading *ngIf="!post"></app-loading>
 
-    <ion-card *ngIf="post as posts">
-        <img (dblclick)="toggleHeart()" src="{{post.image}}" alt="insta-post" class="insta-post" />
+    <!-- <ion-card *ngIf="post as posts">
+        <img (dblclick)="toggleHeart()" src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}" alt="insta-post" class="insta-post" />
         <div class="interactive">
             <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
             <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
@@ -17,34 +17,88 @@
             messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')" name="paper-plane-outline" color="dark">
             </ion-icon>
             <p class="insta-text"><b>{{ countLiked() }}</b></p>
-            <p class="insta-text"><b>{{ post.author }}</b> {{ post.title }}</p>
+            <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p>
         </div>
-        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ postData.date.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
         <hr>
         <ion-chip style="background: none;">
             <ion-avatar>
                 <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
             </ion-avatar>
-            <p class="insta-text"><b>{{ post.author }}</b></p>
+            <p class="insta-text"><b>{{ postData.author }}</b></p>
         </ion-chip>
         <ion-label>
             <p class="insta-text" style="margin: 0px;
             margin-left: 50px;
-            padding: 0px;">{{ post.content }}</p>
+            padding: 0px;">{{ postData.desc }}</p>
         </ion-label>
 
         <ion-chip style="background: none;">
             <ion-avatar>
                 <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
             </ion-avatar>
-            <p class="insta-text"><b>{{ post.author }}</b></p>
+            <p class="insta-text"><b>{{ postData.author }}</b></p>
         </ion-chip>
         <ion-label>
             <p class="insta-text" style="margin: 0px;
             margin-left: 50px;
-            padding: 0px;">{{ post.content }}</p>
+            padding: 0px;">{{ postData.desc }}</p>
         </ion-label>
+    </ion-card> -->
+
+ádfafd
+    <ion-card *ngIf="post as posts">
+        <ion-img (click)="goTo(post.id)" src="{{post.image}}"></ion-img>
+        {{post.author}}
+        {{post.desc}}
+        <!-- <div class="interactive">
+            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+            <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
+        </div> -->
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <hr>
+        
     </ion-card>
+</ion-content>
 
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Social Sharing
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
 
-</ion-content> 
+<ion-content>
+    <ion-card>
+        <ion-icon name="pin" slot="end" color="primary"></ion-icon>
+        <h2 #messageSubject>Ionic Developer</h2>
+        <p>May 5, 2019</p>
+        <img src="https://source.unsplash.com/category/technology/600x390">
+
+        <ion-card-content>
+            <p #messageBody>Wow Ionic 4 is so awesom. I gotta share this to other people.</p>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-button color="primary">
+                            <ion-icon slot="end" name="thumbs-up"></ion-icon>
+                            <div>12 Likes</div>
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-button (click)="sendShare(messageBody.innerText, 
+                messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')">
+                            <ion-icon slot="icon-only" name="share"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-note>
+                            11h ago
+                        </ion-note>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+</ion-content> -->

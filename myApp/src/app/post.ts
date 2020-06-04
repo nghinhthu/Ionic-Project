@@ -6,5 +6,4 @@ export class Post {
     image: string
     published: Date
     title: string
-    // likes
   }

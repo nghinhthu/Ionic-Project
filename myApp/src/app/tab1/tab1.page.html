@@ -1,20 +1,24 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar>
         <ion-title>
             Tab Three
         </ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding>
+<ion-content padding style="background-image: url(/assets/image/backgroudregister1.jpg); background-size: cover;">
     <!-- <form #form="ngForm" (ngSubmit)="login(form)">  -->
     <form #form="ngForm">
         <ion-grid>
             <ion-row justify-content-center>
                 <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
                     <div text-center>
-                        <img src="/assets/image/logo.png" alt="" width="150px" height="150px" />
-                        <h3>Aqual Ul Kit</h3>
+                        <img src="../assets/image/logo2.png" alt="" width="150px" height="150px" />
+                        <h3 style="color: #e9bd3f;">REGISTER</h3>
+                        <p>Already have an account, please login</p>
+                        <ion-chip color="danger" routerLink='/login' style="background: #ffd760;">
+                            <ion-label style="color: white;">Login</ion-label>
+                        </ion-chip>
                     </div>
                     <div padding>
                         <ion-item>
@@ -31,6 +35,7 @@
                         </ion-item>
                           <ion-radio-group>
                             <ion-item *ngFor="let item of gender">
+                                
                               <ion-label>{{item.text}}</ion-label>
                               <ion-radio slot="start" (ionFocus)="getGender(item.text)"></ion-radio>
                             </ion-item>
@@ -39,9 +44,12 @@
                                 <ion-radio name="gender" value="Female" slot="start" (ionSelect)="mcqAnswer(value)"></ion-radio>
                               </ion-item> -->
                           </ion-radio-group>
+                          <ion-item *ngIf="checkAccount">
+                            <ion-input clearInput name="Code" type="text" placeholder="Confirm Admin Code" [(ngModel)]="adminCode" ngModel required></ion-input>
+                        </ion-item>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()">Register</ion-button>
+                        <ion-button class="my-button" size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()" style="color: #43a6be;">Register</ion-button>
                         <div text-center (click)="resetPassword()">
                             <a>
                             <!-- <a routerLink='/'> -->
@@ -54,14 +62,3 @@
         </ion-grid>
     </form>
 </ion-content>
-<ion-footer>
-    <ion-toolbar>
-
-        <div text-center>
-            <a routerLink='/register'>
-                <p>Registration</p>
-            </a>
-        </div>
-
-    </ion-toolbar>
-</ion-footer>

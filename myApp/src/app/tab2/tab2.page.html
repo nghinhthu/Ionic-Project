@@ -1,20 +1,32 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar>
         <ion-title>
             LogIn
         </ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding>
+<ion-content padding style="background-image: url(/assets/image/backgroudlogin.jpg); background-size: cover;">
     <!-- <form #form="ngForm" (ngSubmit)="login(form)">  -->
+
+        <!-- <img src="/assets/image/logo2.png" alt="" width="150px" height="150px" />
+
+        <input type="text" placeholder="Login">
+        <input type="password" placeholder="Password">
+
+        <button color="roze" ion-button class="login"> LOGIN</button> -->
+
+
+
+
+
     <form #form="ngForm"> 
         <ion-grid>
             <ion-row justify-content-center>
                 <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
                     <div text-center>
-                        <img src="/assets/image/logo.png" alt="" width="150px" height="150px" />
-                        <h3>Aqual Ul Kit</h3>
+                        <img src="/assets/image/logo2.png" alt="" width="150px" height="150px" />
+                        <h1>Aqual Ul Kit</h1>
                     </div>
                     <div padding>
                         <ion-item>
@@ -25,29 +37,25 @@
                         </ion-item>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="logIn()">Login</ion-button>
-                        <div text-center (click)="resetPassword()">
-                            <a routerLink='/'>
-                                <p style="padding-left: 20px;">Lost password?</p>
+                        <ion-button  class="my-button" size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="logIn()" style="color: #43a6be;">LOGIN</ion-button>
+                       
+                            <a  (click)="resetPassword()">
+                                <p><b>LOST PASSWORD?</b></p>
                             </a>
-                        </div>
+                            OR
+                            <a routerLink='/register'>
+                                <p><b>REGISTRATION</b></p>
+                            </a>
+                            <ion-chip color="danger" routerLink='/feed'>
+                                <ion-label style="color: white;">Skip</ion-label>
+                            </ion-chip>
                     </div>
+                    
+                
                 </ion-col>
             </ion-row>
         </ion-grid>
+     
     </form>
+
 </ion-content>
-<ion-footer>
-    <ion-toolbar>
-
-        <div text-center>
-            <a routerLink='/register'>
-                <p>Registration</p>
-            </a>
-            <ion-chip color="danger" routerLink='/feed'>
-                <ion-label>Skip</ion-label>
-              </ion-chip>
-        </div>
-
-    </ion-toolbar>
-</ion-footer>

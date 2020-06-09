@@ -1,1 +1,36 @@
 
+input[type="button"] {
+
+    display: block;
+    background-color: gray;
+    color: white;
+    border: none;
+  }
+
+  .tab-selected{
+//   background: #68c9e1 !important;
+    border-width:5px;
+    color: #68c9e1 !important;
+    border-bottom-style: solid;  
+    ion-button{
+        --color: #68c9e1
+    }
+}
+
+// .tabbar [aria-selected=true] {
+//     border-top: 1px;
+//     border-style: solid;    
+// }
+
+// ion-tab-button{
+//     font-size: 10px;
+//     --padding-end: 0px;
+//     --padding-start: 10px;
+//     --padding-bottom: 0px;
+//     --margin-left:0px;
+//     --margin-right:0px;
+//     max-width:100px;
+//     ion-icon{
+//         font-size: 67.5px;
+//     }
+// }

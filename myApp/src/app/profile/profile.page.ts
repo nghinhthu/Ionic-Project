@@ -3,6 +3,12 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { UserService } from '../user.service';
 import { Router } from '@angular/router'
 import { Route } from '@angular/compiler/src/core';
+import { PostService } from '../post.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as firebase from 'firebase';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -13,48 +19,75 @@ export class ProfilePage implements OnInit {
 
   userPosts
   mainuser: AngularFirestoreDocument
-	sub
-	posts
-	userName: string
+  sub
+  posts
+  displayName: string
+  account: string
   profilePic: string
-  profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
   avatar
+  postCount: number = 0
+
+  // postRef: Observable<any>;
+  postRef: Observable<any[]>;
+
+  userID: string
 
   constructor(
     public afStore: AngularFirestore,
+    public afAuth: AngularFireAuth,
     public user: UserService,
-    public router: Router) {
-
+    public router: Router,
+    public postService: PostService
+    
+  ) {
+    this.userID = this.afAuth.auth.currentUser.uid;
     // const posts = afStore.doc(`users/${user.getUID()}`)
     // this.userPosts = posts.valueChanges()
     this.mainuser = afStore.doc(`users/${user.getUID()}`)
-		this.sub = this.mainuser.valueChanges().subscribe(event => {
-			this.posts = event.posts
-			this.userName = event.displayName
+    // this.posts = this.postService.getPosts()  
+
+    this.sub = this.mainuser.valueChanges().subscribe(event => {
+      this.posts = event.posts
+      this.displayName = event.displayName
+      this.account = event.account
       this.profilePic = event.profilePic
       
     })
+
+    this.afStore.collection('posts', ref => ref.where('userID', '==', this.userID)).snapshotChanges()
+      .subscribe(data => {
+        this.postCount = data.length;
+      })
+    this.postRef = this.afStore.collection('posts', ref => ref.where('userID', '==', this.userID).orderBy('published', 'desc')).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+    // this.postRef = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
+    //   .valueChanges({ idField: "postID" });
+    //   console.log('postRef '+this.postRef)
   }
 
   ngOnDestroy() {
-		this.sub.unsubscribe()
+    this.sub.unsubscribe()
   }
 
-  getProfilePic(){
-    if(this.profilePic != ""){
-      this.avatar = this.profilePic
-    }
-    else{
-      this.avatar = this.profilePicDefault
-    }
-    return this.avatar
+  goTo(postID: string) {
+    this.router.navigate(['/tabs/post/' + postID])
   }
+
+  checkAccount(){
+    if(this.account == 'Admin'){
+      return true
+    }
+  }
+
   
-  goTo(postID: string){
-    this.router.navigate(['/tabs/post/'+postID])
-  }
 
   ngOnInit() {
+    // console.log("postRef ",this.postRef)
   }
 
 }

@@ -18,12 +18,14 @@ export class Tab1Page {
   password: string = "";
   cPassword: string = "";
   displayName: string = "";
-  account
+  account;
+  adminCode: string = ""
+  checkAccount: boolean = false
   gender = [
-    { text: 'Male', disabled: false, checked: true },
-    { text: 'Female', disabled: false, checked: false }
+    { text: 'Admin', disabled: false, checked: true , Code:"gangsteronly"},
+    { text: 'User', disabled: false, checked: false }
   ]
-  genderChoose: string = "Male"
+  genderChoose
   profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
 
   constructor(
@@ -39,6 +41,13 @@ export class Tab1Page {
 
   getGender(genderID) {
     console.log('gender ' + genderID)
+    if(genderID == "User"){
+      this.checkAccount = false
+    }
+    else{
+      this.checkAccount = true
+    }
+    
     this.genderChoose = genderID
     return this.genderChoose
   }
@@ -51,35 +60,43 @@ export class Tab1Page {
     })
   }
 
-  registerPasswordUser(){
-    const { userName, password, cPassword, gender, displayName } = this
-    var user = null;
-    //nullify empty arguments
-    for (var i = 0; i < arguments.length; i++) {
-        arguments[i] = arguments[i] ? arguments[i] : null;
-    }
+//   registerPasswordUser(){
+//     const { userName, password, cPassword, gender, displayName, genderChoose } = this
+//     var user = null;
+//     //nullify empty arguments
+//     for (var i = 0; i < arguments.length; i++) {
+//         arguments[i] = arguments[i] ? arguments[i] : null;
+//     }
    
-    this.afAuth.auth.createUserWithEmailAndPassword(userName, password)
-        .then(function () {
-            user = this.afAuth.auth.currentUser;
-            user.sendEmailVerification();
-        })
-        .then(function () {
-            user.updateProfile({
-                displayName: displayName,
-            });
-        })
-        .catch(function(error) {
-            console.log(error.message);
-        });
-        console.log('Validation link was sent to ' + userName + '.', 7000);
-}
+//     this.afAuth.auth.createUserWithEmailAndPassword(userName, password)
+//         .then(function () {
+//             user = this.afAuth.auth.currentUser;
+//             user.sendEmailVerification();
+//         })
+//         .then(function () {
+//             user.updateProfile({
+//                 displayName: displayName,
+//                 account: genderChoose,
+//             });
+//         })
+//         .catch(function(error) {
+//             console.log(error.message);
+//         });
+//         console.log('Validation link was sent to ' + userName + '.', 7000);
+// }
 
   async register() {
-    const { userName, password, cPassword, gender, displayName } = this
+    const { userName, password, cPassword,  displayName, genderChoose, adminCode } = this
     if (password !== cPassword) {
       this.showAlert("Error", "Password do not match")
       return console.log("Password do not match")
+      
+    }
+    if(genderChoose == "Admin"){
+      if(adminCode !== this.gender[0].Code){
+        this.showAlert("Error", "Admin Code do not match")
+        return console.log("Admin Code do not match")
+      }
     }
     try {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@gmail.com', password)
@@ -89,20 +106,19 @@ export class Tab1Page {
       }).catch(function (error) {
         // An error happened.
       });
-      const gender = this.genderChoose
-      const profilePicDefault = this.profilePicDefault
 
       this.user.setUser({
         userName,
         uid: res.user.uid,
-        displayName: this.displayName
-        // gender: this.gender.val
+        displayName
+        // account: genderChoose
       })
       
       this.afStore.doc(`users/${res.user.uid}`).set({
         userName,
-        gender,
-        displayName
+        displayName: displayName,
+        account: genderChoose,
+        profilePic: this.profilePicDefault
       })
 
 

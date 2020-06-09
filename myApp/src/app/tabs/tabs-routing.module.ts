@@ -71,7 +71,8 @@ const routes: Routes = [
       {path: 'chat', loadChildren: '../chat/chat.module#ChatPageModule'},
       {path: 'search', loadChildren: '../search/search.module#SearchPageModule'},
       {path: 'notification', loadChildren: '../notification/notification.module#NotificationPageModule'},
-      {path: 'cloudlist', loadChildren: '../cloud-list/cloud-list.module#CloudListPageModule'}
+      {path: 'cloudlist', loadChildren: '../cloud-list/cloud-list.module#CloudListPageModule'},
+      
       // {path: 'tab3',
       //  loadChildren: () => import ('../tab3/tab3.module').then(m => m.Tab3PageModule)},
     ]

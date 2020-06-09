@@ -9,6 +9,7 @@ interface user {
     userName: string;
     uid: string,
     displayName: string;
+    // account: string
     // gender: string
     // profilePic: string
 }
@@ -50,6 +51,10 @@ export class UserService {
     //     return this.user.account
     // }
 
+    // getAccount(): string {
+    //     return this.user.account
+    // }
+
     // getProfilePic(): string {
     //     return this.user.profilePic
     // }
@@ -81,7 +86,7 @@ export class UserService {
             this.setUser({
                 userName: user.email.split('@')[0],
                 uid: user.uid,
-                displayName: user.displayName,
+                displayName: user.displayName
             })
             return true
         }

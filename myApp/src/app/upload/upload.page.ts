@@ -23,6 +23,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs/Observable'
 import { PostService } from '../post.service'
+import { AngularFireAuth } from '@angular/fire/auth';
 
 const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -63,6 +64,7 @@ export class UploadPage implements OnInit {
   content: string
   image: string
   title: string
+  userid: string;
 
   saving = 'Create Post'
 
@@ -76,6 +78,7 @@ export class UploadPage implements OnInit {
     public file: File,
     public http: Http,
     public afStore: AngularFirestore,
+    public afAuth: AngularFireAuth,
     public user: UserService,
     private alertContraller: AlertController,
     private router: Router,
@@ -89,7 +92,9 @@ export class UploadPage implements OnInit {
     private toastCtrl: ToastController,
     private storage: AngularFireStorage,
     private postService: PostService
-  ) {}
+  ) {
+    this.userid = this.afAuth.auth.currentUser.uid;
+  }
 
   ngOnInit() {
     // this.plt.ready().then(() => {
@@ -126,7 +131,8 @@ export class UploadPage implements OnInit {
         author: this.user.getDisplayName() || this.user.getEmail(),
         likes: [],
         published: firestore.FieldValue.serverTimestamp(),
-        image
+        image,
+        userID: this.userid
         // data = new firestore.FieldValue.serverTimestamp()
       });
   
@@ -134,39 +140,19 @@ export class UploadPage implements OnInit {
       this.image = "";
       this.title = "";
       this.content = ""
-
-
-
-    // let displayName = this.user.getDisplayName()
-    // const postData = {
-    //   author: displayName || this.user.authState.email,
-    //   authorId: this.user.currentUserId,
-    //   content: this.content,
-    //   image: this.image || null,
-    //   published: new Date(),
-    //   title: this.title
-    // }
-    
-    // this.postService.create(postData)
-    // this.user.create(postData)
-    // // this.afStore.doc(`users/${this.user.getUID()}`).update({
-    // //   posts: firestore.FieldValue.arrayUnion(), //["image1", "image2"]
-    // // });
-
-    // this.title = ''
-    // this.content = ''
-    // this.image = ''
+      
 
     this.saving = 'Post Created!'
     setTimeout(() => (this.saving = 'Create Post'), 3000)
+    // this.router.navigate(['/feed'])
   }
 
   uploadImage(event) {
     const file = event.target.files[0]
     const path = `posts/${file.name}`
-    if (file.type.split('/')[0] !== 'image') {
-      return alert('only image files')
-    } else {
+    // if (file.type.split('/')[0] !== 'image') {
+    //   return alert('only image files')
+    // } else {
       const task = this.storage.upload(path, file);
       const ref = this.storage.ref(path);
       this.uploadPercent = task.percentageChanges();
@@ -177,7 +163,7 @@ export class UploadPage implements OnInit {
         })
       )
         .subscribe();
-    }
+    // }
   }
 
 

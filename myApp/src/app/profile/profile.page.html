@@ -1,6 +1,6 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>{{ userName }} <ion-icon color="primary" name="checkmark-circle"></ion-icon>
+    <ion-toolbar class="new-background-color">
+        <ion-title style="text-align: center; color: white;">{{ displayName }} <ion-icon *ngIf="checkAccount()" color="primary" name="checkmark-circle"></ion-icon>
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -9,16 +9,16 @@
 
     <!-- <app-loading *ngIf="!posts"></app-loading> -->
 
-    <ion-item lines="none" *ngIf="userName">
+    <ion-item lines="none" *ngIf="displayName">
 
         <ion-avatar style="width: 45px;
         height: 45px;">
-            <ion-img src="https://ucarecdn.com/{{ getProfilePic() }}/-/scale_crop/200x200/center/"></ion-img>
+            <ion-img src="http://ucarecdn.com/{{ profilePic}}/-/preview/"></ion-img>
         </ion-avatar>
         <ion-label style="margin: 5px;">
             <div class="info_box">
                 <div class="date_box">
-                    <b>245</b>
+                    <b>{{postCount}}</b>
                     <p>posts</p>
                 </div>
                 <div class="date_box">
@@ -34,11 +34,13 @@
     </ion-item>
 
     <section class="full-width">
-        <ion-button size="small" expand="full" shape="round" color="light" routerLink="/tabs/edit-profile">Edit Profile
+        <ion-button  size="small" expand="full" shape="round" style="color: #ffffff; --background: #43a6be;" routerLink="/tabs/edit-profile">Edit Profile
         </ion-button>
     </section>
 
-    <ion-button class="text_button" shape="round" size="small" (click)="getProfilePic()">message</ion-button>
+    <!-- <ion-note style="font-weight:bold">{{postCount+' Posts'}}</ion-note> -->
+
+    <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="getProfilePic()">message</ion-button>
     <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
         <ion-icon color="dark" slot="icon-only" name="person-circle"></ion-icon>
         <ion-icon color="dark" slot="icon-only" name="checkmark"></ion-icon>
@@ -65,11 +67,33 @@
     </ion-segment>
   
     <!-- *ngIf="(userPosts | async)?.posts as posts" -->
-    <div id="images" *ngIf="posts">
-        <div class="img_box" *ngFor="let post of posts">
-            <img (click)="goTo(post)" class="main-image"
-                src="http://ucarecdn.com/{{ post }}/-/scale_crop/200x200/center/">
+    <div id="images">
+        <div class="img_box" *ngFor="let post of postRef | async">
+            <img (click)="goTo(post.id)" height="100%" width="100%" class="main-image"  style=" object-fit: cover;"
+                src="{{post.data.image}}">
         </div>
     </div>
 
+
+    <!-- <ion-grid class="image-grid">
+        <ion-row class="single-row" >
+          <ion-col col-4 class="single-image" *ngFor="let post of postRef | async">
+            <img height="100%" width="100%" style=" object-fit: cover;" (click)="goTo(post.id)" src="{{post.data.image}}">
+          </ion-col>
+        </ion-row>
+      </ion-grid> -->
+
+
+
+    <!-- <div id="images">
+        <ion-list>
+          <ion-grid>
+            <ion-row >
+              <ion-col col-4 class="grid_img" class="img_box" *ngFor="let post of postRef | async">
+                <img class="scale" (click)="goTo(post.id)" src="{{post.data.image}}" alt="" style="width:200px; height:100px; background-position:center;">
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+    </div> -->
 </ion-content>

@@ -1,24 +1,31 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar class="new-background-color"> 
         <ion-buttons slot="start">
-            <ion-button (click)="logOut()" color="dark">
+            <ion-button (click)="logOut()" style="color: white;">
                 <ion-icon name="power-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>
-            <img src="../../assets/image/instagram-new-logo-1024x366.png">
+        <ion-title style="text-align: center;">
+            <img src="../../assets/image/instagram-new-logo-1024x3662.png">
         </ion-title>
-        <ion-buttons slot="end" color="dark">
+        <!-- <ion-buttons slot="end" color="dark">
             <ion-button (click)="chat()" color="dark">
                 <ion-icon slot="icon-only" name="send-outline" ></ion-icon>
+            </ion-button>
+        </ion-buttons> -->
+        <ion-buttons slot="end">
+            <ion-button>
+                <!-- <ion-badge style="background-color:tomato;">99</ion-badge>
+                <ion-icon name="heart" style="color: white !important;"></ion-icon> -->
+                <ion-icon name="menu-outline" style="color: white !important;"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
 
-    
-    <div *ngFor="let post of posts | async">
+    <!-- <ion-button (click)="schedule()">Thông Báo</ion-button> -->
+    <div *ngFor="let post of postss | async">
         <ion-item no-padding lines="none">
             <app-loading *ngIf="!posts"></app-loading>
             <ion-avatar slot="start">
@@ -28,7 +35,7 @@
             <ion-icon slot="end" name="more"></ion-icon>
 
         </ion-item>
-        <img class="post_img" (click)="goTo(post.id)" src="{{post.image}}">
+        <img class="post_img" (click)="goTo(post.postID)" src="{{post.image}}">
         <div class="flex-button">
             <div>
                 <ion-icon name="heart-outline"></ion-icon>
@@ -37,11 +44,45 @@
             </div>
             <ion-icon name="bookmark"></ion-icon>
         </div>
-        <!-- <ion-button (click)="delete(post.id)">delete</ion-button> -->
-        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p> -->
-        <p class="insta-text"><b>{{ post.author }}</b> {{ post.content }}</p>{{ post.content }}
-        <!-- <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label> -->
+        <ion-button (click)="delete(post.id)">delete</ion-button>
+        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p>
+        <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
+        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label> -->
     </div>
     <br>
+
+
+    <ion-card *ngFor="let post of posts | async">
+        <!-- <ion-img (click)="goTo(post.postID)" src="{{post.image}}"></ion-img> -->
+        <video width="auto" controls="controls" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+            <source src="{{post.image}}" type="video/mp4" />
+           </video>
+        <!-- <hr> -->
+        <ion-grid>
+            <ion-row>
+                <ion-col col-12>
+                    <b style="color: black;">{{post.author}}</b>
+                    {{post.title}}
+                </ion-col>
+               
+            </ion-row>
+            <!-- <ion-row>
+                <ion-col col-12>
+                    {{post.content}}
+                  </ion-col>
+            </ion-row> -->
+            <!-- <div class="interactive">
+                <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+                <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
+            </div> -->
+            <ion-row>
+                <ion-col col-12>
+                    <b style="font-size: small;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</b>
+                </ion-col>
+            </ion-row>
+            
+    </ion-grid>
+    </ion-card>
+
 
 </ion-content>

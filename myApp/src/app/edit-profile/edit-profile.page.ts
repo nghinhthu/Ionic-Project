@@ -4,6 +4,9 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firest
 import { UserService } from "../user.service";
 import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: "app-edit-profile",
@@ -16,7 +19,7 @@ export class EditProfilePage implements OnInit {
   userName: string;
   displayName: string
   profilePic: string
-  profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
+  // profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
   avatar
   gender: string
   genderArray = [
@@ -30,6 +33,9 @@ export class EditProfilePage implements OnInit {
   password: string;
   newpassword: string;
 
+  uploadPercent: Observable<number>
+  downloadURL: Observable<string>
+
   @ViewChild("fileBtn", { static: false }) fileBtn: {
     nativeElement: HTMLInputElement;
   };
@@ -39,7 +45,8 @@ export class EditProfilePage implements OnInit {
     public afStore: AngularFirestore,
     public user: UserService,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private storage: AngularFireStorage,
   ) {
     this.mainUser = afStore.doc(`users/${user.getUID()}`);
     this.sub = this.mainUser.valueChanges().subscribe(event => {
@@ -56,20 +63,38 @@ export class EditProfilePage implements OnInit {
     this.sub.unsubscribe();
   }
 
-  getProfilePic(){
-    if(this.profilePic != ""){
-      this.avatar = this.profilePic
-    }
-    else{
-      this.avatar = this.profilePicDefault
-    }
-    return this.avatar
-  }
+  // getProfilePic(){
+  //   if(this.profilePic != ""){
+  //     this.avatar = this.profilePic
+  //   }
+  //   else{
+  //     this.avatar = this.profilePicDefault
+  //   }
+  //   return this.avatar
+  // }
 
   updateProfilePic() {
     this.fileBtn.nativeElement.click();
   }
 
+  uploadImage(event) {
+    const file = event.target.files[0]
+    const path = `posts/${file.name}`
+    if (file.type.split('/')[0] !== 'image') {
+      return alert('only image files')
+    } else {
+      const task = this.storage.upload(path, file);
+      const ref = this.storage.ref(path);
+      this.uploadPercent = task.percentageChanges();
+      console.log('Image uploaded!', file.accessToken);
+      task.snapshotChanges().pipe(finalize(() => {
+          this.downloadURL = ref.getDownloadURL()
+          this.downloadURL.subscribe(url => (this.profilePic = url));
+        })
+      )
+        .subscribe();
+    }
+  }
   uploadPic(event) {
     const files = event.target.files;
 
@@ -126,13 +151,6 @@ export class EditProfilePage implements OnInit {
       await this.user.updateEmail(this.userName)
       this.mainUser.update({
         userName: this.userName
-      })
-    }
-
-    if(this.displayName !== this.user.getDisplayName()){
-      await this.user.updateUserName(this.userName)
-      this.mainUser.update({
-        displayName: this.displayName
       })
     }
 

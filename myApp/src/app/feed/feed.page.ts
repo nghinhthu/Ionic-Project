@@ -67,8 +67,8 @@ export class FeedPage implements OnInit {
     private postService: PostService
   ) // private post: PostService
   {
-    // this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
-    //   .valueChanges({ idField: "postID" });
+    this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
+      .valueChanges({ idField: "postID" });
     // this.plt.ready().then(() => {
     //   this.localNotifications.on('click').subscribe(res => {
     //     console.log('click: ', res)
@@ -172,10 +172,10 @@ export class FeedPage implements OnInit {
     // getFeed({}).subscribe(data => {
     //   console.log('babababa '+data);
     // });  
-    // this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
-    //   .valueChanges({ idField: "postID" });
-    this.posts = this.postService.getPosts()
-    console.log('post ',this.posts)
+    this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
+      .valueChanges({ idField: "postID" });
+    // this.posts = this.postService.getPosts()
+    console.log('post '+this.posts)
     
     console.log('user ',this.user)
     // console.log('id ',postID)

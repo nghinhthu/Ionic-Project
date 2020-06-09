@@ -14,7 +14,7 @@
 
         <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)">
         <div>
-            <ion-img class="profile-pic" (click)="updateProfilePic()" src="https://ucarecdn.com/{{ getProfilePic() }}/-/scale_crop/150x150/center/"></ion-img>
+            <ion-img class="profile-pic" (click)="updateProfilePic()" src="{{profilePic}}"></ion-img>
         </div>
 
         <div class="profile-info">
@@ -42,7 +42,7 @@
                 <ion-label position="floating">Enter Old Password</ion-label>
                 <ion-input clearInput [(ngModel)]="password" type="password" required></ion-input>
             </ion-item>
-            <ion-button fill="solid" expand="block" color="dark" (click)="updateDetails()">Save</ion-button>
+            <ion-button fill="solid" expand="block" style="color:#ffffff ; --background: #5db8ce;" (click)="updateDetails()">Save</ion-button>
         </div>
     </div>
 </ion-content>

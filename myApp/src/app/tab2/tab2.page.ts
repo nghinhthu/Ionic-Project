@@ -33,7 +33,7 @@ export class Tab2Page {
   
 
   async logIn() {
-    const { userName, password, displayName } = this
+    const { userName, password } = this
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(userName + '@gmail.com', password)
 
@@ -41,7 +41,8 @@ export class Tab2Page {
         this.user.setUser({
           userName,
           uid: res.user.uid,
-          displayName
+          displayName: res.user.displayName,
+          // account: this.user.getAccount()
         })
         this.router.navigate(['/tabs'])
       }

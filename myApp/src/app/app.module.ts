@@ -40,6 +40,7 @@ import { FCM } from '@ionic-native/fcm/ngx'
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
+import { Deeplinks } from '@ionic-native/deeplinks'
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
@@ -80,7 +81,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     LocalNotifications,
     FCM,
     InAppBrowser,
-    AngularFirestore
+    AngularFirestore,
   ],
   bootstrap: [AppComponent]
 })

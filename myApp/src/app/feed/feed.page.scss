@@ -53,3 +53,14 @@ hr {
     font-size: 13px;
     margin: 0px 6px 4px 6px;
   }
+
+  ion-badge{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 100%;
+ 
+  }
+  .new-background-color{
+    --background: #97daeb;
+}

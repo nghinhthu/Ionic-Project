@@ -1,6 +1,14 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>POST</ion-title>
+    <ion-toolbar class="new-background-color">
+        <ion-buttons slot="start">
+            <ion-button defaultHref="/" style="color: white;">
+                <ion-icon name="caret-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title style="color: white; font-size: small; text-align: center; margin-right: 30px;">
+            <!-- <b>{{posts.author}}</b>  -->
+            post
+        </ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -8,8 +16,8 @@
 
     <app-loading *ngIf="!post"></app-loading>
 
-    <ion-card *ngIf="post as posts">
-        <img (dblclick)="toggleHeart()" src="{{post.image}}" alt="insta-post" class="insta-post" />
+    <!-- <ion-card *ngIf="post as posts">
+        <img (dblclick)="toggleHeart()" src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}" alt="insta-post" class="insta-post" />
         <div class="interactive">
             <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
             <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
@@ -17,34 +25,177 @@
             messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')" name="paper-plane-outline" color="dark">
             </ion-icon>
             <p class="insta-text"><b>{{ countLiked() }}</b></p>
-            <p class="insta-text"><b>{{ post.author }}</b> {{ post.title }}</p>
+            <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p>
         </div>
-        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ postData.date.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
         <hr>
         <ion-chip style="background: none;">
             <ion-avatar>
                 <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
             </ion-avatar>
-            <p class="insta-text"><b>{{ post.author }}</b></p>
+            <p class="insta-text"><b>{{ postData.author }}</b></p>
         </ion-chip>
         <ion-label>
             <p class="insta-text" style="margin: 0px;
             margin-left: 50px;
-            padding: 0px;">{{ post.content }}</p>
+            padding: 0px;">{{ postData.desc }}</p>
         </ion-label>
 
         <ion-chip style="background: none;">
             <ion-avatar>
                 <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
             </ion-avatar>
-            <p class="insta-text"><b>{{ post.author }}</b></p>
+            <p class="insta-text"><b>{{ postData.author }}</b></p>
         </ion-chip>
         <ion-label>
             <p class="insta-text" style="margin: 0px;
             margin-left: 50px;
-            padding: 0px;">{{ post.content }}</p>
+            padding: 0px;">{{ postData.desc }}</p>
         </ion-label>
+    </ion-card> -->
+
+
+
+
+    <ion-card *ngIf="post as posts">
+        <ion-toolbar class="scoll">
+            <!-- <ion-avatar item-start>
+                <img class="icon-photo" src="http://ucarecdn.com/{{profilePic}}/-/preview/">
+            </ion-avatar> -->
+            <p class="insta-text"><b>{{post.author}}</b></p>
+            <ion-button class="my-button" style="color: tomato;--background:none" (click)="options()" slot="end">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+            </ion-button>
+        </ion-toolbar>
+
+
+
+        <!-- <ion-button *ngIf="">Xoa</ion-button> -->
+        <ion-img (dblclick)="toggleHeart()" src="{{post.image}}"></ion-img>
+        <div class="interactive">
+            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+            <ion-icon (click)="toggle()" name="chatbubble-outline" color="dark"></ion-icon>
+            <ion-icon (click)="sendShare(messageBody.innerText, 
+            messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')"
+                name="paper-plane-outline" color="dark">
+            </ion-icon>
+            <p class="insta-text"><b>{{ countLiked() }}</b></p>
+            <!-- <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p> -->
+        </div>
+        <p class="insta-text"><b>{{post.author}}</b> {{post.title}}</p>
+        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">
+            {{ post.published.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
+        <hr>
+
+
+        <ion-row class="post-content" *ngFor="let comment of commentsRef | async">
+            <ion-item-sliding>
+                <ion-item>
+                    <ion-col size="2">
+                        <ion-avatar item-start>
+                            <img class="icon-photo" src="http://ucarecdn.com/{{comment.profilePic}}/-/preview/">
+                        </ion-avatar>
+                    </ion-col>
+                    <ion-col size="10">
+                        <div>
+                        <!-- this will contain the main post content -->
+                        <p style="font-size: small;"><strong>{{comment.displayName}}</strong> {{comment.comment}}</p>
+                        <ion-label style="font-size: small;">
+                            {{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+                        </div>
+                    </ion-col>
+                    <ion-item-options side="end">
+                        <ion-item-option color="danger">Delete</ion-item-option>
+                    </ion-item-options>
+                </ion-item>
+            </ion-item-sliding>
+        </ion-row>
+
+
+        <!-- <div *ngFor="let comment of commentsRef | async">
+            <ion-chip style="background: none;">
+                <ion-avatar>
+                    <img src="http://ucarecdn.com/{{comment.profilePic}}/-/preview/">
+                </ion-avatar>
+                <p class="insta-text" ><b>{{comment.displayName}}</b></p>
+            </ion-chip>
+            <ion-label>
+                <p class="insta-text" style="margin: 0px;
+                margin-left: 50px;
+                padding: 0px;">{{comment.comment}}</p>
+            </ion-label>
+            <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">
+                {{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
+            <hr>
+        </div> -->
+
+
     </ion-card>
+    <ion-footer *ngIf="show">
+        <ion-grid>
+            <ion-row class="comment-area">
+                <ion-col size="9">
+                    <ion-textarea placeholder="Enter your comment..." (keyup.enter)="comment()"
+                        [(ngModel)]="inputComment" ngModel required></ion-textarea>
+                </ion-col>
+                <ion-col size="3">
+                    <button ion-button class="comment-button" (click)="comment()" autofocus>
+                        <ion-icon name="paper-plane"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 
+    </ion-footer>
 
-</ion-content> 
+    <!-- <ion-footer *ngIf="show">
+        <ion-item>
+            <ion-input placeholder="Type..." (keyup.enter)="comment()" [(ngModel)]="inputComment"></ion-input>
+            <ion-button (click)="comment()" fill="clear" icon-only slot="end">
+                <ion-icon name="send"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-footer> -->
+</ion-content>
+
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Social Sharing
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-icon name="pin" slot="end" color="primary"></ion-icon>
+        <h2 #messageSubject>Ionic Developer</h2>
+        <p>May 5, 2019</p>
+        <img src="https://source.unsplash.com/category/technology/600x390">
+
+        <ion-card-content>
+            <p #messageBody>Wow Ionic 4 is so awesom. I gotta share this to other people.</p>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-button color="primary">
+                            <ion-icon slot="end" name="thumbs-up"></ion-icon>
+                            <div>12 Likes</div>
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-button (click)="sendShare(messageBody.innerText, 
+                messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')">
+                            <ion-icon slot="icon-only" name="share"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-note>
+                            11h ago
+                        </ion-note>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+</ion-content> -->

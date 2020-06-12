@@ -94,6 +94,8 @@ export class UploadPage implements OnInit {
     private postService: PostService
   ) {
     this.userid = this.afAuth.auth.currentUser.uid;
+    let ahihi = this.afAuth.auth.currentUser.displayName
+    console.log('ahihi '+ahihi)
   }
 
   ngOnInit() {
@@ -109,7 +111,7 @@ export class UploadPage implements OnInit {
     //   );
     // });
   }
-  createPost() {
+  async createPost() {
 
     this.busy = true;
 
@@ -143,13 +145,24 @@ export class UploadPage implements OnInit {
       
 
     this.saving = 'Post Created!'
-    setTimeout(() => (this.saving = 'Create Post'), 3000)
+      const alert = await this.alertContraller.create({
+      header: "Done",
+      message: "Your post was create!",
+      buttons: ["Cool!",],
+      // this.router.navigate(['/feed'])
+    });
+
+    await alert.present();
+
+      
+    // setTimeout(() => (this.saving = 'Create Post'), 3000)
     // this.router.navigate(['/feed'])
   }
 
   uploadImage(event) {
     const file = event.target.files[0]
     const path = `posts/${file.name}`
+    // const typeFile = file.type.split('/')[0]
     // if (file.type.split('/')[0] !== 'image') {
     //   return alert('only image files')
     // } else {
@@ -164,6 +177,7 @@ export class UploadPage implements OnInit {
       )
         .subscribe();
     // }
+    
   }
 
 

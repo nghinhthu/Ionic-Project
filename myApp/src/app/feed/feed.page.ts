@@ -182,16 +182,16 @@ export class FeedPage implements OnInit {
     // console.log('displayName ',this.users)
 
 
-  //   this.afAuth.auth.onAuthStateChanged(function (user) {
-  //     if (user) {
-  //       console.log('User log in ', user)
-  //     }
-  //     else if(user == null){
-  //       console.log('Log in without user')
-  //     } else {
-  //       console.log('User log out ', user)
-  //     }
-  //   });
+    // this.afAuth.auth.onAuthStateChanged(function (user) {
+    //   if (user) {
+    //     console.log('User log in ', user.email)
+    //   }
+    //   else if(user == null){
+    //     console.log('Log in without user')
+    //   } else {
+    //     console.log('User log out ', user)
+    //   }
+    // });
   }
 
   delete(id: string) {

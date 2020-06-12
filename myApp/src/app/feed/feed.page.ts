@@ -23,6 +23,8 @@ import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native
 import { FCM } from '@ionic-native/fcm/ngx';
 import { PostService } from '../post.service';
 
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: "app-feed",
   templateUrl: "./feed.page.html",
@@ -64,7 +66,8 @@ export class FeedPage implements OnInit {
     private alertCtrl: AlertController,
     private fcm: FCM,
 
-    private postService: PostService
+    private postService: PostService,
+    private menu: MenuController
   ) // private post: PostService
   {
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))

@@ -71,6 +71,8 @@ export class UploadPage implements OnInit {
   uploadPercent: Observable<number>
   downloadURL: Observable<string>
 
+  typeFile: string
+
   @ViewChild("fileButton", { static: false }) fileButton;
 
   constructor(
@@ -113,34 +115,37 @@ export class UploadPage implements OnInit {
 
     this.busy = true;
 
-      const image = this.image;
-      const title = this.title;
-      const content = this.content;
-      let id = this.afStore.createId()
-  
-      this.afStore.doc(`users/${this.user.getUID()}`).update({
-        posts: firestore.FieldValue.arrayUnion(id), //["image1", "image2"]
-      });
-  
-      // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
-      // console.log(profilePic + 'profilePic')
-  
-      this.afStore.doc(`posts/${id}`).set({
-        title,
-        content,
-        author: this.user.getDisplayName() || this.user.getEmail(),
-        likes: [],
-        published: firestore.FieldValue.serverTimestamp(),
-        image,
-        userID: this.userid
-        // data = new firestore.FieldValue.serverTimestamp()
-      });
-  
-      this.busy = false;
-      this.image = "";
-      this.title = "";
-      this.content = ""
-      
+    const image = this.image;
+    const title = this.title;
+    const content = this.content;
+    const typeFile = this.typeFile
+    let id = this.afStore.createId()
+
+    this.afStore.doc(`users/${this.user.getUID()}`).update({
+      posts: firestore.FieldValue.arrayUnion(id), //["image1", "image2"]
+    });
+
+    // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
+    // console.log(profilePic + 'profilePic')
+
+    this.afStore.doc(`posts/${id}`).set({
+      title,
+      content,
+      author: this.user.getDisplayName() || this.user.getEmail(),
+      likes: [],
+      published: firestore.FieldValue.serverTimestamp(),
+      image,
+      userID: this.userid,
+      typeFile
+      // data = new firestore.FieldValue.serverTimestamp()
+    });
+
+    this.busy = false;
+    this.image = "";
+    this.title = "";
+    this.content = "";
+    this.typeFile = ""
+
 
     this.saving = 'Post Created!'
     setTimeout(() => (this.saving = 'Create Post'), 3000)
@@ -153,16 +158,22 @@ export class UploadPage implements OnInit {
     // if (file.type.split('/')[0] !== 'image') {
     //   return alert('only image files')
     // } else {
-      const task = this.storage.upload(path, file);
-      const ref = this.storage.ref(path);
-      this.uploadPercent = task.percentageChanges();
-      console.log('Image uploaded!', file.accessToken);
-      task.snapshotChanges().pipe(finalize(() => {
-          this.downloadURL = ref.getDownloadURL()
-          this.downloadURL.subscribe(url => (this.image = url));
-        })
-      )
-        .subscribe();
+    if (file.type.split('/')[0] == 'image') {
+      this.typeFile = 'image'
+    }
+    else if (file.type.split('/')[0] == 'video') {
+      this.typeFile = 'video'
+    }
+    const task = this.storage.upload(path, file);
+    const ref = this.storage.ref(path);
+    this.uploadPercent = task.percentageChanges();
+    console.log('Image uploaded!', file.accessToken);
+    task.snapshotChanges().pipe(finalize(() => {
+      this.downloadURL = ref.getDownloadURL()
+      this.downloadURL.subscribe(url => (this.image = url));
+    })
+    )
+      .subscribe();
     // }
   }
 
@@ -219,7 +230,7 @@ export class UploadPage implements OnInit {
         }
       }
     );
- 
+
     // If you get problems on Android, try to ask for Permission first
     // this.imagePicker.requestReadPermission().then(result => {
     //   console.log('requestReadPermission: ', result);
@@ -262,15 +273,15 @@ export class UploadPage implements OnInit {
     if (fullPath.indexOf('file://') < 0) {
       myPath = 'file://' + fullPath;
     }
- 
+
     const ext = myPath.split('.').pop();
     const d = Date.now();
     const newName = `${d}.${ext}`;
- 
+
     const name = myPath.substr(myPath.lastIndexOf('/') + 1);
     const copyFrom = myPath.substr(0, myPath.lastIndexOf('/') + 1);
     const copyTo = this.file.dataDirectory + MEDIA_FOLDER_NAME;
- 
+
     this.file.copyFile(copyFrom, name, copyTo, newName).then(
       success => {
         this.loadFiles();
@@ -283,7 +294,7 @@ export class UploadPage implements OnInit {
   openFile(f: FileEntry) {
     if (f.name.indexOf('.wav') > -1) {
       // We need to remove file:/// from the path for the audio plugin to work
-      const path =  f.nativeURL.replace(/^file:\/\//, '');
+      const path = f.nativeURL.replace(/^file:\/\//, '');
       const audioFile: MediaObject = this.media.create(path);
       audioFile.play();
     } else if (f.name.indexOf('.MOV') > -1 || f.name.indexOf('.mp4') > -1) {
@@ -306,20 +317,20 @@ export class UploadPage implements OnInit {
     const type = this.getMimeType(f.name.split('.').pop());
     const buffer = await this.file.readAsArrayBuffer(path, f.name);
     const fileBlob = new Blob([buffer], type);
- 
+
     const randomId = Math.random()
       .toString(36)
       .substring(2, 8);
- 
+
     const uploadTask = this.storage.upload(
       `files/${new Date().getTime()}_${randomId}`,
       fileBlob
     );
- 
+
     uploadTask.percentageChanges().subscribe(change => {
       this.uploadProgress = change;
     });
- 
+
     uploadTask.then(async res => {
       const toast = await this.toastCtrl.create({
         duration: 3000,
@@ -328,7 +339,7 @@ export class UploadPage implements OnInit {
       toast.present();
     });
   }
- 
+
   getMimeType(fileExt) {
     if (fileExt == 'wav') return { type: 'audio/wav' };
     else if (fileExt == 'jpg') return { type: 'image/jpg' };

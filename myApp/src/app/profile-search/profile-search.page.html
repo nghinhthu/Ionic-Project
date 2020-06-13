@@ -13,7 +13,7 @@
     <ion-item lines="none" *ngIf="displayName">
 
         <ion-avatar style="width: 45px;
-        height: 45px;">
+      height: 45px;">
             <ion-img src="http://ucarecdn.com/{{ profilePic}}/-/preview/"></ion-img>
         </ion-avatar>
         <ion-label style="margin: 5px;">
@@ -34,15 +34,14 @@
         </ion-label>
     </ion-item>
 
-    <section class="full-width">
-        <ion-button size="small" expand="full" shape="round" style="color: #ffffff; --background: #43a6be;"
-            routerLink="/tabs/edit-profile">Edit Profile
-        </ion-button>
-    </section>
+    <!-- <section class="full-width">
+      <ion-button  size="small" expand="full" shape="round" style="color: #ffffff; --background: #43a6be;" routerLink="/tabs/edit-profile">Edit Profile
+      </ion-button>
+  </section> -->
 
-    <!-- <ion-note style="font-weight:bold">{{postCount+' Posts'}}</ion-note> -->
 
-    <!-- <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="getProfilePic()">follow</ion-button> -->
+    <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="follow()">follow</ion-button>
+    <ion-icon (click)="follow()" [name]="heartType" [color]="heartColor"></ion-icon>
     <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
         <ion-icon color="dark" slot="icon-only" name="person-circle"></ion-icon>
         <ion-icon color="dark" slot="icon-only" name="checkmark"></ion-icon>
@@ -79,27 +78,4 @@
             </video>
         </div>
     </div>
-
-
-    <!-- <ion-grid class="image-grid">
-        <ion-row class="single-row" >
-          <ion-col col-4 class="single-image" *ngFor="let post of postRef | async">
-            <img height="100%" width="100%" style=" object-fit: cover;" (click)="goTo(post.id)" src="{{post.data.image}}">
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
-
-
-
-    <!-- <div id="images">
-        <ion-list>
-          <ion-grid>
-            <ion-row >
-              <ion-col col-4 class="grid_img" class="img_box" *ngFor="let post of postRef | async">
-                <img class="scale" (click)="goTo(post.id)" src="{{post.data.image}}" alt="" style="width:200px; height:100px; background-position:center;">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list>
-    </div> -->
 </ion-content>

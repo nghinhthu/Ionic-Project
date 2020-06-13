@@ -29,7 +29,10 @@
 
 
         <!-- <ion-button *ngIf="">Xoa</ion-button> -->
-        <ion-img (dblclick)="toggleHeart()" src="{{post.image}}"></ion-img>
+        <ion-img *ngIf="post.typeFile == 'image'" (dblclick)="toggleHeart()" src="{{post.image}}"></ion-img>
+        <video *ngIf="post.typeFile == 'video'" width="auto" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+            <source src="{{post.image}}" type="video/mp4" />
+           </video>
         <div class="interactive">
             <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
             <ion-icon (click)="toggle()" name="chatbubble-outline" color="dark"></ion-icon>

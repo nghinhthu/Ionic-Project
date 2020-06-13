@@ -46,7 +46,7 @@ export class ProfilePage implements OnInit {
     
   ) {
 
-
+    // this.postID = this.route.snapshot.paramMap.get('postID')
 
 
     // profile cu
@@ -75,9 +75,9 @@ export class ProfilePage implements OnInit {
         return { id, data };
       }))
     );
-    this.postRef = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
-      .valueChanges({ idField: "postID" });
-      console.log('postRef '+this.postRef)
+    // this.postRef = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
+    //   .valueChanges({ idField: "postID" });
+    //   console.log('postRef '+this.postRef)
   }
 
   ngOnDestroy() {

@@ -50,6 +50,7 @@ export class FeedPage implements OnInit {
   comments
   scheduled = []
   pushes: any = [];
+  typeFile: string
 
   constructor(
     public router: Router,

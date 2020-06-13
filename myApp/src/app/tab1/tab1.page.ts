@@ -19,6 +19,7 @@ export class Tab1Page {
   cPassword: string = "";
   displayName: string = "";
   account;
+  follow
   adminCode: string = ""
   checkAccount: boolean = false
   gender = [
@@ -118,7 +119,8 @@ export class Tab1Page {
         userName,
         displayName: displayName,
         account: genderChoose,
-        profilePic: this.profilePicDefault
+        profilePic: this.profilePicDefault,
+        follow: []
       })
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { Route } from '@angular/compiler/src/core';
 import { PostService } from '../post.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -32,14 +32,24 @@ export class ProfilePage implements OnInit {
 
   userID: string
 
+  postss: Observable<any[]>; //collection 'posts'
+  users: Observable<any[]>; //collection 'users'
+  postID
+
   constructor(
     public afStore: AngularFirestore,
     public afAuth: AngularFireAuth,
     public user: UserService,
     public router: Router,
-    public postService: PostService
+    public postService: PostService,
+    private route: ActivatedRoute
     
   ) {
+
+
+
+
+    // profile cu
     this.userID = this.afAuth.auth.currentUser.uid;
     // const posts = afStore.doc(`users/${user.getUID()}`)
     // this.userPosts = posts.valueChanges()
@@ -65,9 +75,9 @@ export class ProfilePage implements OnInit {
         return { id, data };
       }))
     );
-    // this.postRef = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
-    //   .valueChanges({ idField: "postID" });
-    //   console.log('postRef '+this.postRef)
+    this.postRef = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
+      .valueChanges({ idField: "postID" });
+      console.log('postRef '+this.postRef)
   }
 
   ngOnDestroy() {

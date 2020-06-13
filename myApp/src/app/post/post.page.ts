@@ -64,13 +64,9 @@ export class PostPage implements OnInit {
     public nav: NavController,
     public platform: Platform
   ) {
-    this.userID = localStorage.getItem('userID');
-  
-    // this.userID = this.afAuth.auth.currentUser.uid;
-    // const posts = afStore.doc(`users/${user.getUID()}`)
-    // this.userPosts = posts.valueChanges()
+
+    // binh luan 
     this.mainuser = afStore.doc(`users/${user.getUID()}`)
-    // this.posts = this.postService.getPosts()  
 
     this.sub = this.mainuser.valueChanges().subscribe(event => {
       this.posts = event.posts
@@ -86,12 +82,7 @@ export class PostPage implements OnInit {
 
   ngOnInit() {
 
-    // this.postID = this.route.snapshot.paramMap.get('id')
-    // this.post = this.afStore.doc(`posts/${this.postID}`).valueChanges()
     this.postReference = this.afStore.doc(`posts/${this.postID}`)
-
-    // this.posts = this.postService.getPostData('id')
-    // console.log('id '+this.posts)
 
     this.sub = this.postReference.valueChanges().subscribe(val => {
       this.post = val

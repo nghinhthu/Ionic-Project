@@ -43,8 +43,6 @@ export class PostPage implements OnInit {
   url = 'https://facebook.com/nghinhmatbu'
   posts: any;
 
-  typeFile
-
   public show: boolean = false;
   public buttonName: any = 'Show';
 
@@ -86,7 +84,6 @@ export class PostPage implements OnInit {
 
     this.sub = this.postReference.valueChanges().subscribe(val => {
       this.post = val
-      console.log('post val '+ this.post.image)
       this.heartType = val.likes.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
       this.heartColor = val.likes.includes(this.user.getUID()) ? 'danger' : 'dark'
     })
@@ -220,14 +217,12 @@ export class PostPage implements OnInit {
           handler: () => {
             this.afStore.collection('posts').doc(this.postID).delete();
             this.mainuser.collection('posts').doc(this.postID).delete()
-            this.router.navigate(["/tabs/feed"]);
           }
         }
       ]
     });
 
     await alert.present();
-    
   }
   options() {
     this.presentActionSheet();

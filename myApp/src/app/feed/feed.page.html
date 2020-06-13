@@ -53,10 +53,10 @@
 
 
     <ion-card *ngFor="let post of posts | async">
-        <ion-img (click)="goTo(post.postID)" src="{{post.image}}"></ion-img>
-        <!-- <video width="auto" controls="controls" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+        <!-- <ion-img (click)="goTo(post.postID)" src="{{post.image}}"></ion-img> -->
+        <video width="auto" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
             <source src="{{post.image}}" type="video/mp4" />
-           </video> -->
+           </video>
         <!-- <hr> -->
         <ion-grid  (click)="goTo(post.postID)">
             <ion-row>

@@ -9,7 +9,6 @@
     <ion-searchbar animated type="text" [(ngModel)]="term"></ion-searchbar>
     <div>
         <div *ngFor="let item of users |async |filter:term">
-            <ion-item (click)="search()">{{ item.userName }}</ion-item>
         </div>
     </div>
 </ion-content>

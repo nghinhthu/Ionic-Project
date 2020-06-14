@@ -25,8 +25,10 @@ export class SearchPage implements OnInit {
     console.log('USER ' + this.users);
   }
 
-  search(userID: string){
-    this.router.navigate(['/tabs/profile/'+userID])
+  search(){
+    this.router.navigate(['/tabs/profile/zf9H1T99KGNKcf0KhWp93TKKFM12'])
   }
+
+  
   ngOnInit() {}
 }

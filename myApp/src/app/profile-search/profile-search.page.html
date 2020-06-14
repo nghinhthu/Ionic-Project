@@ -23,8 +23,9 @@
                     <p>posts</p>
                 </div>
                 <div class="date_box">
-                    <b>7850</b>
-                    <p>followers</p>
+                    <b>{{follower}}</b>
+                    <p *ngIf="follower <= '1'">follower</p>
+                    <p *ngIf="follower > '1'">followers</p>
                 </div>
                 <div class="date_box">
                     <b>715</b>

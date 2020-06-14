@@ -47,6 +47,22 @@ export class UserService {
         return this.user.displayName
     }
 
+    // getAccount(): string {
+    //     return this.user.account
+    // }
+
+    // getAccount(): string {
+    //     return this.user.account
+    // }
+
+    // getProfilePic(): string {
+    //     return this.user.profilePic
+    // }
+
+    // getGender(): string {
+
+    // }
+
     reAuth(userName: string, password: string) {
         return this.afAuth.auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(userName + '@gmail.com', password))
     }

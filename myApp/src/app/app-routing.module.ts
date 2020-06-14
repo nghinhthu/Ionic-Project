@@ -43,7 +43,11 @@ const routes: Routes = [
   {
     path: 'cloud-list',
     loadChildren: () => import('./cloud-list/cloud-list.module').then( m => m.CloudListPageModule)
+  },  {
+    path: 'profile-search',
+    loadChildren: () => import('./profile-search/profile-search.module').then( m => m.ProfileSearchPageModule)
   }
+
 
   // {
   //   path: 'search',

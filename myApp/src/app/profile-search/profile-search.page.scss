@@ -1,0 +1,47 @@
+h1 {
+    font-size: 30px;
+}
+.info_box {
+    display: flex;
+}
+.date_box {
+    margin: 4px 5px 7px 10px;
+    text-align: center;
+}
+.date_box b{
+    font-size: 20px;
+}
+.date_box p{
+    margin: 2px;
+    font-size: 12px;
+    color: grey;
+    font-weight: 500;
+}
+.text_button {
+    margin-left: 10px;
+    text-transform: initial;
+    --padding-start: 17px;
+    --padding-end: 17px;
+}
+.icon_button {
+    margin-left: 10px;
+    --padding-start: 7px;
+    --padding-end: 7px;
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+.img_box {
+    border: 1px solid white;
+    width: 33.3%;
+    height: 33.3%;
+    float: left;
+}
+.new-background-color{
+    --background: #97daeb;
+}
+
+
+
+

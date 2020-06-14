@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { Route } from '@angular/compiler/src/core';
 import { PostService } from '../post.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -32,14 +32,24 @@ export class ProfilePage implements OnInit {
 
   userID: string
 
+  postss: Observable<any[]>; //collection 'posts'
+  users: Observable<any[]>; //collection 'users'
+  postID
+
   constructor(
     public afStore: AngularFirestore,
     public afAuth: AngularFireAuth,
     public user: UserService,
     public router: Router,
-    public postService: PostService
+    public postService: PostService,
+    private route: ActivatedRoute
     
   ) {
+
+    // this.postID = this.route.snapshot.paramMap.get('postID')
+
+
+    // profile cu
     this.userID = this.afAuth.auth.currentUser.uid;
     // const posts = afStore.doc(`users/${user.getUID()}`)
     // this.userPosts = posts.valueChanges()

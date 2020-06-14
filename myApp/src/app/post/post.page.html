@@ -15,48 +15,6 @@
 <ion-content fullscreen>
 
     <app-loading *ngIf="!post"></app-loading>
-
-    <!-- <ion-card *ngIf="post as posts">
-        <img (dblclick)="toggleHeart()" src="http://ucarecdn.com/{{ postID }}/-/preview/{{ effect }}" alt="insta-post" class="insta-post" />
-        <div class="interactive">
-            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
-            <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
-            <ion-icon (click)="sendShare(messageBody.innerText, 
-            messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')" name="paper-plane-outline" color="dark">
-            </ion-icon>
-            <p class="insta-text"><b>{{ countLiked() }}</b></p>
-            <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p>
-        </div>
-        <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">{{ postData.date.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
-        <hr>
-        <ion-chip style="background: none;">
-            <ion-avatar>
-                <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
-            </ion-avatar>
-            <p class="insta-text"><b>{{ postData.author }}</b></p>
-        </ion-chip>
-        <ion-label>
-            <p class="insta-text" style="margin: 0px;
-            margin-left: 50px;
-            padding: 0px;">{{ postData.desc }}</p>
-        </ion-label>
-
-        <ion-chip style="background: none;">
-            <ion-avatar>
-                <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
-            </ion-avatar>
-            <p class="insta-text"><b>{{ postData.author }}</b></p>
-        </ion-chip>
-        <ion-label>
-            <p class="insta-text" style="margin: 0px;
-            margin-left: 50px;
-            padding: 0px;">{{ postData.desc }}</p>
-        </ion-label>
-    </ion-card> -->
-
-
-
-
     <ion-card *ngIf="post as posts">
         <ion-toolbar class="scoll">
             <!-- <ion-avatar item-start>
@@ -71,7 +29,10 @@
 
 
         <!-- <ion-button *ngIf="">Xoa</ion-button> -->
-        <ion-img (dblclick)="toggleHeart()" src="{{post.image}}"></ion-img>
+        <ion-img *ngIf="post.typeFile == 'image'" (dblclick)="toggleHeart()" src="{{post.image}}"></ion-img>
+        <video *ngIf="post.typeFile == 'video'" width="auto" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+            <source src="{{post.image}}" type="video/mp4" />
+           </video>
         <div class="interactive">
             <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
             <ion-icon (click)="toggle()" name="chatbubble-outline" color="dark"></ion-icon>

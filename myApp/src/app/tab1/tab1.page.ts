@@ -88,8 +88,6 @@ export class Tab1Page {
 
   async register() {
     const { userName, password, cPassword,  displayName, genderChoose, adminCode } = this
-
-
     if (password !== cPassword) {
       this.showAlert("Error", "Password do not match")
       return console.log("Password do not match")
@@ -100,10 +98,6 @@ export class Tab1Page {
         this.showAlert("Error", "Admin Code do not match")
         return console.log("Admin Code do not match")
       }
-    }
-    else if(genderChoose == null){
-      this.showAlert("Error", "Please choose your type of account!")
-      return console.log("Please choose your type of account!")
     }
     try {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(userName + '@gmail.com', password)
@@ -123,7 +117,7 @@ export class Tab1Page {
       
       this.afStore.doc(`users/${res.user.uid}`).set({
         userName,
-        displayName,
+        displayName: displayName,
         account: genderChoose,
         profilePic: this.profilePicDefault,
         follow: []

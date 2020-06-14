@@ -27,7 +27,6 @@ export class ProfileSearchPage implements OnInit {
   users
   heartType: string = "heart-outline"
   heartColor: string = "black"
-  follower: number = 0
 
   constructor(
     public router: Router,
@@ -47,7 +46,6 @@ export class ProfileSearchPage implements OnInit {
       this.displayName = event.displayName
       this.account = event.account
       this.profilePic = event.profilePic
-      this.follower = event.follow.length
       
     })
 

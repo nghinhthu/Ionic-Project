@@ -26,7 +26,6 @@ export class ProfilePage implements OnInit {
   profilePic: string
   avatar
   postCount: number = 0
-  follower: number = 0
 
   // postRef: Observable<any>;
   postRef: Observable<any[]>;
@@ -62,7 +61,6 @@ export class ProfilePage implements OnInit {
       this.displayName = event.displayName
       this.account = event.account
       this.profilePic = event.profilePic
-      this.follower = event.follow.length
       
     })
 
@@ -70,7 +68,6 @@ export class ProfilePage implements OnInit {
       .subscribe(data => {
         this.postCount = data.length;
       })
-      
     this.postRef = this.afStore.collection('posts', ref => ref.where('userID', '==', this.userID).orderBy('published', 'desc')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data();

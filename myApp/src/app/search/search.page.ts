@@ -21,10 +21,12 @@ export class SearchPage implements OnInit {
     public router: Router
   ) {
     this.users = afStore.collection('users').valueChanges({ idField: 'userID' });
-    // this.userss = this.users
-    // console.log('USER ' + this.users);
+    this.userss = this.users
+    console.log('USER ' + this.users);
   }
 
-
+  search(userID: string){
+    this.router.navigate(['/tabs/search/'+userID])
+  }
   ngOnInit() {}
 }

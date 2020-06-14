@@ -26,7 +26,11 @@ export class SearchPage implements OnInit {
   }
 
   search(userID: string){
+<<<<<<< HEAD
     this.router.navigate(['/tabs/profile/'+userID])
+=======
+    this.router.navigate(['/tabs/search/'+userID])
+>>>>>>> parent of 696d26b... count Follower
   }
   ngOnInit() {}
 }

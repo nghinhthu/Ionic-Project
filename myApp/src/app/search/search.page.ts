@@ -23,12 +23,17 @@ export class SearchPage implements OnInit {
     this.users = afStore.collection('users').valueChanges({ idField: 'userID' });
     this.userss = this.users
     console.log('USER ' + this.users);
+    // this.userss = this.users
+    // console.log('USER ' + this.users);
   }
 
   search(userID: string){
-    this.router.navigate(['/tabs/profile/'+userID])
-    this.router.navigate(['/tabs/search/'+userID])
-    this.router.navigate(['/tabs/searchh/'+userID])
+    if(this.user.getUID() == userID){
+      this.router.navigate(['/tabs/profile'])
+    }
+    else{
+      this.router.navigate(['/tabs/search/'+userID])
+    }
   }
   ngOnInit() {}
 }

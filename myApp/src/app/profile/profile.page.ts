@@ -35,6 +35,7 @@ export class ProfilePage implements OnInit {
   postss: Observable<any[]>; //collection 'posts'
   users: Observable<any[]>; //collection 'users'
   postID
+  follower: number = 0
 
   constructor(
     public afStore: AngularFirestore,
@@ -61,6 +62,7 @@ export class ProfilePage implements OnInit {
       this.displayName = event.displayName
       this.account = event.account
       this.profilePic = event.profilePic
+      this.follower = event.follow.length
       
     })
 

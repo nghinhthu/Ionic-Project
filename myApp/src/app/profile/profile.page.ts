@@ -37,6 +37,9 @@ export class ProfilePage implements OnInit {
   postID
   follower: number = 0
 
+  public show:boolean = false;
+  public buttonName:any = 'Show';
+
   constructor(
     public afStore: AngularFirestore,
     public afAuth: AngularFireAuth,
@@ -101,5 +104,10 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     // console.log("postRef ",this.postRef)
   }
-
+  toggle() {
+    this.show = !this.show;
+  }
+  toggle1() {
+    this.show == this.show;
+  }
 }

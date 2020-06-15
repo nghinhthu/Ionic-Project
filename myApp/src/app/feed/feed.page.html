@@ -57,7 +57,7 @@
         <video *ngIf="post.typeFile == 'video'" (click)="goTo(post.postID)" width="auto" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
             <source src="{{post.image}}" type="video/mp4" />
            </video>
-        <hr>
+        <!-- <hr> -->
         <ion-grid  (click)="goTo(post.postID)">
             <ion-row>
                 <ion-col col-12>

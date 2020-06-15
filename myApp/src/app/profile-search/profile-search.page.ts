@@ -28,6 +28,8 @@ export class ProfileSearchPage implements OnInit {
   heartType: string = "heart-outline"
   heartColor: string = "black"
   follower: number = 0
+  public show:boolean = false;
+  public buttonName:any = 'Show';
 
   constructor(
     public router: Router,
@@ -96,5 +98,10 @@ export class ProfileSearchPage implements OnInit {
       })
     }
   }
-
+  toggle() {
+    this.show = !this.show;
+  }
+  toggle1() {
+    this.show == this.show;
+  }
 }

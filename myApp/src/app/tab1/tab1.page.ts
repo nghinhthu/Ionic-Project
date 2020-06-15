@@ -123,11 +123,11 @@ export class Tab1Page {
         follower: [],
         following: []
       })
-
-
-
+    
       this.showAlert('Success!', 'You are registered!')
       this.router.navigate(['/tabs'])
+      this.userName = ""
+      this.password = ""
       // console.log(res)
       // this.showAlert("Success!", "Welcome Aboard!")
       // this.router.navigate(['/tabs'])

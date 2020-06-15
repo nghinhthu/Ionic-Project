@@ -47,6 +47,10 @@ export class UserService {
         return this.user.displayName
     }
 
+    clearItem(){
+        this.user = null
+    }
+
     // getAccount(): string {
     //     return this.user.account
     // }

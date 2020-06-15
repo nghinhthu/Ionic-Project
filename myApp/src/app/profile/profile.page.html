@@ -73,13 +73,19 @@
     <!-- *ngIf="(userPosts | async)?.posts as posts" -->
     <div id="images" *ngIf="!show">
         <div class="img_box" *ngFor="let post of postRef | async" id="player-overlay">
-            <img *ngIf="post.data.typeFile == 'image'" (click)="goTo(post.id)" height="100%" width="100%" class="main-image" style=" object-fit: cover;"
-                src="{{post.data.image}}">
-                <img *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" height="100%" width="100%" class="main-image" style=" object-fit: cover;"
+            <img *ngIf="post.data.typeFile == 'image'" (click)="goTo(post.id)" height="100%" width="100%"
+                class="main-image" style=" object-fit: cover;" src="{{post.data.image}}">
+            <img *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" height="100%" width="100%" class="main-image" style=" object-fit: cover;"
                 src="../../assets/image/video.jpg">
+            <!-- <video *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" width="auto" controls="controls"
+                preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+                <source src="{{post.image}}" type="video/mp4" />
+            </video> -->
         </div>
     </div>
-    <div id="images" *ngIf="show">
+
+
+    <!-- <div id="images" *ngIf="show">
         <div class="img_box" *ngFor="let post of postRef | async" id="player-overlay">
             
                 <video *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" width="auto" controls="controls" preload="metadata"
@@ -87,9 +93,9 @@
                 <source src="{{post.image}}" type="video/mp4" />
             </video>
         </div>
-    </div>
-  
-    
+    </div> -->
+
+
 
     <!-- <ion-grid class="image-grid">
         <ion-row class="single-row" >

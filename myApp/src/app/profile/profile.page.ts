@@ -36,6 +36,7 @@ export class ProfilePage implements OnInit {
   users: Observable<any[]>; //collection 'users'
   postID
   follower: number = 0
+  following: number = 0
 
   public show:boolean = false;
   public buttonName:any = 'Show';
@@ -65,8 +66,8 @@ export class ProfilePage implements OnInit {
       this.displayName = event.displayName
       this.account = event.account
       this.profilePic = event.profilePic
-      this.follower = event.follow.length
-      
+      this.follower = event.follower.length
+      this.following = event.following.length
     })
 
     this.afStore.collection('posts', ref => ref.where('userID', '==', this.userID)).snapshotChanges()

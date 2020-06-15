@@ -28,6 +28,7 @@ export class ProfileSearchPage implements OnInit {
   heartType: string = "heart-outline"
   heartColor: string = "black"
   follower: number = 0
+  following: number = 0
   public show:boolean = false;
   public buttonName:any = 'Show';
 
@@ -49,8 +50,8 @@ export class ProfileSearchPage implements OnInit {
       this.displayName = event.displayName
       this.account = event.account
       this.profilePic = event.profilePic
-      this.follower = event.follow.length
-      
+      this.follower = event.follower.length
+      this.following = event.following.length
     })
 
     this.afStore.collection('posts', ref => ref.where('userID', '==', this.userID)).snapshotChanges()
@@ -71,8 +72,8 @@ export class ProfileSearchPage implements OnInit {
 
     this.sub = this.userReference.valueChanges().subscribe(val => {
       this.users = val
-      this.heartType = val.follow.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
-      this.heartColor = val.follow.includes(this.user.getUID()) ? 'danger' : 'dark'
+      this.heartType = val.follower.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
+      this.heartColor = val.follower.includes(this.user.getUID()) ? 'danger' : 'dark'
     })
   }
 
@@ -89,12 +90,12 @@ export class ProfileSearchPage implements OnInit {
   follow(){
     if (this.heartType == 'heart-outline') {
       this.userReference.update({
-        follow: firestore.FieldValue.arrayUnion(this.user.getUID())
+        follower: firestore.FieldValue.arrayUnion(this.user.getUID())
       })
     }
     else {
       this.userReference.update({
-        follow: firestore.FieldValue.arrayRemove(this.user.getUID())
+        follower: firestore.FieldValue.arrayRemove(this.user.getUID())
       })
     }
   }

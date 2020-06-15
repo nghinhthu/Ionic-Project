@@ -28,8 +28,9 @@
                     <p *ngIf="follower > '1'">followers</p>
                 </div>
                 <div class="date_box">
-                    <b>715</b>
-                    <p>following</p>
+                    <b>{{following}}</b>
+                    <p *ngIf="following <= '1'">following</p>
+                    <p *ngIf="following > '1'">followings</p>
                 </div>
             </div>
         </ion-label>

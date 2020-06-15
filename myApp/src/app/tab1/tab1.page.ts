@@ -120,7 +120,8 @@ export class Tab1Page {
         displayName: displayName,
         account: genderChoose,
         profilePic: this.profilePicDefault,
-        follow: []
+        follower: [],
+        following: []
       })
 
 

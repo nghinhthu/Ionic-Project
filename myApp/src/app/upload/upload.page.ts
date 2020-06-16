@@ -73,6 +73,10 @@ export class UploadPage implements OnInit {
 
   typeFile: string
 
+  mainuser
+  sub
+  displayName
+
   @ViewChild("fileButton", { static: false }) fileButton;
 
   constructor(
@@ -96,6 +100,13 @@ export class UploadPage implements OnInit {
     private postService: PostService
   ) {
     this.userid = this.afAuth.auth.currentUser.uid;
+    this.mainuser = afStore.doc(`users/${user.getUID()}`)
+    // this.posts = this.postService.getPosts()  
+
+    this.sub = this.mainuser.valueChanges().subscribe(event => {
+      this.displayName = event.displayName
+    })
+    
   }
 
   ngOnInit() {
@@ -131,7 +142,7 @@ export class UploadPage implements OnInit {
     this.afStore.doc(`posts/${id}`).set({
       title,
       content,
-      author: this.user.getDisplayName() || this.user.getEmail(),
+      author: this.displayName,
       likes: [],
       published: firestore.FieldValue.serverTimestamp(),
       image,
@@ -158,12 +169,21 @@ export class UploadPage implements OnInit {
     // if (file.type.split('/')[0] !== 'image') {
     //   return alert('only image files')
     // } else {
+
+    
     if (file.type.split('/')[0] == 'image') {
       this.typeFile = 'image'
     }
     else if (file.type.split('/')[0] == 'video') {
       this.typeFile = 'video'
     }
+    else{
+      return alert('only image files')
+    }
+
+
+
+
     const task = this.storage.upload(path, file);
     const ref = this.storage.ref(path);
     this.uploadPercent = task.percentageChanges();

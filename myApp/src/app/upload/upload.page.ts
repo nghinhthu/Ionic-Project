@@ -106,7 +106,7 @@ export class UploadPage implements OnInit {
     this.sub = this.mainuser.valueChanges().subscribe(event => {
       this.displayName = event.displayName
     })
-    
+
   }
 
   ngOnInit() {
@@ -166,34 +166,54 @@ export class UploadPage implements OnInit {
   uploadImage(event) {
     const file = event.target.files[0]
     const path = `posts/${file.name}`
-    // if (file.type.split('/')[0] !== 'image') {
-    //   return alert('only image files')
+    
     // } else {
 
-    
+
     if (file.type.split('/')[0] == 'image') {
       this.typeFile = 'image'
+      const task = this.storage.upload(path, file);
+      const ref = this.storage.ref(path);
+      this.uploadPercent = task.percentageChanges();
+      console.log('Image uploaded!', file.accessToken);
+      task.snapshotChanges().pipe(finalize(() => {
+        this.downloadURL = ref.getDownloadURL()
+        this.downloadURL.subscribe(url => (this.image = url));
+      })
+      )
+        .subscribe();
     }
     else if (file.type.split('/')[0] == 'video') {
       this.typeFile = 'video'
+      const task = this.storage.upload(path, file);
+      const ref = this.storage.ref(path);
+      this.uploadPercent = task.percentageChanges();
+      console.log('Image uploaded!', file.accessToken);
+      task.snapshotChanges().pipe(finalize(() => {
+        this.downloadURL = ref.getDownloadURL()
+        this.downloadURL.subscribe(url => (this.image = url));
+      })
+      )
+        .subscribe();
     }
-    else{
+
+    else if (file.type.split('/')[0] !== 'image' || file.type.split('/')[0] !== 'video') {
       return alert('only image files')
     }
 
 
 
 
-    const task = this.storage.upload(path, file);
-    const ref = this.storage.ref(path);
-    this.uploadPercent = task.percentageChanges();
-    console.log('Image uploaded!', file.accessToken);
-    task.snapshotChanges().pipe(finalize(() => {
-      this.downloadURL = ref.getDownloadURL()
-      this.downloadURL.subscribe(url => (this.image = url));
-    })
-    )
-      .subscribe();
+    // const task = this.storage.upload(path, file);
+    // const ref = this.storage.ref(path);
+    // this.uploadPercent = task.percentageChanges();
+    // console.log('Image uploaded!', file.accessToken);
+    // task.snapshotChanges().pipe(finalize(() => {
+    //   this.downloadURL = ref.getDownloadURL()
+    //   this.downloadURL.subscribe(url => (this.image = url));
+    // })
+    // )
+    //   .subscribe();
     // }
   }
 

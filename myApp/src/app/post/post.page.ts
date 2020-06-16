@@ -227,4 +227,7 @@ export class PostPage implements OnInit {
   options() {
     this.presentActionSheet();
   }
+  back(){
+    this.router.navigate(['/feed']) 
+  }
 }

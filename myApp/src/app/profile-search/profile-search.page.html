@@ -28,8 +28,9 @@
                     <p *ngIf="follower > '1'">followers</p>
                 </div>
                 <div class="date_box">
-                    <b>715</b>
-                    <p>following</p>
+                    <b>{{following}}</b>
+                    <p *ngIf="following <= '1'">following</p>
+                    <p *ngIf="following > '1'">followings</p>
                 </div>
             </div>
         </ion-label>
@@ -41,8 +42,8 @@
   </section> -->
 
 
-    <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="follow()">follow</ion-button>
-    <ion-icon (click)="follow()" [name]="heartType" [color]="heartColor"></ion-icon>
+    <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="followerFunction()">follow</ion-button>
+    <ion-icon (click)="followerFunction()" [name]="heartType" [color]="heartColor"></ion-icon>
     <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
         <ion-icon color="dark" slot="icon-only" name="person-circle"></ion-icon>
         <ion-icon color="dark" slot="icon-only" name="checkmark"></ion-icon>

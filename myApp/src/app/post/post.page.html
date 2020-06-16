@@ -20,9 +20,16 @@
             <!-- <ion-avatar item-start>
                 <img class="icon-photo" src="http://ucarecdn.com/{{profilePic}}/-/preview/">
             </ion-avatar> -->
-            <p class="insta-text"><b>{{post.author}}</b></p>
-            
+            <ion-item>
+                <ion-avatar item-left >
+                <img src="http://ucarecdn.com/{{profilePic}}/-/preview/">
+              </ion-avatar>
+                <p class="insta-text"><b>{{post.author}}</b></p>
                 <ion-icon style="color: tomato;" name="ellipsis-vertical-outline" (click)="options()" slot="end"></ion-icon>
+            </ion-item>
+            
+            
+                
             
         </ion-toolbar>
 
@@ -43,7 +50,7 @@
             <p class="insta-text"><b>{{ countLiked() }}</b></p>
             <!-- <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p> -->
         </div>
-        <p class="insta-text"><b>{{post.author}}</b> {{post.title}}</p>
+        <p class="insta-text"> {{post.title}}</p>
         <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">
             {{ post.published.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
         <hr>

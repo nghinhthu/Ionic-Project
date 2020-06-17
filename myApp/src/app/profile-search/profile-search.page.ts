@@ -135,4 +135,5 @@ export class ProfileSearchPage implements OnInit {
   toggle1() {
     this.show == this.show;
   }
+  
 }

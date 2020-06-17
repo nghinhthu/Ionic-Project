@@ -5,18 +5,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-avatar slot="start">
-      <img src="./avatar.svg">
-    </ion-avatar>
+  <div *ngFor="let user of users | async">
+    <div *ngFor="let item of listFollower">
+    <ion-item *ngIf="user.userID == item">
+      <ion-avatar slot="start">
+        <img src="http://ucarecdn.com/{{ user.profilePic}}/-/preview/">
+      </ion-avatar>
       <ion-button color="primary" slot="end">Primary</ion-button>
-    <ion-label>
-      <h3>nghinhthu</h3>
-      <p>followed you</p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item>
+      <ion-label>
+        <h3>{{user.displayName}}</h3>
+        <!-- <h3>{{item}}</h3> -->
+        <p>followed you</p>
+      </ion-label>
+    </ion-item>
+  </div>
+  </div>
+  <!-- <ion-item>
     <ion-avatar slot="start">
       <img src="./avatar.svg">
     </ion-avatar>
@@ -36,5 +40,5 @@
       <h3>nghinhthu</h3>
       <p>followed you</p>
     </ion-label>
-  </ion-item>
+  </ion-item> -->
 </ion-content>

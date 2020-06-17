@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { ActionSheetController } from '@ionic/angular';
+
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -20,7 +21,7 @@ export class NotificationPage implements OnInit {
   mainuser: AngularFirestoreDocument
   youridFollow
   sub
-  users; //collection 'users'
+  users: Observable<any[]>;; //collection 'users'
   nameFollow = []
   ahihi
 
@@ -32,42 +33,22 @@ export class NotificationPage implements OnInit {
     public postService: PostService,
     private route: ActivatedRoute) { 
 
-      this.youridFollow = this.user.getUID() //Id nguoi dang nhap
-
       this.users = this.afStore.collection("users")
-      .snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          console.log('data '+data)
-          return { id, data };
-        }))
-      );
-      
-      console.log('sấdfasdf '+this.users)
+      .valueChanges({ idField: "userID" })
+      console.log('userssss '+this.users)
+
+      this.youridFollow = this.user.getUID() //Id nguoi dang nhap
 
       this.mainuser = afStore.doc(`users/${this.youridFollow}`) //cai nay mng lay o dau a
 
+      //list follower cua mainuser
       this.sub = this.mainuser.valueChanges().subscribe(event => {
        
         this.listFollower = event.follower
-        console.log('folloew '+this.listFollower)
+        console.log('follower '+this.listFollower)
       })
-
-      this.afStore.collection('users').snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          console.log('data '+data)
-          return { id, data };
-        }))
-      );
-      
   
     }
-    // getNameFollow(postID: string) {
-    //  this.
-    // }
   ngOnInit() {
    
   }

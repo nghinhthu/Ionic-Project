@@ -159,13 +159,15 @@ export class UploadPage implements OnInit {
 
 
     this.saving = 'Post Created!'
-    setTimeout(() => (this.saving = 'Create Post'), 3000)
+    setTimeout(() => (this.saving = 'Create Post',this.router.navigate(['/feed'])), 500)
+    
     // this.router.navigate(['/feed'])
   }
 
   uploadImage(event) {
     const file = event.target.files[0]
     const path = `posts/${file.name}`
+    
     
     // } else {
 

@@ -72,3 +72,6 @@ video {
   height: auto;
 }
 
+.new-background-color{
+  .button:hover {--background-hover: none}
+}

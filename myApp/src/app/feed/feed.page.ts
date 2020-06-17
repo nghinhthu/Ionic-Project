@@ -165,6 +165,31 @@ export class FeedPage implements OnInit {
     }).then(alert => alert.present)
   }
 
+  async presentAlertMultipleButtons() {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Are you log out.',
+      buttons: [{
+        text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          this.logOut();
+        }
+      }
+    ]
+    });
+
+    await alert.present();
+  }
+
+  
   getPostID(postID: string) {
     this.postid = postID;
     console.log("aaaaa " + this.postid);
@@ -179,9 +204,9 @@ export class FeedPage implements OnInit {
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
       .valueChanges({ idField: "postID" });
     // this.posts = this.postService.getPosts()
-    console.log('post '+this.posts)
+    // console.log('post '+this.posts)
     
-    console.log('user ',this.user)
+    // console.log('user ',this.user)
     // console.log('id ',postID)
     // console.log('displayName ',this.users)
 

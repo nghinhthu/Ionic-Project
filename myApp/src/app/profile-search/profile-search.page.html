@@ -42,11 +42,10 @@
   </section> -->
 
 
-    <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="followerFunction()">follow</ion-button>
-    <ion-icon (click)="followerFunction()" [name]="heartType" [color]="heartColor"></ion-icon>
-    <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
+    <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="followerFunction()">{{textFollow}}</ion-button>
+    <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium"  (click)="options()">
         <ion-icon color="dark" slot="icon-only" name="person-circle"></ion-icon>
-        <ion-icon color="dark" slot="icon-only" name="checkmark"></ion-icon>
+        <ion-icon *ngIf="textFollow=='Un Follow'" color="dark" slot="icon-only" name="checkmark"></ion-icon>
     </ion-button>
     <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
         <ion-icon color="dark" slot="icon-only" name="caret-down"></ion-icon>
@@ -62,10 +61,10 @@
 
     <ion-segment color="medium">
         <ion-segment-button>
-            <ion-icon name="apps"></ion-icon>
+            <ion-icon src="/assets/icons/apps.svg" (click)="toggle()"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button>
-            <ion-icon name="person-circle"></ion-icon>
+        <ion-segment-button (click)="toggle()">
+            <ion-icon src="/assets/icons/person-circle.svg"></ion-icon>
         </ion-segment-button>
     </ion-segment>
 

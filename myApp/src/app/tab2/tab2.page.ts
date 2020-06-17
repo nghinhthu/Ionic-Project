@@ -71,7 +71,38 @@ export class Tab2Page {
 
     await alert.present()
   }
-
+  async presentAlertMultipleButtons() {
+    if(this.userName == ""){
+      const alert = await this.alert.create({
+        cssClass: 'my-custom-class',
+        message: 'Username not entered.',
+        buttons: [{
+          text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+        }
+      ]
+      });
+  
+      await alert.present();
+    }
+    if(this.userName != ""){
+      this.afAuth.auth.sendPasswordResetEmail(this.userName+'@gmail.com').then(function (){
+        window.alert('Email has been sent to you. Please check your email and verify !')
+      })
+      .catch(function(err){
+        console.dir(err)
+      if(err.code){
+        // this.showAlert("Error", err)
+        console.log(err.code)
+        window.alert(err)
+      }
+      })
+  }
+  }
   resetPassword(){
     if(this.userName == ""){
       window.alert("Please fill your email address !")

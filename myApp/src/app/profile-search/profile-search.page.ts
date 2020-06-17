@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserService } from '../user.service';
 import { firestore } from 'firebase/app';
-
+import { ActionSheetController, AlertController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-profile-search',
   templateUrl: './profile-search.page.html',
@@ -18,6 +18,7 @@ export class ProfileSearchPage implements OnInit {
   mainuser1: AngularFirestoreDocument
   sub
   sub1
+  notificationFollow
   posts
   displayName: string
   account: string
@@ -33,8 +34,10 @@ export class ProfileSearchPage implements OnInit {
   heartColor: string = "black"
   follower: number = 0
   following: number = 0
+  textFollow: string
   public show:boolean = false;
   public buttonName:any = 'Show';
+
 
 
   myID
@@ -44,11 +47,17 @@ export class ProfileSearchPage implements OnInit {
     public router: Router,
     private route: ActivatedRoute,
     public afStore: AngularFirestore,
-    private user: UserService
+    private user: UserService,
+    public actionSheetController: ActionSheetController,
+    public alertCtrl: AlertController,
+    public nav: NavController,
+    public action: ActionSheetController,
+
   ) {
 
     //id cua nguoi duoc tim kiem
     this.userID = this.route.snapshot.paramMap.get('id')
+    console.log('this.userID '+this.userID)
     this.myID = this.user.getUID()
     // console.log('aaaaaahsdhf '+this.userID)
 
@@ -91,6 +100,7 @@ export class ProfileSearchPage implements OnInit {
       this.users = val
       this.heartType = val.follower.includes(this.user.getUID()) ? 'heart' : 'heart-outline'
       this.heartColor = val.follower.includes(this.user.getUID()) ? 'danger' : 'dark'
+      this.textFollow = val.follower.includes(this.user.getUID()) ? 'Un Follow' : 'Follow'
     })
 
     // this.sub1 = this.userReference1.valueChanges().subscribe(data => {
@@ -112,23 +122,56 @@ export class ProfileSearchPage implements OnInit {
 
   followerFunction(){
     if (this.heartType == 'heart-outline') {
+      // this.textFollow = "Un Follow"
       this.userReference.update({
         follower: firestore.FieldValue.arrayUnion(this.user.getUID()),
+        
       })
       this.userReference1.update({
-        following: firestore.FieldValue.arrayUnion(this.userID)
+        following: firestore.FieldValue.arrayUnion(this.userID),
+        //displayName: firestore.FieldValue.arrayUnion(this.userID)
       })
       
     }
     else {
+      // this.textFollow = "Follow"
       this.userReference.update({
         follower: firestore.FieldValue.arrayRemove(this.user.getUID()),
+        // displayName: this.displayName
       })
       this.userReference1.update({
         following: firestore.FieldValue.arrayRemove(this.userID)
       })
     }
   }
+
+  async presentActionSheet() {
+    const actionSheet = await this.action.create({
+      header: 'More Optons',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.followerFunction();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+  
+  
+  options() {
+    this.presentActionSheet();
+  }
+
   toggle() {
     this.show = !this.show;
   }

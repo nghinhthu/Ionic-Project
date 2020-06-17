@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar class="new-background-color">
         <ion-buttons slot="start">
-            <ion-button defaultHref="/" style="color: white;">
+            <ion-button defaultHref="/feed" style="color: white;">
                 <ion-icon name="caret-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -25,7 +25,7 @@
                 <img src="http://ucarecdn.com/{{profilePic}}/-/preview/">
               </ion-avatar>
                 <p class="insta-text"><b>{{post.author}}</b></p>
-                <ion-icon style="color: tomato;" name="ellipsis-vertical-outline" (click)="options()" slot="end"></ion-icon>
+                <ion-icon src="/assets/icons/ellipsis-vertical-outline.svg" (click)="options()" slot="end"></ion-icon>
             </ion-item>
             
             
@@ -41,7 +41,7 @@
             <source src="{{post.image}}" type="video/mp4" />
            </video>
         <div class="interactive">
-            <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
+            <ion-icon (click)="toggleHeart()" [name]="heartType"  [color]="heartColor"></ion-icon>
             <ion-icon (click)="toggle()" name="chatbubble-outline" color="dark"></ion-icon>
             <ion-icon (click)="sendShare(messageBody.innerText, 
             messageSubject.innerText, 'http://ucarecdn.com/11a5036f-c572-4171-acfe-374b9de95222/-/preview/')"
@@ -50,7 +50,7 @@
             <p class="insta-text"><b>{{ countLiked() }}</b></p>
             <!-- <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p> -->
         </div>
-        <p class="insta-text"> {{post.title}}</p>
+        <p class="insta-text"><b>{{post.author}}</b> {{post.title}}</p>
         <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">
             {{ post.published.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
         <hr>

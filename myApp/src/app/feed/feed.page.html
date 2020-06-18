@@ -59,11 +59,11 @@
             <source src="{{post.image}}" type="video/mp4" />
            </video>
         <!-- <hr> -->
-        <ion-grid  (click)="goTo(post.postID)">
+        <ion-grid >
             <ion-row>
                 <ion-col col-12>
                     
-                    <b style="color: black;">{{post.author}}</b>
+                    <b (click)="goToUser(post.userID)" style="color: black;">{{post.author}}</b>
                     {{post.title}}
                 </ion-col>
                

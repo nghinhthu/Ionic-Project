@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content>
-  <div *ngFor="let user of users | async">
-    <div *ngFor="let item of listFollower">
-    <ion-item *ngIf="user.userID == item">
+  <div *ngFor="let item of listFollower">
+    <div *ngFor="let user of users | async">
+    <ion-item *ngIf="item == user.userID">
       <ion-avatar slot="start">
         <img src="http://ucarecdn.com/{{ user.profilePic}}/-/preview/">
       </ion-avatar>

@@ -51,6 +51,7 @@ export class FeedPage implements OnInit {
   scheduled = []
   pushes: any = [];
   typeFile: string
+  modalController: any;
 
   constructor(
     public router: Router,
@@ -103,6 +104,22 @@ export class FeedPage implements OnInit {
     //     });
     //   })
   }
+
+  async presentModal(){
+    const modal = await this.modalController.create({
+      component: FeedPage,
+      componentProps: {isModal: true}
+    })
+
+    await modal.present()
+
+    if(!window.history.state.modal){
+      const modalState = { modal: true}
+      history.pushState(modalState, null)
+    }
+  }
+
+  
 
   subscribeToTopic() {
     this.fcm.subscribeToTopic('enappd');
@@ -235,6 +252,10 @@ export class FeedPage implements OnInit {
 
   goTo(postID: string) {
     this.router.navigate(["/tabs/post/" + postID]);
+  }
+
+  goToUser(userID: string) {
+    this.router.navigate(["/tabs/user/" + userID]);
   }
 
   chat() {

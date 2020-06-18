@@ -1,7 +1,10 @@
 <ion-header>
     <ion-toolbar class="new-background-color">
         <ion-buttons slot="start">
-            <ion-button defaultHref="/feed" style="color: white;">
+            <ion-button (click)="close()" *ngIf="!isModal" style="color: white;">
+                <ion-icon name="caret-back-outline"></ion-icon>
+            </ion-button>
+            <ion-button defaultHref="/feed" *ngIf="!isModal" style="color: white;">
                 <ion-icon name="caret-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -24,7 +27,7 @@
                 <ion-avatar item-left >
                 <img src="http://ucarecdn.com/{{profilePic}}/-/preview/">
               </ion-avatar>
-                <p class="insta-text"><b>{{post.author}}</b></p>
+                <p (click)="goToUser(post.userID)" class="insta-text"><b>{{post.author}}</b></p>
                 <ion-icon src="/assets/icons/ellipsis-vertical-outline.svg" (click)="options()" slot="end"></ion-icon>
             </ion-item>
             
@@ -50,7 +53,7 @@
             <p class="insta-text"><b>{{ countLiked() }}</b></p>
             <!-- <p class="insta-text"><b>{{ postData.author }}</b> {{ postData.desc }}</p> -->
         </div>
-        <p class="insta-text"><b>{{post.author}}</b> {{post.title}}</p>
+        <p class="insta-text"><b (click)="goToUser(post.userID)">{{post.author}}</b> {{post.title}}</p>
         <ion-label style="font-size: 9px;padding: 0; margin: 5px 0px 5px 14px;">
             {{ post.published.toDate() | date: 'dd MMM, yyyy ' }}</ion-label>
         <hr>
@@ -67,7 +70,7 @@
                     <ion-col size="10">
                         <div>
                         <!-- this will contain the main post content -->
-                        <p style="font-size: small;"><strong>{{comment.displayName}}</strong> {{comment.comment}}</p>
+                        <p style="font-size: small;"><strong (click)="goToUser(comment.userID)">{{comment.displayName}}</strong> {{comment.comment}}</p>
                         <ion-label style="font-size: small;">
                             {{ post.published.toDate() | date: 'dd MMM, yyyy' }}</ion-label>
                         </div>

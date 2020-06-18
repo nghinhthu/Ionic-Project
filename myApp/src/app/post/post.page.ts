@@ -9,8 +9,9 @@ import { PostService } from '../post.service';
 import { Post } from '../post'
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, NavController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, ModalController } from '@ionic/angular';
 import { Platform } from '@ionic/angular'
+import { FeedPage } from '../feed/feed.page';
 @Component({
   selector: 'app-post',
   templateUrl: './post.page.html',
@@ -60,7 +61,8 @@ export class PostPage implements OnInit {
     public alert: AlertController,
     public action: ActionSheetController,
     public nav: NavController,
-    public platform: Platform
+    public platform: Platform,
+    private modalController:  ModalController
   ) {
 
     // binh luan 
@@ -77,6 +79,19 @@ export class PostPage implements OnInit {
     this.commentsRef = this.afStore.collection('comments').doc(this.postID)
       .collection('comments', ref => ref.orderBy('published', 'desc')).valueChanges();
   }
+
+  // close(){
+  //   this.modalController.dismiss()
+  // }
+
+  // async presentModal(){
+  //   const modal = await this.modalController.create({
+  //     component: FeedPage,
+  //     componentProps: {isModal: true}
+  //   })
+
+  //   await modal.present()
+  // }
 
   ngOnInit() {
 
@@ -133,6 +148,7 @@ export class PostPage implements OnInit {
     const comment = this.inputComment
     const author = this.displayName
     const profilePic = this.profilePic
+    const userID = this.user.getUID()
 
     if (this.inputComment != "") {
       this.afStore.collection('comments').doc(this.postID).collection('comments').add({
@@ -140,6 +156,7 @@ export class PostPage implements OnInit {
         displayName: author,
         profilePic: profilePic,
         published: firebase.firestore.FieldValue.serverTimestamp(),
+        userID: userID
       });
       this.inputComment = ""
     }
@@ -229,5 +246,8 @@ export class PostPage implements OnInit {
   }
   back(){
     this.router.navigate(['/feed']) 
+  }
+  goToUser(userID: string) {
+    this.router.navigate(["/tabs/user/" + userID]);
   }
 }

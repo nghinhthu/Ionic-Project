@@ -150,7 +150,7 @@ export class EditProfilePage implements OnInit {
     if(this.userName !== this.user.getEmail()){
       await this.user.updateEmail(this.userName)
       this.mainUser.update({
-        userName: this.userName
+        displayName: this.displayName
       })
     }
 

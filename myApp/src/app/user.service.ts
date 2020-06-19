@@ -79,6 +79,10 @@ export class UserService {
         return this.afAuth.auth.currentUser.updateEmail(newemail + '@gmail.com')
     }
 
+    updateDisplayName(newDisplayName: string) {
+        return this.afAuth.auth.currentUser.updateEmail(newDisplayName)
+    }
+
     async isAuthenticated() {
         if (this.user) {
             return true

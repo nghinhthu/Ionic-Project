@@ -1,11 +1,11 @@
 <ion-header>
     <ion-toolbar class="new-background-color">
-
-        <ion-buttons >
-            <ion-button slot="start" (click)="back()" style="color: white;" >
-                <ion-icon src="/assets/icons/caret-back-outline.svg"></ion-icon>
-
-       
+        <ion-buttons slot="start">
+            <ion-button (click)="close()" *ngIf="!isModal" style="color: white;">
+                <ion-icon name="caret-back-outline"></ion-icon>
+            </ion-button>
+            <ion-button defaultHref="/feed" *ngIf="!isModal" style="color: white;">
+                <ion-icon name="caret-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
         <ion-title style="color: white; font-size: small; text-align: center; margin-right: 30px;">

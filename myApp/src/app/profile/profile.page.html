@@ -42,32 +42,30 @@
         </ion-button>
     </section>
 
-    <!-- <ion-note style="font-weight:bold">{{postCount+' Posts'}}</ion-note> -->
-
-    <!-- <ion-button class="icon_button" shape="round" size="small" fill="outline" (click)="getProfilePic()">follow</ion-button> -->
     
     
-    <!-- <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
-        <ion-icon color="dark" slot="icon-only" name="person-circle"></ion-icon>
-        <ion-icon color="dark" slot="icon-only" name="checkmark"></ion-icon>
-    </ion-button>
-    <ion-button class="icon_button" shape="round" size="small" fill="outline" color="medium">
-        <ion-icon color="dark" slot="icon-only" name="caret-down"></ion-icon>
-    </ion-button> -->
-
-    <ion-item lines="none">
-        <ion-label>
-            <h3><b>{{ userName }}</b></h3>
-            <p>Fashion-designer, London UK</p>
-            <h3>Có <b>levanb, danchoi_1</b> và <b>12 người khác</b> theo dõi</h3>
+    <ion-item lines="none" >
+        
+        <ion-label >
+            <h3><b>{{ displayName }}</b></h3>
+                <p>Fashion-designer, London UK</p>
+                Có
+            <dfn *ngFor="let user of users | async" >
+                
+                <dfn *ngFor="let item of listFollower; let i=index" >
+                    <dfn *ngIf="user.userID == item" style="font-size: small;"><b *ngIf="i<2">{{user.displayName}},</b></dfn>   
+                </dfn>
+            </dfn>
+            theo dõi
         </ion-label>
+    
     </ion-item>
 
     <ion-segment color="medium">
         <ion-segment-button>
-            <ion-icon src="/assets/icons/apps.svg" (click)="toggle()"></ion-icon>
+            <ion-icon src="/assets/icons/apps.svg" ></ion-icon>
         </ion-segment-button>
-        <ion-segment-button (click)="toggle()">
+        <ion-segment-button>
             <ion-icon src="/assets/icons/person-circle.svg"></ion-icon>
         </ion-segment-button>
     </ion-segment>
@@ -75,7 +73,7 @@
     <!-- *ngIf="(userPosts | async)?.posts as posts" -->
     <div id="images" *ngIf="!show">
         <div class="img_box" *ngFor="let post of postRef | async" id="player-overlay">
-            <img *ngIf="post.data.typeFile == 'image'" (click)="goTo(post.id)" height="100%" width="100%"
+            <img *ngIf="post.data.typeFile == 'image'" (click)="goTo(post.id)" style="max-width: 605px;max-height: 601px; object-fit: cover;"
                 class="main-image" style=" object-fit: cover;" src="{{post.data.image}}">
             <img *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" height="100%" width="100%" class="main-image" style=" object-fit: cover;"
                 src="../../assets/image/video.jpg">

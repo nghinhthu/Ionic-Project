@@ -160,7 +160,7 @@ export class PostPage implements OnInit {
 
   deletePost(postID) {
     this.postService.delete(this.postID)
-    this.router.navigate(['/feed'])
+    
   }
   toggle() {
     this.show = !this.show;
@@ -216,7 +216,9 @@ export class PostPage implements OnInit {
           text: 'Delete',
           handler: () => {
             this.afStore.collection('posts').doc(this.postID).delete();
-            this.mainuser.collection('posts').doc(this.postID).delete()
+            this.mainuser.collection('posts').doc(this.postID).delete();
+            //this.router.navigate(['/feed']);
+            this.nav.navigateForward(['/tabs/feed'])
           }
         }
       ]
@@ -228,6 +230,6 @@ export class PostPage implements OnInit {
     this.presentActionSheet();
   }
   back(){
-    this.router.navigate(['/feed']) 
+    this.router.navigate(['/tabs/feed']) 
   }
 }

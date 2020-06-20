@@ -178,5 +178,7 @@ export class ProfileSearchPage implements OnInit {
   toggle1() {
     this.show == this.show;
   }
-  
+  back(){
+    this.router.navigate(['/tabs/search']) 
+  }
 }

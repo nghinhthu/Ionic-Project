@@ -1,5 +1,10 @@
 <ion-header>
     <ion-toolbar class="new-background-color">
+        <ion-buttons >
+            <ion-button (click)="back()" style="color: white;" slot="start">
+                <ion-icon src="/assets/icons/caret-back-outline.svg"></ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-title style="text-align: center; color: white;">{{ displayName }} <ion-icon *ngIf="checkAccount()"
                 color="primary" name="checkmark-circle"></ion-icon>
         </ion-title>
@@ -61,9 +66,9 @@
 
     <ion-segment color="medium">
         <ion-segment-button>
-            <ion-icon src="/assets/icons/apps.svg" (click)="toggle()"></ion-icon>
+            <ion-icon src="/assets/icons/apps.svg"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button (click)="toggle()">
+        <ion-segment-button>
             <ion-icon src="/assets/icons/person-circle.svg"></ion-icon>
         </ion-segment-button>
     </ion-segment>

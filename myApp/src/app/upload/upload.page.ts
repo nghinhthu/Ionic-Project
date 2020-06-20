@@ -122,7 +122,7 @@ export class UploadPage implements OnInit {
     //   );
     // });
   }
-  createPost() {
+  async createPost() {
 
     this.busy = true;
 
@@ -159,7 +159,17 @@ export class UploadPage implements OnInit {
 
 
     this.saving = 'Post Created!'
-    setTimeout(() => (this.saving = 'Create Post',this.router.navigate(['/feed'])), 500)
+    const alert = await this.alertContraller.create({
+          header: "Done",
+          message: "Your post was create!",
+          buttons: ["Cool!"]
+        });
+    
+        await alert.present();
+    
+        this.router.navigate(["/tabs/feed"]);
+    // setTimeout(() => (this.saving = 'Create Post'), 500)
+    // this.router.navigate(['/feed'])
     
     // this.router.navigate(['/feed'])
   }

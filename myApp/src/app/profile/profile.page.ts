@@ -37,6 +37,7 @@ export class ProfilePage implements OnInit {
   postID
   follower: number = 0
   following: number = 0
+  listFollower = []
 
   public show:boolean = false;
   public buttonName:any = 'Show';
@@ -53,6 +54,8 @@ export class ProfilePage implements OnInit {
 
     // this.postID = this.route.snapshot.paramMap.get('postID')
 
+    this.users = this.afStore.collection("users")
+      .valueChanges({ idField: "userID" })
 
     // profile cu
     this.userID = this.afAuth.auth.currentUser.uid;
@@ -68,8 +71,10 @@ export class ProfilePage implements OnInit {
       this.profilePic = event.profilePic
       this.follower = event.follower.length
       this.following = event.following.length
+      this.listFollower = event.follower
+        console.log('follower '+this.listFollower[0])
     })
-
+    
     this.afStore.collection('posts', ref => ref.where('userID', '==', this.userID)).snapshotChanges()
       .subscribe(data => {
         this.postCount = data.length;

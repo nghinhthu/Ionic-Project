@@ -25,7 +25,8 @@
             <div class="info_box">
                 <div class="date_box">
                     <b>{{postCount}}</b>
-                    <p>posts</p>
+                    <p *ngIf="postCount <= '1'">post</p>
+                    <p *ngIf="postCount > '1'">posts</p>
                 </div>
                 <div class="date_box">
                     <b>{{follower}}</b>

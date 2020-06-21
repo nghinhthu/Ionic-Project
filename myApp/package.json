@@ -169,8 +169,7 @@
       "cordova-support-google-services": {}
     },
     "platforms": [
-      "browser",
-      "android"
+      "browser"
     ]
   }
 }

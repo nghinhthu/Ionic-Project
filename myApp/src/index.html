@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <title>Aqua Ul kit</title>
@@ -17,11 +16,42 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
+<script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js"></script>
+
 
 <body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js"></script>
+
   <app-root></app-root>
 
  
 </body>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyAdnKeNSQcowB6GzNmqfANg3iCSKwjrpMo",
+    authDomain: "ionic-project-e1801.firebaseapp.com",
+    databaseURL: "https://ionic-project-e1801.firebaseio.com",
+    projectId: "ionic-project-e1801",
+    storageBucket: "ionic-project-e1801.appspot.com",
+    messagingSenderId: "354898369503",
+    appId: "1:354898369503:web:ee39c45e862df6e22c826a",
+    measurementId: "G-C9K347CJ18"
+  };
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </html>

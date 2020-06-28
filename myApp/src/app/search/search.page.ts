@@ -10,21 +10,16 @@ import { Router } from "@angular/router";
   styleUrls: ["./search.page.scss"]
 })
 export class SearchPage implements OnInit {
-  // term
-  items = [{ name: "archie" }, { name: "jake" }, { name: "richard" }];
 
-  users: Observable<any[]>; //collection 'users'
-  userss
+  users: Observable<any[]>;
+  
   constructor(
     private user: UserService,
     private afStore: AngularFirestore,
     public router: Router
   ) {
     this.users = afStore.collection('users').valueChanges({ idField: 'userID' });
-    this.userss = this.users
     console.log('USER ' + this.users);
-    // this.userss = this.users
-    // console.log('USER ' + this.users);
   }
 
   search(userID: string){
@@ -35,5 +30,6 @@ export class SearchPage implements OnInit {
       this.router.navigate(['/tabs/search/'+userID])
     }
   }
+  
   ngOnInit() {}
 }

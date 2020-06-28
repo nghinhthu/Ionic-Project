@@ -1,13 +1,4 @@
-<!-- <ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Tab Three
-        </ion-title>
-    </ion-toolbar>
-</ion-header> -->
-
-<ion-content padding style="background-image: url(/assets/image/backgroudregister1.jpg); background-size: cover;">
-    <!-- <form #form="ngForm" (ngSubmit)="login(form)">  -->
+<ion-content padding style="background-image: url(/assets/image/backgroudregister2.png); background-size: cover;">
     <form #form="ngForm">
         <ion-grid>
             <ion-row justify-content-center>
@@ -22,37 +13,38 @@
                     </div>
                     <div padding>
                         <ion-item>
-                            <ion-input clearInput name="email" type="text" placeholder="your@email.com" [(ngModel)]="userName" ngModel required></ion-input>
+                            <ion-input clearInput name="email" type="text" placeholder="your@email.com"
+                                [(ngModel)]="userName" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input clearInput name="email" type="text" placeholder="User Name" [(ngModel)]="displayName" ngModel required></ion-input>
+                            <ion-input clearInput name="email" type="text" placeholder="User Name"
+                                [(ngModel)]="displayName" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input clearInput name="password" type="password" placeholder="Password" [(ngModel)]="password" ngModel required></ion-input>
+                            <ion-input clearInput name="password" type="password" placeholder="Password"
+                                [(ngModel)]="password" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input clearInput name="password" type="password" placeholder="Confirm Password" [(ngModel)]="cPassword" ngModel required></ion-input>
+                            <ion-input clearInput name="password" type="password" placeholder="Confirm Password"
+                                [(ngModel)]="cPassword" ngModel required></ion-input>
                         </ion-item>
-                          <ion-radio-group>
+                        <ion-radio-group>
                             <ion-item *ngFor="let item of gender">
-                                
-                              <ion-label>{{item.text}}</ion-label>
-                              <ion-radio slot="start" (ionFocus)="getGender(item.text)"></ion-radio>
+
+                                <ion-label>{{item.text}}</ion-label>
+                                <ion-radio slot="start" (ionFocus)="getGender(item.text)"></ion-radio>
                             </ion-item>
-                            <!-- <ion-item>
-                                <ion-label>Female</ion-label>
-                                <ion-radio name="gender" value="Female" slot="start" (ionSelect)="mcqAnswer(value)"></ion-radio>
-                              </ion-item> -->
-                          </ion-radio-group>
-                          <ion-item *ngIf="checkAccount">
-                            <ion-input clearInput name="Code" type="text" placeholder="Confirm Admin Code" [(ngModel)]="adminCode" ngModel required></ion-input>
+                        </ion-radio-group>
+                        <ion-item *ngIf="checkAccount">
+                            <ion-input clearInput name="Code" type="text" placeholder="Confirm Admin Code"
+                                [(ngModel)]="adminCode" ngModel required></ion-input>
                         </ion-item>
                     </div>
                     <div padding>
-                        <ion-button class="my-button" size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="register()" style="color: #43a6be;">Register</ion-button>
-                        <div text-center (click)="resetPassword()">
+                        <ion-button class="my-button" size="large" type="submit" [disabled]="form.invalid"
+                            expand="block" (click)="register()" style="color: #ffffff;">Register</ion-button>
+                        <div (click)=resetPassword() text-center (click)="resetPassword()">
                             <a>
-                            <!-- <a routerLink='/'> -->
                                 <p style="padding-left: 20px;">Lost password?</p>
                             </a>
                         </div>
@@ -61,4 +53,5 @@
             </ion-row>
         </ion-grid>
     </form>
+    <br>
 </ion-content>

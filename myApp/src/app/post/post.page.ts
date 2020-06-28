@@ -3,15 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { UserService } from '../user.service';
 import { firestore } from 'firebase/app';
-import { File } from "@ionic-native/file/ngx";
-import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 import { PostService } from '../post.service';
-import { Post } from '../post'
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import { ActionSheetController, AlertController, NavController, ModalController } from '@ionic/angular';
-import { Platform } from '@ionic/angular'
-import { FeedPage } from '../feed/feed.page';
+import { ActionSheetController, AlertController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-post',
   templateUrl: './post.page.html',
@@ -20,7 +15,6 @@ import { FeedPage } from '../feed/feed.page';
 
 export class PostPage implements OnInit {
 
-  postNew: Post
   userID
   authorId
   mainuser: AngularFirestoreDocument
@@ -29,7 +23,6 @@ export class PostPage implements OnInit {
   profilePic: string
   commentsRef
   inputComment: string = ""
-  //like
 
   postID: string
   post
@@ -40,8 +33,6 @@ export class PostPage implements OnInit {
   heartColor: string = "black"
   sub
 
-  text = 'Hom nay dui que'
-  url = 'https://facebook.com/nghinhmatbu'
   posts: any;
 
   public show: boolean = false;
@@ -52,21 +43,16 @@ export class PostPage implements OnInit {
     private afStore: AngularFirestore,
     public afAuth: AngularFireAuth,
     private user: UserService,
-    private socialSharing: SocialSharing,
-    private file: File,
     private postService: PostService,
     private router: Router,
-    public actionSheetController: ActionSheetController,
     public alertCtrl: AlertController,
     public alert: AlertController,
     public action: ActionSheetController,
-    public nav: NavController,
-    public platform: Platform,
-    private modalController:  ModalController
+    public nav: NavController
   ) {
-
-    // binh luan 
+    
     this.mainuser = afStore.doc(`users/${user.getUID()}`)
+    this.userID = this.user.getUID()
 
     this.sub = this.mainuser.valueChanges().subscribe(event => {
       this.posts = event.posts
@@ -79,19 +65,6 @@ export class PostPage implements OnInit {
     this.commentsRef = this.afStore.collection('comments').doc(this.postID)
       .collection('comments', ref => ref.orderBy('published', 'desc')).valueChanges();
   }
-
-  // close(){
-  //   this.modalController.dismiss()
-  // }
-
-  // async presentModal(){
-  //   const modal = await this.modalController.create({
-  //     component: FeedPage,
-  //     componentProps: {isModal: true}
-  //   })
-
-  //   await modal.present()
-  // }
 
   ngOnInit() {
 
@@ -109,7 +82,6 @@ export class PostPage implements OnInit {
   }
 
   toggleHeart() {
-    // this.heartType = this.heartType == "heart" ? "heart-empty" : "heart"
     if (this.heartType == 'heart-outline') {
       this.postReference.update({
         likes: firestore.FieldValue.arrayUnion(this.user.getUID())
@@ -144,7 +116,6 @@ export class PostPage implements OnInit {
 
   comment() {
 
-    console.log('postid ' + this.postID)
     const comment = this.inputComment
     const author = this.displayName
     const profilePic = this.profilePic
@@ -164,15 +135,6 @@ export class PostPage implements OnInit {
       this.showAlert("Error", "Please write your comment!")
     }
 
-  }
-
-  async resolveLocalFile() {
-    return this.file.copyFile(`${this.file.applicationDirectory}www/assets/image`, 'logo.png',
-      this.file.cacheDirectory, `${new Date().getTime()}.jpg`)
-  }
-
-  removeTempFile(name) {
-    this.file.removeFile(this.file.cacheDirectory, name)
   }
 
   deletePost(postID) {
@@ -203,7 +165,7 @@ export class PostPage implements OnInit {
         text: 'Edit',
         icon: 'options',
         handler: () => {
-          this.nav.navigateForward('/edit');
+          this.router.navigate([`/tabs/edit-post/${this.postID}`])
         }
       }, {
         text: 'Cancel',
@@ -233,8 +195,7 @@ export class PostPage implements OnInit {
           text: 'Delete',
           handler: () => {
             this.afStore.collection('posts').doc(this.postID).delete();
-            this.mainuser.collection('posts').doc(this.postID).delete();
-            //this.router.navigate(['/feed']);
+            this.afStore.collection('users').doc(this.user.getUID()).collection('posts').doc(this.postID).delete();
             this.nav.navigateForward(['/tabs/feed'])
           }
         }

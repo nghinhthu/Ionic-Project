@@ -42,6 +42,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { Deeplinks } from '@ionic-native/deeplinks'
 import { PostPageModule } from './post/post.module';
+import { LoadingController } from '@ionic/angular';
+
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({

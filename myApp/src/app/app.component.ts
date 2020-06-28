@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  @ViewChild(IonRouterOutlet, {static: false}) routerOutlet: IonRouterOutlet
+  @ViewChild(IonRouterOutlet, { static: false }) routerOutlet: IonRouterOutlet
 
   rootPage: any = Tab2PageModule;
+  splash = true;
 
 
   constructor(
@@ -25,16 +26,17 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private location: PlatformLocation,
-    private modalController:  ModalController,
+    private modalController: ModalController,
     private alertController: AlertController,
     private router: Router
-  ) {
+  ) 
+  {
     this.initializeApp();
 
     this.location.onPopState(async () => {
       console.log('On Pop')
       const modal = await this.modalController.getTop()
-      if(modal){
+      if (modal) {
         modal.dismiss()
       }
     })
@@ -42,14 +44,17 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+    
       this.statusBar.styleDefault();
+
+      this.statusBar.backgroundColorByHexString('#75c1f9');
       this.splashScreen.hide();
 
-      this.platform.backButton.subscribeWithPriority(0, async() => {
-        if(this.routerOutlet && this.routerOutlet.canGoBack()){
+      this.platform.backButton.subscribeWithPriority(0, async () => {
+        if (this.routerOutlet && this.routerOutlet.canGoBack()) {
           this.routerOutlet.pop()
         }
-        else if(this.router.url === '/feed'){
+        else if (this.router.url === '/feed') {
           const alert = await this.alertController.create({
             header: "Close App",
             message: "Do you really want to close the app?",
@@ -70,5 +75,12 @@ export class AppComponent {
         }
       })
     });
+  }
+  
+  ngOnInit() {
+    this.ionViewDidLoad();
+  }
+  ionViewDidLoad() {
+    setTimeout(() => (this.splash = false), 4000);
   }
 }

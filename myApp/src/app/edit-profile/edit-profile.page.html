@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar class="new-background-color">
         <ion-title>Edit Profile</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -11,11 +11,13 @@
     <div *ngIf="!busy">
 
 
-
-        <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)">
-        <div>
-            <ion-img class="profile-pic" (click)="updateProfilePic()" src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}"></ion-img>
+        <div class="pic">
+            <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)">
+   
+            <ion-img class="profile-pic" style="border-radius: 50%;" (click)="updateProfilePic()" src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}"></ion-img>
         </div>
+        
+        
 
         <div class="profile-info">
             <ion-item>
@@ -25,13 +27,8 @@
 
             <ion-item>
                 <ion-label position="floating">User Name</ion-label>
-                <ion-input [(ngModel)]="displayName"></ion-input>
+                <ion-input [(ngModel)]="displayName" disabled></ion-input>
             </ion-item>
-
-            <!-- <ion-item>
-                <ion-label position="floating">Gneder</ion-label>
-                <ion-input [(ngModel)]="gender"></ion-input>
-            </ion-item> -->
 
             <ion-item>
                 <ion-label position="floating">New Password</ion-label>

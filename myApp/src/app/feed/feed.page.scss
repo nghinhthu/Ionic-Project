@@ -19,14 +19,7 @@ hr {
     width: 100% !important;
     background: #d5d5d5 !important;
   }
-  ion-avatar{
-    background-image: url('../../assets/image/instagram-bg-color.jpg');
-    background-size: contain;
-    padding: 2px;
-    margin: 5px;
-    height: 35px;
-    width: 35px;
-  }
+
   ion-avatar img {
     border: 2px solid white;
   }
@@ -62,7 +55,8 @@ hr {
  
   }
   .new-background-color{
-    --background: #97daeb;
+    --background: rgb(2,0,36);
+    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(100,189,255,1) 0%, rgba(190,248,255,1) 100%);
 }
 
 
@@ -74,4 +68,18 @@ video {
 
 .new-background-color{
   .button:hover {--background-hover: none}
+}
+ion-content {
+  --background: url(../../assets/image/backgroudprofile.png) no-repeat top center/cover fixed, #fff;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+ion-card{
+  --background: none !important;
+  --border: none;
+}
+.card-1{
+  webkit-box-shadow: none;
+  box-shadow: none;
 }

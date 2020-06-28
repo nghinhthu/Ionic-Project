@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar class="new-background-color"> 
+    <ion-toolbar class="new-background-color">
         <ion-buttons slot="start">
             <ion-button (click)="presentAlertMultipleButtons()">
                 <ion-icon src="/assets/icons/power.svg"></ion-icon>
@@ -8,82 +8,39 @@
         <ion-title style="text-align: center;">
             <img src="../../assets/image/instagram-new-logo-1024x3662.png">
         </ion-title>
-        <!-- <ion-buttons slot="end" color="dark">
-            <ion-button (click)="chat()" color="dark">
-                <ion-icon slot="icon-only" name="send-outline" ></ion-icon>
-            </ion-button>
-        </ion-buttons> -->
+
         <ion-buttons slot="end">
             <ion-button>
-                <!-- <ion-badge style="background-color:tomato;">99</ion-badge>
-                <ion-icon name="heart" style="color: white !important;"></ion-icon> -->
                 <ion-icon src="/assets/icons/menu.svg"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-
-    <!-- <ion-button (click)="schedule()">Thông Báo</ion-button> -->
-    
-    <div *ngFor="let post of postss | async">
-        <ion-item no-padding lines="none">
-            <app-loading *ngIf="!posts"></app-loading>
-            <ion-avatar slot="start">
-                <img src="http://ucarecdn.com/{{ profilePic }}/-/preview/{{ effect }}">
-            </ion-avatar>
-            <ion-label>{{ post.author }}</ion-label>
-            <ion-icon slot="end" name="more"></ion-icon>
-
-        </ion-item>
-        <img class="post_img" (click)="goTo(post.postID)" src="{{post.image}}">
-        <div class="flex-button">
-            <div>
-                <ion-icon name="heart-outline"></ion-icon>
-                <ion-icon name="chatbubble-outline"></ion-icon>
-                <ion-icon name="paper-plane-outline"></ion-icon>
-            </div>
-            <ion-icon name="bookmark"></ion-icon>
-        </div>
-        <ion-button (click)="delete(post.id)">delete</ion-button>
-        <!-- <p class="insta-text"><b>{{ countLiked(post.postID) }}428 Likes</b></p>
-        <p class="insta-text"><b>{{ post.author }}</b> {{ post.desc }}</p>
-        <ion-label style="font-size: smaller;padding: 0; margin: 5px 0px 5px 14px;">{{ post.date.toDate() | date: 'dd MMM, yyyy' }}</ion-label> -->
-    </div>
-    <br>
-
-
+    <app-loading *ngIf="!posts"></app-loading>
     <ion-card *ngFor="let post of posts | async">
-        <ion-img *ngIf="post.typeFile == 'image'" (click)="goTo(post.postID)" src="{{post.image}}"></ion-img>
-        <video *ngIf="post.typeFile == 'video'" (click)="goTo(post.postID)" width="auto" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-            <source src="{{post.image}}" type="video/mp4" />
-           </video>
-        <!-- <hr> -->
-        <ion-grid >
-            <ion-row>
-                <ion-col col-12>
-                    
-                    <b (click)="goToUser(post.userID)" style="color: black;">{{post.author}}</b>
-                    {{post.title}}
-                </ion-col>
-               
-            </ion-row>
-            <!-- <ion-row>
-                <ion-col col-12>
-                    {{post.content}}
-                  </ion-col>
-            </ion-row> -->
-            <!-- <div class="interactive">
-                <ion-icon (click)="toggleHeart()" [name]="heartType" [color]="heartColor"></ion-icon>
-                <ion-icon name="chatbubble-outline" color="dark"></ion-icon>
-            </div> -->
-            <ion-row>
-                <ion-col col-12>
-                    <b style="font-size: small;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</b>
-                </ion-col>
-            </ion-row>
-            
-    </ion-grid>
+        <ion-card class="card-1" (click)="goTo(post.postID)"> 
+            <ion-img *ngIf="post.typeFile == 'image'" (click)="goTo(post.postID)" src="{{post.image}}"></ion-img>
+            <video  *ngIf="post.typeFile == 'video'"  width="auto" controls>
+                <source src="{{post.image}}" type="video/mp4" />
+            </video>  
+            <ion-grid>
+                <ion-row> 
+                    <ion-col col-12> 
+
+                        <b (click)="goToUser(post.userID)" style="color: black;">{{post.author}}</b>
+                        {{post.title}}
+                    </ion-col>
+
+                </ion-row>
+                <ion-row>
+                    <ion-col col-12>
+                        <b style="font-size: small;">{{ post.published.toDate() | date: 'dd MMM, yyyy' }}</b>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+        </ion-card>
     </ion-card>
 
 

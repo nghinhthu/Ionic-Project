@@ -26,19 +26,19 @@ export class ProfileSearchPage implements OnInit {
   avatar
   postCount: number = 0
   postRef: Observable<any[]>;
+  userRef: Observable<any[]>;
   userReference: AngularFirestoreDocument
   userReference1: AngularFirestoreDocument
   users
-  users1
   heartType: string = "heart-outline"
   heartColor: string = "black"
   follower: number = 0
   following: number = 0
   textFollow: string
-  public show:boolean = false;
-  public buttonName:any = 'Show';
+  public show: boolean = false;
+  listFollower = []
 
-
+  userProfile: Observable<any[]>; //collection 'users'
 
   myID
   myfollowing: number = 0
@@ -55,15 +55,17 @@ export class ProfileSearchPage implements OnInit {
 
   ) {
 
-    //id cua nguoi duoc tim kiem
+
+    this.userProfile = this.afStore.collection("users")
+      .valueChanges({ idField: "userID" })
+    this.userRef = this.afStore.collection("users")
+      .valueChanges({ idField: "userID" })
+
     this.userID = this.route.snapshot.paramMap.get('id')
-    console.log('this.userID '+this.userID)
     this.myID = this.user.getUID()
-    // console.log('aaaaaahsdhf '+this.userID)
 
     this.mainuser = afStore.doc(`users/${this.userID}`)
     this.mainuser1 = afStore.doc(`users/${this.myID}`)
-    // this.posts = this.postService.getPosts()  
 
     this.sub = this.mainuser.valueChanges().subscribe(event => {
       this.posts = event.posts
@@ -72,6 +74,7 @@ export class ProfileSearchPage implements OnInit {
       this.profilePic = event.profilePic
       this.follower = event.follower.length
       this.following = event.following.length
+      this.listFollower = event.follower
     })
 
     this.sub1 = this.mainuser1.valueChanges().subscribe(event => {
@@ -90,7 +93,7 @@ export class ProfileSearchPage implements OnInit {
         return { id, data };
       }))
     );
-   }
+  }
 
   ngOnInit() {
     this.userReference = this.afStore.doc(`users/${this.userID}`)
@@ -102,42 +105,32 @@ export class ProfileSearchPage implements OnInit {
       this.heartColor = val.follower.includes(this.user.getUID()) ? 'danger' : 'dark'
       this.textFollow = val.follower.includes(this.user.getUID()) ? 'Un Follow' : 'Follow'
     })
-
-    // this.sub1 = this.userReference1.valueChanges().subscribe(data => {
-    //   this.users1 = data
-    //   this.heartType = data.following.includes(this.myID) ? 'heart' : 'heart-outline'
-    //   this.heartColor = data.following.includes(this.myID) ? 'danger' : 'dark'
-    // })
   }
 
   goTo(postID: string) {
     this.router.navigate(['/tabs/post/' + postID])
   }
 
-  checkAccount(){
-    if(this.account == 'Admin'){
+  checkAccount() {
+    if (this.account == 'Admin') {
       return true
     }
   }
 
-  followerFunction(){
+  followerFunction() {
     if (this.heartType == 'heart-outline') {
-      // this.textFollow = "Un Follow"
       this.userReference.update({
-        follower: firestore.FieldValue.arrayUnion(this.user.getUID()),
-        
+        follower: firestore.FieldValue.arrayUnion(this.user.getUID())
+
       })
       this.userReference1.update({
-        following: firestore.FieldValue.arrayUnion(this.userID),
-        //displayName: firestore.FieldValue.arrayUnion(this.userID)
+        following: firestore.FieldValue.arrayUnion(this.userID)
       })
-      
+
     }
     else {
-      // this.textFollow = "Follow"
       this.userReference.update({
-        follower: firestore.FieldValue.arrayRemove(this.user.getUID()),
-        // displayName: this.displayName
+        follower: firestore.FieldValue.arrayRemove(this.user.getUID())
       })
       this.userReference1.update({
         following: firestore.FieldValue.arrayRemove(this.userID)
@@ -166,8 +159,8 @@ export class ProfileSearchPage implements OnInit {
     });
     await actionSheet.present();
   }
-  
-  
+
+
   options() {
     this.presentActionSheet();
   }
@@ -178,7 +171,8 @@ export class ProfileSearchPage implements OnInit {
   toggle1() {
     this.show == this.show;
   }
-  back(){
-    this.router.navigate(['/tabs/search']) 
+  back() {
+    this.router.navigate(['/tabs/search'])
   }
+
 }

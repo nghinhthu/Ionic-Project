@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-  AngularFirestoreCollection
-} from "@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import { UserService } from "../user.service";
 import { firestore, auth } from "firebase/app";
 import { Router } from "@angular/router";
@@ -12,19 +8,16 @@ import { AngularFireAuth } from "@angular/fire/auth";
 
 import { AngularFireFunctions } from "@angular/fire/functions";
 import { HTTP } from "@ionic-native/http/ngx";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Http, HttpModule } from "@angular/http";
 import { Platform, LoadingController, AlertController } from "@ionic/angular";
-import { finalize } from "rxjs/operators";
-import { from, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import "firebase/firestore";
 import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
 // import { PostService } from "../post.service";
 import { FCM } from '@ionic-native/fcm/ngx';
 import { PostService } from '../post.service';
-
-import { MenuController } from '@ionic/angular';
-
+import { LoaderService } from '../services/loader.service';
 @Component({
   selector: "app-feed",
   templateUrl: "./feed.page.html",
@@ -56,24 +49,15 @@ export class FeedPage implements OnInit {
   constructor(
     public router: Router,
     private afAuth: AngularFireAuth,
-    private aff: AngularFireFunctions,
-    private http: HttpClient,
-    private nativeHTTP: HTTP,
-    private plt: Platform,
-    private loadingCtrl: LoadingController,
     private afStore: AngularFirestore,
-    private route: ActivatedRoute,
-    private user: UserService,
     private localNotifications: LocalNotifications,
     private alertCtrl: AlertController,
     private fcm: FCM,
 
     private postService: PostService,
-    private menu: MenuController
-  ) // private post: PostService
+    private ionLoader: LoaderService
+  ) 
   {
-    this.posts = this.afStore.collection("posts", ref => ref.orderBy("date", "desc"))
-      .valueChanges({ idField: "postID" });
     // this.plt.ready().then(() => {
     //   this.localNotifications.on('click').subscribe(res => {
     //     console.log('click: ', res)
@@ -126,8 +110,6 @@ export class FeedPage implements OnInit {
   }
   getToken() {
     this.fcm.getToken().then(token => {
-      // Register your new token in your back-end if you want
-      // backend.registerToken(token);
     });
   }
   unsubscribeFromTopic() {
@@ -137,7 +119,7 @@ export class FeedPage implements OnInit {
   schedule() {
     this.localNotifications.schedule({
       id: 1,
-      title: 'Attention',
+      title: 'Notification',
       text: 'Chichay Notifications',
       data: { mydata: 'My hidden message this is' },
       trigger: { in: 5, unit: ELocalNotificationTriggerUnit.SECOND },
@@ -209,46 +191,30 @@ export class FeedPage implements OnInit {
   
   getPostID(postID: string) {
     this.postid = postID;
-    console.log("aaaaa " + this.postid);
     return this.postid;
   }
 
+
+  showLoader() {
+    this.ionLoader.showLoader();
+
+    setTimeout(() => {
+      this.hideLoader();
+    }, 2000);
+  }
+
+  hideLoader() {
+    this.ionLoader.hideLoader();
+  }
+
   ngOnInit() {
-    // const getFeed = this.aff.httpsCallable('getFeed');
-    // getFeed({}).subscribe(data => {
-    //   console.log('babababa '+data);
-    // });  
     this.posts = this.afStore.collection("posts", ref => ref.orderBy("published", "desc"))
       .valueChanges({ idField: "postID" });
-    // this.posts = this.postService.getPosts()
-    // console.log('post '+this.posts)
-    
-    // console.log('user ',this.user)
-    // console.log('id ',postID)
-    // console.log('displayName ',this.users)
-
-
-  //   this.afAuth.auth.onAuthStateChanged(function (user) {
-  //     if (user) {
-  //       console.log('User log in ', user)
-  //     }
-  //     else if(user == null){
-  //       console.log('Log in without user')
-  //     } else {
-  //       console.log('User log out ', user)
-  //     }
-  //   });
   }
 
   delete(id: string) {
     this.postService.delete(id)
   }
-
-
-
-  // ngOnDestroy() {
-  // 	this.sub.unsubscribe()
-  // }
 
   goTo(postID: string) {
     this.router.navigate(["/tabs/post/" + postID]);
@@ -259,7 +225,6 @@ export class FeedPage implements OnInit {
   }
 
   chat() {
-    console.log('chat')
     this.router.navigate(["/tabs/chat"]);
   }
 
@@ -274,10 +239,14 @@ export class FeedPage implements OnInit {
         }
       
       },
+      
       function (error) {
         console.log("log out err");
       }
     );
+    window.location.reload()
+    this.showLoader(); 
     this.router.navigate(["/login"]);
   }
+   
 }

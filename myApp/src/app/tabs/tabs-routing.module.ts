@@ -73,7 +73,7 @@ const routes: Routes = [
       {path: 'search', loadChildren: '../search/search.module#SearchPageModule'},
       {path: 'notification', loadChildren: '../notification/notification.module#NotificationPageModule'},
       {path: 'cloudlist', loadChildren: '../cloud-list/cloud-list.module#CloudListPageModule'},
-      
+      {path: 'edit-post/:id',loadChildren:'../edit-post/edit-post.module#EditPostPageModule'}
       // {path: 'tab3',
       //  loadChildren: () => import ('../tab3/tab3.module').then(m => m.Tab3PageModule)},
     ]

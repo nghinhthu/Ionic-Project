@@ -3,15 +3,11 @@ import { AngularFireAuth } from '@angular/fire/auth'
 import { first } from 'rxjs/operators'
 import { auth } from 'firebase/app'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { Post } from './post'
 
 interface user {
     userName: string;
     uid: string,
     displayName: string;
-    // account: string
-    // gender: string
-    // profilePic: string
 }
 
 @Injectable()
@@ -51,22 +47,6 @@ export class UserService {
         this.user = null
     }
 
-    // getAccount(): string {
-    //     return this.user.account
-    // }
-
-    // getAccount(): string {
-    //     return this.user.account
-    // }
-
-    // getProfilePic(): string {
-    //     return this.user.profilePic
-    // }
-
-    // getGender(): string {
-
-    // }
-
     reAuth(userName: string, password: string) {
         return this.afAuth.auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(userName + '@gmail.com', password))
     }
@@ -102,21 +82,6 @@ export class UserService {
     }
 
     getUID(): string {
-        // if(!this.user){
-        //     if(this.afAuth.auth.currentUser){
-        //         const user = this.afAuth.auth.currentUser
-        //         this.setUser({
-        //             userName: user.email.split('@')[0],
-        //             uid: user.uid
-        //         })
-        //         return user.uid
-        //     }
-        //     else{
-        //         throw new Error("User not logged in")
-        //     }
-        // }
-        // return this.user.uid
-        // return this.user.uid
         return this.authenticated ? this.authState.uid : null
     }
 

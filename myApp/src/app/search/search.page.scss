@@ -1,0 +1,18 @@
+ion-content {
+    --background:  #8acdfe;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+ion-item {
+    --background: none;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.item-background{
+    --background: url(../../assets/image/backgroudprofile.png) no-repeat top center/cover fixed, #fff;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}

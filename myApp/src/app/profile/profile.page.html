@@ -1,122 +1,71 @@
-<ion-header>
-    <ion-toolbar class="new-background-color">
-        <ion-title style="text-align: center; color: white;">{{ displayName }} <ion-icon *ngIf="checkAccount()"
-                color="primary" name="checkmark-circle"></ion-icon>
-        </ion-title>
+<ion-header translucent no-border>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="light">
+                <ion-icon src="/assets/icons/chevron-back-outline.svg"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>&nbsp;</ion-title>
+        <ion-buttons slot="end">
+            <ion-button>
+                <!-- <ion-icon src="/assets/icons/chevron-back-outline.svg"></ion-icon> -->
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content fullscreen="true" slot="fixed">
 
-    <!-- <app-loading *ngIf="!posts"></app-loading> -->
 
-    <ion-item lines="none" *ngIf="displayName">
+    <div class="card" *ngIf="displayName">
+        <div class="header">
+            <div class="avatar">
+                <img src="http://ucarecdn.com/{{ profilePic}}/-/preview/" alt="" style=" object-fit: cover;">
+            </div>
+        </div>
+    </div>
 
-        <ion-avatar style="width: 45px;
-        height: 45px;">
-            <ion-img src="http://ucarecdn.com/{{ profilePic}}/-/preview/"></ion-img>
-        </ion-avatar>
-        <ion-label style="margin: 5px;">
+    <div class="card-body">
+        <div class="user-meta ion-text-center">
+            <h4 class="playername">{{ displayName }} <ion-icon *ngIf="checkAccount()" color="primary"
+                    name="checkmark-circle"></ion-icon>
+            </h4>
+            <p style="font-size: small;">Fashion-designer, London UK</p>
+        </div>
+        <ion-card>
             <div class="info_box">
                 <div class="date_box">
                     <b>{{postCount}}</b>
-                    <p *ngIf="postCount <= '1'">post</p>
+                    <p *ngIf="postCount == '0' || postCount == '1'">post</p>
                     <p *ngIf="postCount > '1'">posts</p>
                 </div>
                 <div class="date_box">
                     <b>{{follower}}</b>
-                    <p *ngIf="follower <= '1'">follower</p>
+                    <p *ngIf="follower == '0' || follower == '1'">follower</p>
                     <p *ngIf="follower > '1'">followers</p>
                 </div>
                 <div class="date_box">
                     <b>{{following}}</b>
-                    <p *ngIf="following <= '1'">following</p>
+                    <p *ngIf="following == '0' || following == '1'">following</p>
                     <p *ngIf="following > '1'">followings</p>
                 </div>
             </div>
-        </ion-label>
-    </ion-item>
+        </ion-card>
+        <section class="full-width">
+            <ion-button size="small" expand="full" shape="round" style="color: #ffffff; --background: #43a6be;"
+                routerLink="/tabs/edit-profile">Edit Profile
+            </ion-button>
+        </section>
 
-    <section class="full-width">
-        <ion-button size="small" expand="full" shape="round" style="color: #ffffff; --background: #43a6be;"
-            routerLink="/tabs/edit-profile">Edit Profile
-        </ion-button>
-    </section>
 
-    
-    
-    <ion-item lines="none" >
-        
-        <ion-label >
-            <h3><b>{{ displayName }}</b></h3>
-                <p>Fashion-designer, London UK</p>
-                Có
-            <dfn *ngFor="let user of users | async" >
-                
-                <dfn *ngFor="let item of listFollower; let i=index" >
-                    <dfn *ngIf="user.userID == item" style="font-size: small;"><b *ngIf="i<2">{{user.displayName}},</b></dfn>   
-                </dfn>
-            </dfn>
-            theo dõi
-        </ion-label>
-    
-    </ion-item>
-
-    <ion-segment color="medium">
-        <ion-segment-button>
-            <ion-icon src="/assets/icons/apps.svg" ></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button>
-            <ion-icon src="/assets/icons/person-circle.svg"></ion-icon>
-        </ion-segment-button>
-    </ion-segment>
-
-    <!-- *ngIf="(userPosts | async)?.posts as posts" -->
-    <div id="images" *ngIf="!show">
-        <div class="img_box" *ngFor="let post of postRef | async" id="player-overlay">
-            <img *ngIf="post.data.typeFile == 'image'" (click)="goTo(post.id)" style="max-width: 605px;max-height: 601px; object-fit: cover;"
-                class="main-image" style=" object-fit: cover;" src="{{post.data.image}}">
-            <img *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" height="100%" width="100%" class="main-image" style=" object-fit: cover;"
-                src="../../assets/image/video.jpg">
-            <!-- <video *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" width="auto" controls="controls"
-                preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-                <source src="{{post.image}}" type="video/mp4" />
-            </video> -->
-        </div>
     </div>
 
-
-    <!-- <div id="images" *ngIf="show">
+    <div id="images" *ngIf="!show">
         <div class="img_box" *ngFor="let post of postRef | async" id="player-overlay">
-            
-                <video *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)" width="auto" controls="controls" preload="metadata"
-                webkit-playsinline="webkit-playsinline" class="videoPlayer">
-                <source src="{{post.image}}" type="video/mp4" />
-            </video>
+            <img *ngIf="post.data.typeFile == 'image'" (click)="goTo(post.id)" height="119px" width="119px"
+                class="main-image" style=" object-fit: cover;" src="{{post.data.image}}">
+            <img *ngIf="post.data.typeFile == 'video'" (click)="goTo(post.id)"  height="119px" width="119px"
+                class="main-image" style=" object-fit: cover;" src="../../assets/image/video.jpg">
         </div>
-    </div> -->
-
-
-
-    <!-- <ion-grid class="image-grid">
-        <ion-row class="single-row" >
-          <ion-col col-4 class="single-image" *ngFor="let post of postRef | async">
-            <img height="100%" width="100%" style=" object-fit: cover;" (click)="goTo(post.id)" src="{{post.data.image}}">
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
-
-
-
-    <!-- <div id="images">
-        <ion-list>
-          <ion-grid>
-            <ion-row >
-              <ion-col col-4 class="grid_img" class="img_box" *ngFor="let post of postRef | async">
-                <img class="scale" (click)="goTo(post.id)" src="{{post.data.image}}" alt="" style="width:200px; height:100px; background-position:center;">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list>
-    </div> -->
+    </div>
 </ion-content>

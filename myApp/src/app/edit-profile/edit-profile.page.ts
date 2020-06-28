@@ -14,19 +14,12 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ["./edit-profile.page.scss"]
 })
 export class EditProfilePage implements OnInit {
+
   mainUser: AngularFirestoreDocument;
   sub;
   userName: string;
   displayName: string
   profilePic: string
-  // profilePicDefault: string = "fcf0068f-da61-49a8-a814-95869c68c87c"
-  avatar
-  gender: string
-  genderArray = [
-    { text: 'Male', disabled: false, checked: true},
-    { text: 'Female', disabled: false, checked: false}
-  ]
-  genderChoose : string = ""
 
   busy: boolean = false;
 
@@ -49,29 +42,19 @@ export class EditProfilePage implements OnInit {
     private storage: AngularFireStorage,
   ) {
     this.mainUser = afStore.doc(`users/${user.getUID()}`);
+    console.log(this.mainUser + ' mainUser')
     this.sub = this.mainUser.valueChanges().subscribe(event => {
       this.userName = event.userName;
       this.displayName = event.displayName
-      this.profilePic = event.profilePic;
-      this.gender = event.gender
+      this.profilePic = event.profilePic
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
-  // getProfilePic(){
-  //   if(this.profilePic != ""){
-  //     this.avatar = this.profilePic
-  //   }
-  //   else{
-  //     this.avatar = this.profilePicDefault
-  //   }
-  //   return this.avatar
-  // }
 
   updateProfilePic() {
     this.fileBtn.nativeElement.click();
@@ -88,9 +71,9 @@ export class EditProfilePage implements OnInit {
       this.uploadPercent = task.percentageChanges();
       console.log('Image uploaded!', file.accessToken);
       task.snapshotChanges().pipe(finalize(() => {
-          this.downloadURL = ref.getDownloadURL()
-          this.downloadURL.subscribe(url => (this.profilePic = url));
-        })
+        this.downloadURL = ref.getDownloadURL()
+        this.downloadURL.subscribe(url => (this.profilePic = url));
+      })
       )
         .subscribe();
     }
@@ -123,6 +106,7 @@ export class EditProfilePage implements OnInit {
   }
 
   async updateDetails() {
+
     this.busy = true;
 
     if (!this.password) {
@@ -130,24 +114,18 @@ export class EditProfilePage implements OnInit {
       return this.presentAlert("Error!", "You have to enter a password");
     }
 
-    // try {
-    //   await this.user.reAuth(this.user.getUserName(), this.password);
-    // } catch (error) {
-    //   this.busy = false
-    //   return this.presentAlert("Error!", "Wrong password!");
-    // }
     try {
-			await this.user.reAuth(this.user.getEmail(), this.password)
-		} catch(error) {
-			this.busy = false
-			return this.presentAlert('Error!', 'Wrong password!')
-		}
+      await this.user.reAuth(this.user.getEmail(), this.password)
+    } catch (error) {
+      this.busy = false
+      return this.presentAlert('Error!', 'Wrong password!')
+    }
 
     if (this.newpassword) {
       await this.user.updatePassword(this.newpassword);
     }
 
-    if(this.userName !== this.user.getEmail()){
+    if (this.userName !== this.user.getEmail()) {
       await this.user.updateEmail(this.userName)
       this.mainUser.update({
         displayName: this.displayName

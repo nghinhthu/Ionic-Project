@@ -9,3 +9,12 @@
     width: 200px;
     height: 200px;
 }
+.new-background-color{
+    --background: rgb(2,0,36);
+    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(100,189,255,1) 0%, rgba(190,248,255,1) 100%);
+    color: white;
+}
+
+.pic{
+    margin-left: 32px;
+}

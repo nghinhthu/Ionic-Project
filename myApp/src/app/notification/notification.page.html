@@ -1,44 +1,29 @@
 <ion-header>
   <ion-toolbar class="new-background-color">
-    <ion-title style="color: white;">Notification</ion-title>
+    <ion-title style="color: white; text-align: center;">Notification</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="card" *ngIf="listFollower.length == 0">
+    <div class="header">
+        <div class="avatar">
+            <img src="../../assets/notification1.gif" alt="" >
+        </div>
+    </div>
+</div>
+
   <div *ngFor="let item of listFollower">
     <div *ngFor="let user of users | async">
     <ion-item *ngIf="item == user.userID">
       <ion-avatar slot="start">
         <img src="http://ucarecdn.com/{{ user.profilePic}}/-/preview/">
       </ion-avatar>
-      <ion-button color="primary" slot="end">Follow</ion-button>
-      <ion-label>
+      <ion-label (click)="goToUser(user.userID)">
         <h3>{{user.displayName}}</h3>
-        <!-- <h3>{{item}}</h3> -->
         <p>followed you</p>
       </ion-label>
     </ion-item>
   </div>
   </div>
-  <!-- <ion-item>
-    <ion-avatar slot="start">
-      <img src="./avatar.svg">
-    </ion-avatar>
-    <img slot="end" src="./avatar.svg">
-    <ion-label>
-      <h3>nghinhthu</h3>
-      <p>commented on the post</p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item>
-    <ion-avatar slot="start">
-      <img src="./avatar.svg">
-    </ion-avatar>
-      <ion-button color="light" slot="end">Watching</ion-button>
-    <ion-label>
-      <h3>nghinhthu</h3>
-      <p>followed you</p>
-    </ion-label>
-  </ion-item> -->
 </ion-content>

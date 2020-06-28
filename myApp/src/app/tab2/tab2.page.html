@@ -1,61 +1,38 @@
-<!-- <ion-header>
-    <ion-toolbar>
-        <ion-title>
-            LogIn
-        </ion-title>
-    </ion-toolbar>
-</ion-header> -->
-
-<ion-content padding style="background-image: url(/assets/image/backgroudlogin.jpg); background-size: cover;">
-    <!-- <form #form="ngForm" (ngSubmit)="login(form)">  -->
-
-        <!-- <img src="/assets/image/logo2.png" alt="" width="150px" height="150px" />
-
-        <input type="text" placeholder="Login">
-        <input type="password" placeholder="Password">
-
-        <button color="roze" ion-button class="login"> LOGIN</button> -->
-
-
-
-
-
-    <form #form="ngForm"> 
+<ion-content padding style="background-image: url(/assets/image/backgroudlogin.png); background-size: cover;">
+    <form #form="ngForm">
         <ion-grid>
             <ion-row justify-content-center>
                 <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
                     <div text-center>
                         <img src="/assets/image/logo2.png" alt="" width="150px" height="150px" />
-                        <h1>Aqual Ul Kit</h1>
+                        <h1 class="home-title">
+                            <span>Aqual Ul Kit</span>
+                        </h1>
                     </div>
                     <div padding>
                         <ion-item>
-                            <ion-input name="email" type="text-center" placeholder="your@email.com" [(ngModel)]="userName" ngModel required></ion-input>
+                            <ion-input name="email" type="text-center" placeholder="your@email.com"
+                                [(ngModel)]="userName" ngModel required></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input name="password" type="password" placeholder="Password"  [(ngModel)]="password" ngModel required></ion-input>
+                            <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password"
+                                ngModel required></ion-input>
                         </ion-item>
                     </div>
                     <div padding>
-                        <ion-button  class="my-button" size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="logIn()" style="color: #43a6be;">LOGIN</ion-button>
-                       
-                            <a  (click)="presentAlertMultipleButtons()">
-                                <p><b>LOST PASSWORD?</b></p>
-                            </a>
-                            OR
-                            <a routerLink='/register'>
-                                <p><b>REGISTRATION</b></p>
-                            </a>
-                            <ion-chip color="danger" routerLink='/feed'>
-                                <ion-label style="color: white;">Skip</ion-label>
-                            </ion-chip>
+                        <ion-button class="my-button" size="large" type="submit" [disabled]="form.invalid"
+                            expand="block" (click)="logIn()" style="color: #ffffff;">LOGIN</ion-button>
+                        <a (click)="resetPassword()">
+                            <p><b>LOST PASSWORD?</b></p>
+                        </a>
+                        OR
+                        <a routerLink='/register'>
+                            <p><b>REGISTRATION</b></p>
+                        </a>
+                        <br>
                     </div>
-                    
-                
                 </ion-col>
             </ion-row>
         </ion-grid>
-     
     </form>
-
 </ion-content>

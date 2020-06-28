@@ -10,27 +10,21 @@ input[type="button"] {
   .tab-selected{
 //   background: #68c9e1 !important;
     border-width:5px;
-    color: #68c9e1 !important;
+    color: #88c5f2 !important;
     border-bottom-style: solid;  
     ion-button{
-        --color: #68c9e1
+        --color: #88c5f2
     }
 }
 
-// .tabbar [aria-selected=true] {
-//     border-top: 1px;
-//     border-style: solid;    
-// }
-
-// ion-tab-button{
-//     font-size: 10px;
-//     --padding-end: 0px;
-//     --padding-start: 10px;
-//     --padding-bottom: 0px;
-//     --margin-left:0px;
-//     --margin-right:0px;
-//     max-width:100px;
-//     ion-icon{
-//         font-size: 67.5px;
-//     }
-// }
+ion-icon{
+    font-size:23px;
+}
+ion-fab-button{
+    --background: rgb(2,0,36);
+    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(100,189,255,1) 0%, rgba(190,248,255,1) 100%);
+}
+ion-fab-button:hover{
+    --background: rgb(2,0,36);
+    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(100,189,255,1) 0%, rgba(190,248,255,1) 100%);
+}

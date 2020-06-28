@@ -1,3 +1,10 @@
-<ion-app>
+<ion-app style="padding-top: 50px">
+    <div id="custom-overlay" [style.display]="splash ? 'flex': 'none'" style="background-image: url(/assets/image/backgroudlogin.png); background-size: cover;">
+        <div class="flb">
+          <div class="Aligner-item Aligner-item--top"></div>
+          <img src="assets/logoflash.png">
+          <div class="Aligner-item Aligner-item--bottom"></div>
+        </div>
+      </div>    
     <ion-router-outlet></ion-router-outlet>
 </ion-app>

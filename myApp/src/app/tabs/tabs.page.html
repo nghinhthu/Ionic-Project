@@ -2,34 +2,28 @@
 
     <ion-tab-bar slot="bottom">
         <ion-tab-button tab="feed">
-            <ion-icon src="/assets/icons/home-outline.svg" ></ion-icon>
-            <!-- <ion-label>home</ion-label> -->
+            <ion-icon src="/assets/icons/home-outline.svg"></ion-icon>
         </ion-tab-button>
 
         <ion-tab-button tab="search">
             <ion-icon src="/assets/icons/search-outline.svg"></ion-icon>
-            <!-- <ion-label>search</ion-label> -->
         </ion-tab-button>
 
         <ion-tab-button tab="upload">
-            <ion-icon src="/assets/icons/add-circle-outline.svg"></ion-icon>
-            <!-- <ion-label>up load</ion-label> -->
         </ion-tab-button>
 
         <ion-tab-button tab="notification">
             <ion-icon src="/assets/icons/heart-outline.svg"></ion-icon>
-            <ion-badge style="background-color:tomato;">99</ion-badge>
-            <!-- <ion-label>notification</ion-label> -->
         </ion-tab-button>
 
         <ion-tab-button tab="profile">
-            <ion-icon src="/assets/icons/person-circle-outline.svg"></ion-icon>
-            <!-- <ion-label>profile</ion-label> -->
+            <ion-icon style="color: #E55F00;" src="/assets/icons/person-circle-outline.svg"></ion-icon>
         </ion-tab-button>
-
-        <!-- <ion-tab-button tab="cloudlist">
-            <ion-icon name="person-circle-outline"></ion-icon>
-        </ion-tab-button> -->
     </ion-tab-bar>
 
 </ion-tabs>
+<ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="false" (click)="upload()">
+    <ion-fab-button type="button">
+        <ion-icon src="/assets/icons/add-outline.svg"></ion-icon>
+    </ion-fab-button>
+</ion-fab>

@@ -101,16 +101,12 @@ ion-content {
 	width: 1.5em !important;
 }
 
-// .post-content{
-// 	border-bottom: 1px solid rgba(160, 160, 160, 0.453);
-// 	padding-bottom: 10px;
-// }
-
 .user-comments{
 	padding-bottom: 10px;
 }
 .new-background-color{
-	--background: #97daeb;
+	--background: rgb(2,0,36);
+    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(100,189,255,1) 0%, rgba(190,248,255,1) 100%);
 
 }
 .scoll{
@@ -130,4 +126,13 @@ ion-content {
 		  padding: 0 !important;
 	  }
 
-	  
+	  ion-content {
+		--background: url(../../assets/image/backgroudprofile.png) no-repeat top center/cover fixed, #fff;
+		position: relative;
+		height: 100%;
+		width: 100%;
+	  }
+	  .card-1{
+		--webkit-box-shadow: none;
+		--box-shadow: none;
+	  }

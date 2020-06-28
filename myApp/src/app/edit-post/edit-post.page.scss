@@ -1,0 +1,10 @@
+ion-content {
+    --background: url(../../assets/image/backgroudprofile.png) no-repeat top center/cover fixed, #fff;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.new-background-color{
+    --background: rgb(2,0,36);
+    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(100,189,255,1) 0%, rgba(190,248,255,1) 100%);
+  }

@@ -1,16 +1,11 @@
-<!-- <ion-header>
-    <ion-toolbar>
-        <ion-title>search</ion-title>
-    </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
-
-    <ion-searchbar animated type="text" [(ngModel)]="term"></ion-searchbar>
-    <div>
-        <div *ngFor="let item of users |async |filter:term">
-            <!-- <ion-item (click)="search(item.userID)">{{ item.userName }}</ion-item> -->
-            <ion-item (click)="search(item.userID)">{{ item.displayName }}</ion-item>
+    <ion-searchbar style="--background-color: #75c1f9;" animated type="text" [(ngModel)]="term"></ion-searchbar>
+    <ion-card class="item-background">
+        <div >
+            <div *ngFor="let item of users |async |filter:term">
+                <ion-item (click)="search(item.userID)">{{ item.displayName }}</ion-item>
+            </div>
         </div>
-    </div>
+        
+    </ion-card>
 </ion-content>

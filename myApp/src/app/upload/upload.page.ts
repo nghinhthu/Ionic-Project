@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, Injectable } from "@angular/core";
 import { Http } from "@angular/http";
-import { database } from "firebase/app";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { UserService } from "../user.service";
 import { firestore } from "firebase/app";
@@ -33,34 +32,14 @@ const MEDIA_FOLDER_NAME = 'my_media';
   styleUrls: ["./upload.page.scss"]
 })
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-
 export class UploadPage implements OnInit {
 
   photos: any = [];
   files = [];
   uploadProgress = 0;
-
-  // imageURL: string;
-  // desc: string = " ";
-  // profilePic: string
+  profilePic: string
 
   busy: boolean = false;
-
-  // scaleCrop: string = "-/scale_crop/200x200";
-
-  // effects = {
-  //   effect1: "",
-  //   effect2: "-/exposure/50/-/saturation/50/-/warmth/-30/",
-  //   effect3: "-/filter/vevera/150/",
-  //   effect4: "-/filter/carris/150/",
-  //   effect5: "-/filter/misiara/150/"
-  // };
-  // activeEffect: string = this.effects.effect1;
-
-
   content: string
   image: string
   title: string
@@ -96,31 +75,19 @@ export class UploadPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private plt: Platform,
     private toastCtrl: ToastController,
-    private storage: AngularFireStorage,
-    private postService: PostService
+    private storage: AngularFireStorage
   ) {
     this.userid = this.afAuth.auth.currentUser.uid;
     this.mainuser = afStore.doc(`users/${user.getUID()}`)
-    // this.posts = this.postService.getPosts()  
 
     this.sub = this.mainuser.valueChanges().subscribe(event => {
-      this.displayName = event.displayName
+      this.displayName = event.displayName,
+        this.profilePic = event.profilePic
     })
 
   }
 
   ngOnInit() {
-    // this.plt.ready().then(() => {
-    //   let path = this.file.dataDirectory;
-    //   this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
-    //     () => {
-    //       this.loadFiles();
-    //     },
-    //     err => {  
-    //       this.file.createDir(path, MEDIA_FOLDER_NAME, false);
-    //     }
-    //   );
-    // });
   }
   async createPost() {
 
@@ -133,11 +100,8 @@ export class UploadPage implements OnInit {
     let id = this.afStore.createId()
 
     this.afStore.doc(`users/${this.user.getUID()}`).update({
-      posts: firestore.FieldValue.arrayUnion(id), //["image1", "image2"]
+      posts: firestore.FieldValue.arrayUnion(id)
     });
-
-    // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
-    // console.log(profilePic + 'profilePic')
 
     this.afStore.doc(`posts/${id}`).set({
       title,
@@ -148,7 +112,6 @@ export class UploadPage implements OnInit {
       image,
       userID: this.userid,
       typeFile
-      // data = new firestore.FieldValue.serverTimestamp()
     });
 
     this.busy = false;
@@ -160,27 +123,26 @@ export class UploadPage implements OnInit {
 
     this.saving = 'Post Created!'
     const alert = await this.alertContraller.create({
-          header: "Done",
-          message: "Your post was create!",
-          buttons: ["Cool!"]
-        });
-    
-        await alert.present();
-    
-        this.router.navigate(["/tabs/feed"]);
-    // setTimeout(() => (this.saving = 'Create Post'), 500)
-    // this.router.navigate(['/feed'])
-    
-    // this.router.navigate(['/feed'])
+      header: "Done",
+      message: "Your post was create!",
+      animated: true,
+      buttons: ["Cool!"]
+    });
+
+    await alert.present();
+
+    const toast = await this.toastCtrl.create({
+      message: 'Your post was uploaded',
+      duration: 2000
+    });
+    await toast.present();
+
+    this.router.navigate(["/tabs/feed"]);
   }
 
   uploadImage(event) {
     const file = event.target.files[0]
     const path = `posts/${file.name}`
-    
-    
-    // } else {
-
 
     if (file.type.split('/')[0] == 'image') {
       this.typeFile = 'image'
@@ -212,21 +174,6 @@ export class UploadPage implements OnInit {
     else if (file.type.split('/')[0] !== 'image' || file.type.split('/')[0] !== 'video') {
       return alert('only image files')
     }
-
-
-
-
-    // const task = this.storage.upload(path, file);
-    // const ref = this.storage.ref(path);
-    // this.uploadPercent = task.percentageChanges();
-    // console.log('Image uploaded!', file.accessToken);
-    // task.snapshotChanges().pipe(finalize(() => {
-    //   this.downloadURL = ref.getDownloadURL()
-    //   this.downloadURL.subscribe(url => (this.image = url));
-    // })
-    // )
-    //   .subscribe();
-    // }
   }
 
 
@@ -282,12 +229,6 @@ export class UploadPage implements OnInit {
         }
       }
     );
-
-    // If you get problems on Android, try to ask for Permission first
-    // this.imagePicker.requestReadPermission().then(result => {
-    //   console.log('requestReadPermission: ', result);
-    //   this.selectMultiple();
-    // });
   }
   captureImage() {
     this.mediaCapture.captureImage().then(
@@ -321,7 +262,6 @@ export class UploadPage implements OnInit {
   }
   copyFileToLocalDir(fullPath) {
     let myPath = fullPath;
-    // Make sure we copy from the right location
     if (fullPath.indexOf('file://') < 0) {
       myPath = 'file://' + fullPath;
     }
@@ -345,7 +285,6 @@ export class UploadPage implements OnInit {
   }
   openFile(f: FileEntry) {
     if (f.name.indexOf('.wav') > -1) {
-      // We need to remove file:/// from the path for the audio plugin to work
       const path = f.nativeURL.replace(/^file:\/\//, '');
       const audioFile: MediaObject = this.media.create(path);
       audioFile.play();
@@ -398,67 +337,4 @@ export class UploadPage implements OnInit {
     else if (fileExt == 'mp4') return { type: 'video/mp4' };
     else if (fileExt == 'MOV') return { type: 'video/quicktime' };
   }
-
-  // async createPost() {
-  //   this.busy = true;
-
-  //   const image = this.imageURL;
-  //   const desc = this.desc;
-
-  //   this.afStore.doc(`users/${this.user.getUID()}`).update({
-  //     posts: firestore.FieldValue.arrayUnion(image), //["image1", "image2"]
-  //   });
-
-  //   // profilePic = this.afStore.collection(`users/${this.user.getUID()}/${image}`)
-  //   // console.log(profilePic + 'profilePic')
-
-  //   this.afStore.doc(`posts/${image}`).set({
-  //     desc,
-  //     author: this.user.getEmail(),
-  //     likes: [],
-  //     date: firestore.FieldValue.serverTimestamp(),
-  //     // data = new firestore.FieldValue.serverTimestamp()
-  //   });
-
-  //   this.busy = false;
-  //   this.imageURL = "";
-  //   this.desc = "";
-
-  //   const alert = await this.alertContraller.create({
-  //     header: "Done",
-  //     message: "Your post was create!",
-  //     buttons: ["Cool!"]
-  //   });
-
-  //   await alert.present();
-
-  //   this.router.navigate(["/tabs/feed"]);
-  // }
-
-  // setSelected(effect: string) {
-  //   this.activeEffect = this.effects[effect];
-  // }
-
-  // uploadFileOld() {
-  //   this.fileButton.nativeElement.click();
-  // }
-
-  // fileChanged(event) {
-  //   this.busy = true;
-  //   const files = event.target.files;
-  //   console.log(files);
-
-  //   const data = new FormData();
-  //   data.append("file", files[0]);
-  //   data.append("UPLOADCARE_STORE", "1");
-  //   data.append("UPLOADCARE_PUB_KEY", "c08c0a1ac4eac178fdee");
-
-  //   this.http
-  //     .post("https://upload.uploadcare.com/base/", data)
-  //     .subscribe(event => {
-  //       console.log(event);
-  //       this.imageURL = event.json().file;
-  //       this.busy = false;
-  //     });
-  // }
 }

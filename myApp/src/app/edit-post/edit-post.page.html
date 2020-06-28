@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar class="new-background-color">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon src="/assets/icons/chevron-back-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color: white; ; text-align: center;">
+      Edit post
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!isModal">
+        <ion-icon></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card fullscreen>
+    <ion-list class="au-form" inset padding>
+      <ion-item>
+        <ion-img src="{{postImage}}"></ion-img>
+      </ion-item>
+      <ion-item>
+        <ion-input clearInput type="text" placeholder="Post Title" [(ngModel)]="postTitle" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea rows="6" cols="20" placeholder="Post Content" clearInput [(ngModel)]="postContent" ngModel
+          required>
+        </ion-textarea>
+      </ion-item>
+
+      <div *ngIf="typeFile == 'image'">
+        <img [src]="image || '//:0' ">
+      </div>
+      <ion-button color="primary" (click)="updatePost()">{{saving}}
+      </ion-button>
+    </ion-list>
+  </ion-card>

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../user.service'
+import { LoaderService } from '../services/loader.service';
 
 
 @Component({
@@ -34,14 +34,26 @@ export class Tab1Page {
     public afStore: AngularFirestore,
     public alert: AlertController,
     public router: Router,
-    public user: UserService) { }
+    public user: UserService,
+    private ionLoader: LoaderService) { }
+
 
   ngOninit() {
 
   }
 
+  showLoader() {
+    this.ionLoader.showLoader();
+
+    setTimeout(() => {
+      this.hideLoader();
+    }, 4000);
+  }
+
+  hideLoader() {
+    this.ionLoader.hideLoader();
+  }
   getGender(genderID) {
-    console.log('gender ' + genderID)
     if(genderID == "User"){
       this.checkAccount = false
     }
@@ -60,31 +72,6 @@ export class Tab1Page {
       buttons: ['OK']
     })
   }
-
-//   registerPasswordUser(){
-//     const { userName, password, cPassword, gender, displayName, genderChoose } = this
-//     var user = null;
-//     //nullify empty arguments
-//     for (var i = 0; i < arguments.length; i++) {
-//         arguments[i] = arguments[i] ? arguments[i] : null;
-//     }
-   
-//     this.afAuth.auth.createUserWithEmailAndPassword(userName, password)
-//         .then(function () {
-//             user = this.afAuth.auth.currentUser;
-//             user.sendEmailVerification();
-//         })
-//         .then(function () {
-//             user.updateProfile({
-//                 displayName: displayName,
-//                 account: genderChoose,
-//             });
-//         })
-//         .catch(function(error) {
-//             console.log(error.message);
-//         });
-//         console.log('Validation link was sent to ' + userName + '.', 7000);
-// }
 
   async register() {
     const { userName, password, cPassword,  displayName, genderChoose, adminCode } = this
@@ -112,7 +99,6 @@ export class Tab1Page {
         userName,
         uid: res.user.uid,
         displayName
-        // account: genderChoose
       })
       
       this.afStore.doc(`users/${res.user.uid}`).set({
@@ -125,15 +111,12 @@ export class Tab1Page {
       })
     
       this.showAlert('Success!', 'You are registered!')
+      this.showLoader()
       this.router.navigate(['/tabs'])
       this.userName = ""
       this.password = ""
-      // console.log(res)
-      // this.showAlert("Success!", "Welcome Aboard!")
-      // this.router.navigate(['/tabs'])
     }
     catch (error) {
-      console.dir(error)
       this.showAlert("Error", error.message)
     }
   }
@@ -148,12 +131,6 @@ export class Tab1Page {
     await alert.present()
   }
 
-  // authenticateEmail(){
-  //   if (this.userName != ""){
-  //     this.afAuth.auth.isSignInWithEmailLink(emailLink)
-  //   }
-  // }
-
   resetPassword() {
     if (this.userName != "") {
       this.afAuth.auth.sendPasswordResetEmail(this.userName + '@gmail.com').then(function () {
@@ -161,12 +138,9 @@ export class Tab1Page {
       })
         .catch(function (err) {
           console.dir(err)
-          // if(err){
           console.dir(err)
           this.showAlert("Error", err)
-          // console.log(err.code)
           window.alert(err)
-          // }
         })
     }
   }
